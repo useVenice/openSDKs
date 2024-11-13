@@ -72,7 +72,9 @@ export const qboSdkDef = {
             startPosition,
             maxResults,
           }
-          if (entities.length === 0) {
+          // note: for some reason CompanyInfo keeps returning 1 result even where we used a greater start position.
+          // Adding entities.length < maxResults check to break out of loop
+          if (entities.length === 0 || entities.length < maxResults) {
             break
           }
           startPosition += entities.length
