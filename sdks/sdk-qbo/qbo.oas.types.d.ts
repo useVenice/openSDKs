@@ -111,7 +111,7 @@ export interface components {
       domain: string
       /** @enum {string} */
       status?: 'deleted'
-      Metadata: {
+      MetaData: {
         CreateTime: string
         LastUpdatedTime: string
       }
@@ -136,7 +136,7 @@ export interface components {
       domain: string
       /** @enum {string} */
       status?: 'deleted'
-      Metadata: {
+      MetaData: {
         CreateTime: string
         LastUpdatedTime: string
       }
@@ -204,7 +204,7 @@ export interface components {
       domain: string
       /** @enum {string} */
       status?: 'deleted'
-      Metadata: {
+      MetaData: {
         CreateTime: string
         LastUpdatedTime: string
       }
@@ -245,7 +245,7 @@ export interface components {
       domain: string
       /** @enum {string} */
       status?: 'deleted'
-      Metadata: {
+      MetaData: {
         CreateTime: string
         LastUpdatedTime: string
       }
@@ -308,7 +308,7 @@ export interface components {
       domain: string
       /** @enum {string} */
       status?: 'deleted'
-      Metadata: {
+      MetaData: {
         CreateTime: string
         LastUpdatedTime: string
       }
@@ -357,7 +357,7 @@ export interface components {
       domain: string
       /** @enum {string} */
       status?: 'deleted'
-      Metadata: {
+      MetaData: {
         CreateTime: string
         LastUpdatedTime: string
       }
@@ -401,7 +401,7 @@ export interface components {
       domain: string
       /** @enum {string} */
       status?: 'deleted'
-      Metadata: {
+      MetaData: {
         CreateTime: string
         LastUpdatedTime: string
       }

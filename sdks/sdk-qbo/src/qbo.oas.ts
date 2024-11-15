@@ -47,7 +47,7 @@ export const webhookPayloadSchema = z.object({
   ),
 })
 
-export const metaDataSchema = z.object({
+export const MetaDataSchema = z.object({
   CreateTime: z.string(),
   LastUpdatedTime: z.string(),
 })
@@ -237,7 +237,7 @@ export const companyInfoSchema = z
     sparse: z.boolean(),
     Id: z.string(),
     SyncToken: z.string(),
-    MetaData: metaDataSchema,
+    MetaData: MetaDataSchema,
   })
   .openapi({ref: 'CompanyInfo'})
 
@@ -249,7 +249,7 @@ export const baseEntitySchema = z
     domain: z.string(),
     // https://developer.intuit.com/app/developer/qbo/docs/develop/explore-the-quickbooks-online-api/change-data-capture#using-change-data-capture
     status: z.literal('deleted').optional(),
-    Metadata: metaDataSchema,
+    MetaData: MetaDataSchema,
   })
   .passthrough()
 

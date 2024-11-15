@@ -1647,7 +1647,7 @@
             "type": "string",
             "enum": ["deleted"]
           },
-          "Metadata": {
+          "MetaData": {
             "type": "object",
             "properties": {
               "CreateTime": {
@@ -1729,7 +1729,7 @@
         "required": [
           "Id",
           "domain",
-          "Metadata",
+          "MetaData",
           "AccountSubType",
           "AccountType",
           "Active",
@@ -1757,7 +1757,7 @@
             "type": "string",
             "enum": ["deleted"]
           },
-          "Metadata": {
+          "MetaData": {
             "type": "object",
             "properties": {
               "CreateTime": {
@@ -1961,7 +1961,7 @@
         "required": [
           "Id",
           "domain",
-          "Metadata",
+          "MetaData",
           "AccountRef",
           "PaymentType",
           "TotalAmt",
@@ -1987,7 +1987,7 @@
             "type": "string",
             "enum": ["deleted"]
           },
-          "Metadata": {
+          "MetaData": {
             "type": "object",
             "properties": {
               "CreateTime": {
@@ -2114,7 +2114,7 @@
         "required": [
           "Id",
           "domain",
-          "Metadata",
+          "MetaData",
           "Adjustment",
           "sparse",
           "SyncToken",
@@ -2137,7 +2137,7 @@
             "type": "string",
             "enum": ["deleted"]
           },
-          "Metadata": {
+          "MetaData": {
             "type": "object",
             "properties": {
               "CreateTime": {
@@ -2320,7 +2320,7 @@
         "required": [
           "Id",
           "domain",
-          "Metadata",
+          "MetaData",
           "AllowIPNPayment",
           "AllowOnlineACHPayment",
           "AllowOnlineCreditCardPayment",
@@ -2357,7 +2357,7 @@
             "type": "string",
             "enum": ["deleted"]
           },
-          "Metadata": {
+          "MetaData": {
             "type": "object",
             "properties": {
               "CreateTime": {
@@ -2507,7 +2507,7 @@
         "required": [
           "Id",
           "domain",
-          "Metadata",
+          "MetaData",
           "CurrencyRef",
           "CustomerRef",
           "Line",
@@ -2533,7 +2533,7 @@
             "type": "string",
             "enum": ["deleted"]
           },
-          "Metadata": {
+          "MetaData": {
             "type": "object",
             "properties": {
               "CreateTime": {
@@ -2659,7 +2659,7 @@
         "required": [
           "Id",
           "domain",
-          "Metadata",
+          "MetaData",
           "CurrencyRef",
           "DepositToAccountRef",
           "Line",
@@ -2683,7 +2683,7 @@
             "type": "string",
             "enum": ["deleted"]
           },
-          "Metadata": {
+          "MetaData": {
             "type": "object",
             "properties": {
               "CreateTime": {
@@ -2702,7 +2702,7 @@
             "type": "string"
           }
         },
-        "required": ["Id", "domain", "Metadata", "DisplayName"]
+        "required": ["Id", "domain", "MetaData", "DisplayName"]
       },
       "CompanyInfo": {
         "type": "object",
