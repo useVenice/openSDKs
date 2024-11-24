@@ -1,11 +1,5 @@
+import {mergeHeaders, modifyRequest} from '../index.js'
 import {Link} from '../link.js'
-import {mergeHeaders, modifyRequest} from '../modifyRequestResponse.js'
-
-interface OpenIntProxyHeaders {
-  authorization?: `Bearer ${string}`
-  'x-apikey'?: string
-  'x-resource-id': string
-}
 
 export type OpenIntProxyLinkOptions = {
   token?: string
@@ -52,28 +46,41 @@ export function validateOpenIntProxyLinkOptions(
 interface OpenIntProxyHeaders {
   authorization?: `Bearer ${string}`
   'x-apikey'?: string
-  'x-resource-id': string
+  'x-resource-id'?: string
   'x-resource-end-user-id'?: string
   'x-resource-connector-name'?: string
 }
 
-// TODO: Test that I'm actally working!
+function removeEmptyHeaders(headers: OpenIntProxyHeaders): HeadersInit {
+  return Object.fromEntries(
+    Object.entries(headers).filter(([_, value]) => value !== ''),
+  ) satisfies HeadersInit
+}
+
 export function openIntProxyLink(opts: OpenIntProxyLinkOptions): Link {
   validateOpenIntProxyLinkOptions(opts)
   const {apiKey, token, resourceId, endUserId, connectorName} = opts
 
-  const headers = {
-    ['x-apikey']: apiKey || token || '',
+  let headers = removeEmptyHeaders({
+    ['x-apikey']: apiKey || '',
+    ['authorization']: token ? `Bearer ${token}` : undefined,
     ['x-resource-id']: resourceId || '',
     ['x-resource-end-user-id']: endUserId || '',
     ['x-resource-connector-name']: connectorName || '',
-  } satisfies OpenIntProxyHeaders
+  }) satisfies HeadersInit
 
   return async (req, next) => {
     const baseUrl = getBaseUrl(req.url)
+    const proxyUrl = 'https://app.openint.dev/api/proxy/'
+
+    if (req.url.includes(proxyUrl)) {
+      // QQ: why is this necessary? why is this link called twice leading to /api/proxy/api/proxy/?
+      return next(req)
+    }
+    req.headers.delete('authorization')
     const res = await next(
       modifyRequest(req, {
-        url: req.url.replace(baseUrl, 'https://app.openint.dev/proxy/'),
+        url: req.url.replace(baseUrl, proxyUrl),
         headers: mergeHeaders(req.headers, headers, {}),
         body: req.body,
       }),
