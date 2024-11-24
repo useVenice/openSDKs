@@ -10,16 +10,17 @@ import {default as apolloOasMeta} from './apollo.oas.meta.js'
 
 export type ApolloSDKTypes = SDKTypes<
   apolloTypes,
-  ClientOptions & {api_key: string}
+  ClientOptions & {auth?: {api_key: string}}
 >
 
 export const apolloSdkDef = {
   types: {} as ApolloSDKTypes,
   oasMeta: apolloOasMeta,
-  createClient: (ctx, {api_key, ...opts}) =>
+  createClient: (ctx, {...opts}) =>
     ctx.createClient({
       ...opts,
       links: (defaultLinks) => {
+        const {api_key} = opts.auth ?? {}
         const links: Link[] = [
           (req, next) =>
             next(
