@@ -15,9 +15,18 @@ import {flattenNestedObject, FlattenOptions} from './utils.js'
 
 type _ClientOptions = NonNullable<Parameters<typeof _createClient>[0]>
 
+export type AuthClientOptions = {
+  openInt?: OpenIntProxyLinkOptions
+  // to be passed as Authorization header as a bearer token
+  oauth?: {accessToken: string}
+  authorizationHeader?: {
+    basic?: {username: string; password: string}
+    bearer?: string
+  }
+}
 export interface ClientOptions extends _ClientOptions {
   links?: Link[] | ((defaultLinks: Link[]) => Link[])
-  auth?: OpenIntProxyLinkOptions
+  auth?: AuthClientOptions
 }
 
 export type OpenAPIClient<Paths extends {}> = ReturnType<
@@ -35,15 +44,23 @@ export function createClient<Paths extends {}>({
   links: _links = defaultLinks,
   ...clientOptions
 }: ClientOptions = {}) {
-  // Validate configuration options
-  const expectsAuthProxy = validateOpenIntProxyLinkOptions(
-    clientOptions.auth ?? {},
-  )
-
   const links = typeof _links === 'function' ? _links(defaultLinks) : _links
 
+  const expectsAuthProxy = validateOpenIntProxyLinkOptions(
+    clientOptions.auth?.openInt ?? {},
+  )
+
+  const hasOtherAuthMethods =
+    clientOptions.auth?.authorizationHeader || clientOptions.auth?.oauth
+
+  if (expectsAuthProxy && hasOtherAuthMethods) {
+    throw new Error('Cannot use both openInt proxy and other auth methods')
+  }
+
   if (expectsAuthProxy) {
-    links.push(openIntProxyLink(clientOptions.auth ?? {}))
+    links.unshift(openIntProxyLink(clientOptions.auth?.openInt ?? {}))
+  } else if (hasOtherAuthMethods) {
+    links.unshift(fetchLink())
   }
 
   const customFetch: typeof fetch = (url, init) =>

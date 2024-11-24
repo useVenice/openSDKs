@@ -11,7 +11,7 @@ maybeTest('get QBO company directly with access token', async () => {
     realmId,
     envName: 'sandbox',
     auth: {
-      accessToken: accessToken,
+      oauth: {accessToken},
     },
   })
 
@@ -32,8 +32,7 @@ maybeTest(
       realmId,
       envName: 'sandbox',
       auth: {
-        apiKey,
-        resourceId,
+        openInt: {apiKey, resourceId},
       },
     })
 
@@ -55,8 +54,7 @@ maybeTest(
       realmId,
       envName: 'sandbox',
       auth: {
-        token,
-        connectorName,
+        openInt: {token, connectorName},
       },
     })
 

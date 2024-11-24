@@ -10,9 +10,6 @@ export type QBOSDKTypes = SDKTypes<
   ClientOptions & {
     realmId: string
     envName: 'sandbox' | 'production'
-    auth?: {
-      accessToken?: string
-    }
   }
 >
 
@@ -24,7 +21,6 @@ export const qboSdkDef = {
   types: {} as QBOSDKTypes,
   oasMeta: qboOasMeta,
   createClient: (ctx, {realmId, envName, ...options}) => {
-    const {accessToken} = options.auth ?? {}
     const client = ctx.createClient({
       ...options,
       baseUrl: qboOasMeta.servers
@@ -32,7 +28,6 @@ export const qboSdkDef = {
         ?.url?.replace('{realmId}', realmId),
       // TODO: Should probably extract this server name substitution into a generic function for interacting with oas
       headers: {
-        authorization: `Bearer ${accessToken}`,
         accept: 'application/json',
         ...options.headers,
       },
