@@ -4,6 +4,9 @@ import type {PathsWithMethod} from 'openapi-typescript-helpers'
 import {
   applyLinks,
   fetchLink,
+  openIntProxyLink,
+  OpenIntProxyLinkOptions,
+  validateOpenIntProxyLinkOptions,
   type HTTPMethod,
   type Link,
 } from '@opensdks/fetch-links'
@@ -14,6 +17,7 @@ type _ClientOptions = NonNullable<Parameters<typeof _createClient>[0]>
 
 export interface ClientOptions extends _ClientOptions {
   links?: Link[] | ((defaultLinks: Link[]) => Link[])
+  auth?: OpenIntProxyLinkOptions
 }
 
 export type OpenAPIClient<Paths extends {}> = ReturnType<
@@ -31,7 +35,16 @@ export function createClient<Paths extends {}>({
   links: _links = defaultLinks,
   ...clientOptions
 }: ClientOptions = {}) {
+  // Validate configuration options
+  const expectsAuthProxy = validateOpenIntProxyLinkOptions(
+    clientOptions.auth ?? {},
+  )
+
   const links = typeof _links === 'function' ? _links(defaultLinks) : _links
+
+  if (expectsAuthProxy) {
+    links.push(openIntProxyLink(clientOptions.auth ?? {}))
+  }
 
   const customFetch: typeof fetch = (url, init) =>
     applyLinks(new Request(url, init), links)
