@@ -9,8 +9,10 @@ export type QBOSDKTypes = SDKTypes<
   qboOasTypes,
   ClientOptions & {
     realmId: string
-    accessToken: string
     envName: 'sandbox' | 'production'
+    auth?: {
+      accessToken?: string
+    }
   }
 >
 
@@ -21,7 +23,8 @@ export type QBOSDKTypes = SDKTypes<
 export const qboSdkDef = {
   types: {} as QBOSDKTypes,
   oasMeta: qboOasMeta,
-  createClient: (ctx, {realmId, accessToken, envName, ...options}) => {
+  createClient: (ctx, {realmId, envName, ...options}) => {
+    const {accessToken} = options.auth ?? {}
     const client = ctx.createClient({
       ...options,
       baseUrl: qboOasMeta.servers
@@ -33,6 +36,7 @@ export const qboSdkDef = {
         accept: 'application/json',
         ...options.headers,
       },
+      auth: options.auth,
     })
     function query(
       query: string,
