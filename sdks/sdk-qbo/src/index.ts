@@ -31,7 +31,6 @@ export const qboSdkDef = {
         accept: 'application/json',
         ...options.headers,
       },
-      auth: options.auth,
     })
     function query(
       query: string,

@@ -7,7 +7,7 @@ const apiKey = process.env['APOLLO_API_KEY']!
 const maybeTest = apiKey ? test : test.skip
 
 maybeTest('get email accounts', async () => {
-  const apollo = initSDK(apolloSdkDef, {auth: {api_key: apiKey}})
+  const apollo = initSDK(apolloSdkDef, {api_key: apiKey})
 
   const res = await apollo.GET('/v1/email_accounts')
 
@@ -15,7 +15,7 @@ maybeTest('get email accounts', async () => {
 })
 
 maybeTest('get contacts', async () => {
-  const apollo = initSDK(apolloSdkDef, {auth: {api_key: apiKey}})
+  const apollo = initSDK(apolloSdkDef, {api_key: apiKey})
 
   const res = await apollo.POST('/v1/contacts/search', {body: {}})
 

@@ -1,5 +1,5 @@
 import {mergeHeaders, modifyRequest} from '../index.js'
-import {Link} from '../link.js'
+import type {Link} from '../link.js'
 
 export type OpenIntProxyLinkOptions = {
   token?: string
@@ -8,6 +8,31 @@ export type OpenIntProxyLinkOptions = {
   endUserId?: string
   connectorName?: string
 }
+
+// TODO: Use something like this to validate and generate the types too
+// const AuthClientOptionsSchema = z.union([
+//   z.object({
+//     openInt: z.object({
+//       // Add OpenIntProxyLinkOptions fields here
+//     }).optional()
+//   }),
+//   z.object({
+//     oauth: z.object({
+//       accessToken: z.string(),
+//       refreshToken: z.string().optional(),
+//       expiresAt: z.number().optional()
+//     }).optional()
+//   }),
+//   z.object({
+//     basic: z.object({
+//       username: z.string(),
+//       password: z.string()
+//     }).optional()
+//   }),
+//   z.object({
+//     bearer: z.string().optional()
+//   })
+// ])
 
 export function validateOpenIntProxyLinkOptions(
   options: OpenIntProxyLinkOptions,
@@ -73,12 +98,15 @@ export function openIntProxyLink(
   }) satisfies HeadersInit
 
   return async (req, next) => {
+    // TODO: Check if we are already proxying and throw an error if so
     // if (req.url.includes(proxyUrl)) {
     //   // Was previously necessary as link called twice leading to /api/proxy/api/proxy/?
     //   return next(req)
     // }
     const proxyUrl = 'https://api.openint.dev/proxy'
 
+    // Remove the authorization header because it will be overwritten by the proxy anyways
+    // TODO: Think about using non-standard header for auth to avoid this maybe?
     req.headers.delete('authorization')
     const res = await next(
       modifyRequest(req, {

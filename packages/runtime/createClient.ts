@@ -1,30 +1,31 @@
 import type {BodySerializer, FetchOptions, FetchResponse} from 'openapi-fetch'
 import _createClient from 'openapi-fetch'
 import type {PathsWithMethod} from 'openapi-typescript-helpers'
+import type {OpenIntProxyLinkOptions} from '@opensdks/fetch-links'
 import {
   applyLinks,
   fetchLink,
-  OpenIntProxyLinkOptions,
   type HTTPMethod,
   type Link,
 } from '@opensdks/fetch-links'
 import {authLink} from '../fetch-links/links/authLink.js'
 import {HTTPError} from './HTTPError.js'
-import {flattenNestedObject, FlattenOptions} from './utils.js'
+import type {FlattenOptions} from './utils.js'
+import {flattenNestedObject} from './utils.js'
 
 type _ClientOptions = NonNullable<Parameters<typeof _createClient>[0]>
 
-export type AuthClientOptions = {
-  openInt?: OpenIntProxyLinkOptions
-  // to be passed as Authorization header as a bearer token
-  oauth?: {accessToken: string; refreshToken?: string; expiresAt?: number}
-  basic?: {username: string; password: string}
+export type ClientAuthOptions =
+  | {openInt?: OpenIntProxyLinkOptions}
+  /** to be passed as Authorization header as a bearer token, Should handle automatic refreshing */
+  | {oauth?: {accessToken: string; refreshToken?: string; expiresAt?: number}}
+  | {basic?: {username: string; password: string}}
   /** non oauth / directly specifying bearer token */
-  bearer?: string
-}
+  | {bearer?: string}
+
 export interface ClientOptions extends _ClientOptions {
   links?: Link[] | ((defaultLinks: Link[]) => Link[])
-  auth?: AuthClientOptions
+  auth?: ClientAuthOptions
 }
 
 export type OpenAPIClient<Paths extends {}> = ReturnType<
@@ -36,15 +37,16 @@ export type OpenAPIClient<Paths extends {}> = ReturnType<
 // to get a list of servers and all that?
 // Really do feel that they should be generated as well..
 
-export const defaultLinks = [fetchLink()]
-
 export function createClient<Paths extends {}>({
-  links: _links = defaultLinks,
+  links: _links,
   ...clientOptions
 }: ClientOptions = {}) {
-  const links = typeof _links === 'function' ? _links(defaultLinks) : _links
-
-  links.unshift(authLink(clientOptions.auth ?? {}, clientOptions.baseUrl ?? ''))
+  const defaultLinks = [
+    authLink(clientOptions.auth ?? {}, clientOptions.baseUrl ?? ''),
+    fetchLink(),
+  ]
+  const links =
+    typeof _links === 'function' ? _links(defaultLinks) : _links ?? defaultLinks
 
   const customFetch: typeof fetch = (url, init) =>
     applyLinks(new Request(url, init), links)

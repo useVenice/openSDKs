@@ -1,6 +1,7 @@
 import {
   createClient,
   createFormUrlEncodedBodySerializer,
+  fetchLink,
 } from '@opensdks/runtime'
 
 test('application/x-www-form-urlencoded defaut dot style', () => {
@@ -54,7 +55,17 @@ test('application/x-www-form-urlencoded bracket style', () => {
   )
 })
 
-test('expect links array to have 2 elements', () => {
+test('expect links array to have 2 elements by default', () => {
   const client = createClient()
   expect(client.links.length).toBe(2)
+})
+
+test('expect override to be possible for links', () => {
+  const client0 = createClient({links: []})
+  expect(client0.links.length).toBe(0)
+
+  const client = createClient({
+    links: (defaultLinks) => [...defaultLinks, fetchLink()],
+  })
+  expect(client.links.length).toBe(3)
 })

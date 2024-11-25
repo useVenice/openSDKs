@@ -1,12 +1,12 @@
 import {
-  AuthClientOptions,
+  ClientAuthOptions,
   mergeHeaders,
   modifyRequest,
   openIntProxyLink,
 } from '@opensdks/runtime'
 import {Link} from '../link.js'
 
-export function authLink(auth: AuthClientOptions, baseUrl: string): Link {
+export function authLink(auth: ClientAuthOptions, baseUrl: string): Link {
   if (!auth) {
     // No Op
     return (req, next) => next(req)
