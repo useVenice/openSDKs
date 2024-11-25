@@ -72,6 +72,7 @@ test('expect override to be possible for links', () => {
   expect(client0.links.length).toBe(0)
 
   const client = createClient({
+    auth: {basic: {username: 'user', password: 'pass'}},
     links: (defaultLinks) => [...defaultLinks, fetchLink()],
   })
   expect(client.links.length).toBe(3)
