@@ -4,12 +4,11 @@ import type {PathsWithMethod} from 'openapi-typescript-helpers'
 import {
   applyLinks,
   fetchLink,
-  openIntProxyLink,
   OpenIntProxyLinkOptions,
-  validateOpenIntProxyLinkOptions,
   type HTTPMethod,
   type Link,
 } from '@opensdks/fetch-links'
+import {authLink} from '../fetch-links/links/authLink.js'
 import {HTTPError} from './HTTPError.js'
 import {flattenNestedObject, FlattenOptions} from './utils.js'
 
@@ -18,11 +17,10 @@ type _ClientOptions = NonNullable<Parameters<typeof _createClient>[0]>
 export type AuthClientOptions = {
   openInt?: OpenIntProxyLinkOptions
   // to be passed as Authorization header as a bearer token
-  oauth?: {accessToken: string}
-  authorizationHeader?: {
-    basic?: {username: string; password: string}
-    bearer?: string
-  }
+  oauth?: {accessToken: string; refreshToken?: string; expiresAt?: number}
+  basic?: {username: string; password: string}
+  /** non oauth / directly specifying bearer token */
+  bearer?: string
 }
 export interface ClientOptions extends _ClientOptions {
   links?: Link[] | ((defaultLinks: Link[]) => Link[])
@@ -46,22 +44,7 @@ export function createClient<Paths extends {}>({
 }: ClientOptions = {}) {
   const links = typeof _links === 'function' ? _links(defaultLinks) : _links
 
-  const expectsAuthProxy = validateOpenIntProxyLinkOptions(
-    clientOptions.auth?.openInt ?? {},
-  )
-
-  const hasOtherAuthMethods =
-    clientOptions.auth?.authorizationHeader || clientOptions.auth?.oauth
-
-  if (expectsAuthProxy && hasOtherAuthMethods) {
-    throw new Error('Cannot use both openInt proxy and other auth methods')
-  }
-
-  if (expectsAuthProxy) {
-    links.unshift(openIntProxyLink(clientOptions.auth?.openInt ?? {}))
-  } else if (hasOtherAuthMethods) {
-    links.unshift(fetchLink())
-  }
+  links.unshift(authLink(clientOptions.auth ?? {}, clientOptions.baseUrl ?? ''))
 
   const customFetch: typeof fetch = (url, init) =>
     applyLinks(new Request(url, init), links)

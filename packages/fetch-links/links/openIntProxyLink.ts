@@ -53,11 +53,14 @@ interface OpenIntProxyHeaders {
 
 function removeEmptyHeaders(headers: OpenIntProxyHeaders): HeadersInit {
   return Object.fromEntries(
-    Object.entries(headers).filter(([_, value]) => value !== ''),
+    Object.entries(headers).filter(([_, value]) => value && value !== ''),
   ) satisfies HeadersInit
 }
 
-export function openIntProxyLink(opts: OpenIntProxyLinkOptions): Link {
+export function openIntProxyLink(
+  opts: OpenIntProxyLinkOptions,
+  baseUrl: string,
+): Link {
   validateOpenIntProxyLinkOptions(opts)
   const {apiKey, token, resourceId, endUserId, connectorName} = opts
 
@@ -70,13 +73,12 @@ export function openIntProxyLink(opts: OpenIntProxyLinkOptions): Link {
   }) satisfies HeadersInit
 
   return async (req, next) => {
-    const baseUrl = getBaseUrl(req.url)
-    const proxyUrl = 'https://app.openint.dev/api/proxy/'
+    // if (req.url.includes(proxyUrl)) {
+    //   // Was previously necessary as link called twice leading to /api/proxy/api/proxy/?
+    //   return next(req)
+    // }
+    const proxyUrl = 'https://api.openint.dev/proxy'
 
-    if (req.url.includes(proxyUrl)) {
-      // QQ: why is this necessary? why is this link called twice leading to /api/proxy/api/proxy/?
-      return next(req)
-    }
     req.headers.delete('authorization')
     const res = await next(
       modifyRequest(req, {
@@ -87,9 +89,4 @@ export function openIntProxyLink(opts: OpenIntProxyLinkOptions): Link {
     )
     return res
   }
-}
-
-function getBaseUrl(urlStr: string) {
-  const url = new URL(urlStr)
-  return `${url.protocol}//${url.host}/`
 }

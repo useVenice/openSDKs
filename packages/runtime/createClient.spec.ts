@@ -1,4 +1,7 @@
-import {createFormUrlEncodedBodySerializer} from '@opensdks/runtime'
+import {
+  createClient,
+  createFormUrlEncodedBodySerializer,
+} from '@opensdks/runtime'
 
 test('application/x-www-form-urlencoded defaut dot style', () => {
   const formUrlEncodedBodySerializer = createFormUrlEncodedBodySerializer({})
@@ -49,4 +52,9 @@ test('application/x-www-form-urlencoded bracket style', () => {
   ).toEqual(
     'account=acct_111222&components[account_onboarding][enabled]=true&components[nested][0]=hello&components[nested][1][key]=world',
   )
+})
+
+test('expect links array to have 2 elements', () => {
+  const client = createClient()
+  expect(client.links.length).toBe(2)
 })
