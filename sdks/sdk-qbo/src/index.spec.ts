@@ -3,7 +3,7 @@ import {initSDK} from '@opensdks/runtime'
 import qboSdkDef from './index.js'
 
 const realmId = process.env['QBO_REALM_ID']!
-const accessToken = process.env['QBO_ACCESS_TOKEN']!
+const accessToken = process.env['QBO_DIRECT_TOKEN']!
 const maybeTest = realmId ? test : test.skip
 
 maybeTest('get QBO company directly with access token', async () => {
@@ -46,7 +46,7 @@ maybeTest(
 )
 
 const connectorName = 'qbo'
-const token = process.env['QBO_TOKEN']!
+const token = process.env['QBO_PROXY_TOKEN']!
 maybeTest(
   'get QBO company via proxy with token and connector name',
   async () => {
