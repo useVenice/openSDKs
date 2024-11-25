@@ -55,8 +55,15 @@ test('application/x-www-form-urlencoded bracket style', () => {
   )
 })
 
-test('expect links array to have 2 elements by default', () => {
+test('expect links array to have 1 elements by default', () => {
   const client = createClient()
+  expect(client.links.length).toBe(1)
+})
+
+test('expect links array to have 2 elements when auth is present', () => {
+  const client = createClient({
+    auth: {basic: {username: 'user', password: 'pass'}},
+  })
   expect(client.links.length).toBe(2)
 })
 

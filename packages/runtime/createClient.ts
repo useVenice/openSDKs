@@ -16,12 +16,12 @@ import {flattenNestedObject} from './utils.js'
 type _ClientOptions = NonNullable<Parameters<typeof _createClient>[0]>
 
 export type ClientAuthOptions =
-  | {openInt?: OpenIntProxyLinkOptions}
+  | {openInt: OpenIntProxyLinkOptions}
   /** to be passed as Authorization header as a bearer token, Should handle automatic refreshing */
-  | {oauth?: {accessToken: string; refreshToken?: string; expiresAt?: number}}
-  | {basic?: {username: string; password: string}}
+  | {oauth: {accessToken: string; refreshToken?: string; expiresAt?: number}}
+  | {basic: {username: string; password: string}}
   /** non oauth / directly specifying bearer token */
-  | {bearer?: string}
+  | {bearer: string}
 
 export interface ClientOptions extends _ClientOptions {
   links?: Link[] | ((defaultLinks: Link[]) => Link[])
@@ -42,7 +42,9 @@ export function createClient<Paths extends {}>({
   ...clientOptions
 }: ClientOptions = {}) {
   const defaultLinks = [
-    authLink(clientOptions.auth ?? {}, clientOptions.baseUrl ?? ''),
+    ...(clientOptions.auth
+      ? [authLink(clientOptions.auth, clientOptions.baseUrl ?? '')]
+      : []),
     fetchLink(),
   ]
   const links =
