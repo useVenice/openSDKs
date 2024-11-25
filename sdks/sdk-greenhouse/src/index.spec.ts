@@ -8,11 +8,7 @@ const maybeTest = apiKey ? test : test.skip
 
 maybeTest('get jobs from greenhouse', async () => {
   const greenhouse = initSDK(greenhouseSdkDef, {
-    auth: {
-      basic: {
-        username: apiKey,
-      },
-    },
+    auth: {basic: {username: apiKey, password: ''}},
   })
 
   const res = await greenhouse.GET('/v1/jobs')

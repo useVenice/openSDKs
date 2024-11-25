@@ -15,11 +15,7 @@ const lever = initSDK(
     },
   },
   {
-    auth: {
-      basic: {
-        username: apiKey,
-      },
-    },
+    auth: {basic: {username: apiKey, password: ''}},
     envName: 'sandbox',
   },
 )
