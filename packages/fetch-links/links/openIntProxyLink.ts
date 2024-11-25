@@ -64,7 +64,7 @@ export function openIntProxyLink(
   validateOpenIntProxyLinkOptions(opts)
   const {apiKey, token, resourceId, endUserId, connectorName} = opts
 
-  let headers = removeEmptyHeaders({
+  const headers = removeEmptyHeaders({
     ['x-apikey']: apiKey || '',
     ['authorization']: token ? `Bearer ${token}` : undefined,
     ['x-resource-id']: resourceId || '',
