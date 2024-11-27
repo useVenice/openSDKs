@@ -1,8 +1,16 @@
 import type {UnionToIntersection} from 'type-fest'
-import type {ClientAuthOptions} from '@opensdks/runtime'
-import {mergeHeaders, modifyRequest, openIntProxyLink} from '@opensdks/runtime'
+import {openIntProxyLink, OpenIntProxyLinkOptions} from './openIntProxyLink.js'
+import {mergeHeaders, modifyRequest} from '../modifyRequestResponse.js'
 import type {Link} from '../link.js'
 
+export type ClientAuthOptions =
+  | {openInt: OpenIntProxyLinkOptions}
+  /** to be passed as Authorization header as a bearer token, Should handle automatic refreshing */
+  | {oauth: {accessToken: string; refreshToken?: string; expiresAt?: number}}
+  | {basic: {username: string; password: string}}
+  /** non oauth / directly specifying bearer token */
+  | {bearer: string}
+  
 type Indexify<T> = T & Record<string, undefined>
 type AllUnionKeys<T> = keyof UnionToIntersection<{[K in keyof T]: undefined}>
 type NonDiscriminatedUnion<T> = {

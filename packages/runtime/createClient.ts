@@ -1,27 +1,18 @@
 import type {BodySerializer, FetchOptions, FetchResponse} from 'openapi-fetch'
 import _createClient from 'openapi-fetch'
 import type {PathsWithMethod} from 'openapi-typescript-helpers'
-import type {OpenIntProxyLinkOptions} from '@opensdks/fetch-links'
 import {
   applyLinks,
   fetchLink,
   type HTTPMethod,
   type Link,
+  authLink, ClientAuthOptions
 } from '@opensdks/fetch-links'
-import {authLink} from '../fetch-links/links/authLink.js'
 import {HTTPError} from './HTTPError.js'
 import type {FlattenOptions} from './utils.js'
 import {flattenNestedObject} from './utils.js'
 
 type _ClientOptions = NonNullable<Parameters<typeof _createClient>[0]>
-
-export type ClientAuthOptions =
-  | {openInt: OpenIntProxyLinkOptions}
-  /** to be passed as Authorization header as a bearer token, Should handle automatic refreshing */
-  | {oauth: {accessToken: string; refreshToken?: string; expiresAt?: number}}
-  | {basic: {username: string; password: string}}
-  /** non oauth / directly specifying bearer token */
-  | {bearer: string}
 
 export interface ClientOptions extends _ClientOptions {
   links?: Link[] | ((defaultLinks: Link[]) => Link[])
