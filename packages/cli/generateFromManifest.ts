@@ -81,9 +81,9 @@ export async function syncManifest(baseDir: string, m: Manifest) {
         const format =
           d.format ??
           {
-            json: 'json',
-            yaml: 'yaml',
-            yml: 'yaml',
+            json: 'json' as const,
+            yaml: 'yaml' as const,
+            yml: 'yaml' as const,
           }[d.url?.split('.').pop()?.toLowerCase() ?? ''] ??
           'json'
 
@@ -91,7 +91,7 @@ export async function syncManifest(baseDir: string, m: Manifest) {
         const oasPath = pathJoin(basePath, `${d.name}.oas.${format}`)
         await fs.writeFile(
           oasPath,
-          await prettyFormat(oasText, {parser: 'json'}),
+          await prettyFormat(oasText, {parser: format}),
         )
       }),
     )

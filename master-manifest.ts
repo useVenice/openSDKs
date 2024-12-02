@@ -161,4 +161,8 @@ export default {
         ],
       ),
   },
+  msgraph: {
+    download:
+      'https://raw.githubusercontent.com/microsoftgraph/msgraph-sdk-powershell/refs/heads/dev/openApiDocs/v1.0/Files.yml',
+  },
 } satisfies Record<string, ManifestInfo>
