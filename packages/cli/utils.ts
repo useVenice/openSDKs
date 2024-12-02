@@ -11,7 +11,7 @@ import type {HTTPMethod, oas30, OpenAPISpec} from '@opensdks/runtime'
 
 export async function prettyFormat(
   content: string,
-  opts?: {parser?: 'typescript' | 'json'},
+  opts?: {parser?: 'typescript' | 'json' | 'yaml'},
 ) {
   // Temp workaround for the fact that prettier doesn't always work in client environments easily
   // TODO: Make me a global flag rather than env var
