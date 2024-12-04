@@ -10,6 +10,14 @@ export * from './authLink.js'
 
 // MARK: Built-in links
 
+export function echoLink(): Link {
+  return async (req) => Response.json({
+      url: req.url,
+      headers: Object.fromEntries(req.headers.entries()),
+      bodyText: await req.text(),
+    })
+}
+
 export function fetchLink({
   fetch = globalThis.fetch.bind(globalThis),
 }: {
