@@ -1,40 +1,47 @@
 {
   "openapi": "3.1.0",
   "info": {"title": "OpenInt OpenAPI", "version": "0.0.0"},
-  "servers": [{"url": "https://openint.dev/api/v0"}],
+  "servers": [{"url": "https://api.openint.dev/v0"}],
   "paths": {
     "/health": {
       "get": {
         "operationId": "health",
         "summary": "Health check",
         "tags": ["Internal"],
+        "parameters": [
+          {"in": "query", "name": "exp", "schema": {"type": "boolean"}}
+        ],
         "responses": {
           "200": {
             "description": "Successful response",
-            "content": {"application/json": {"schema": {"type": "string"}}}
-          },
-          "500": {
-            "description": "Internal server error",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                  "type": "object",
+                  "properties": {
+                    "healthy": {"type": "boolean"},
+                    "error": {"type": "string"}
+                  },
+                  "required": ["healthy"]
                 }
               }
             }
-          }
-        }
-      }
-    },
-    "/debug/raw-schemas": {
-      "get": {
-        "operationId": "getRawSchemas",
-        "description": "Get raw schemas",
-        "tags": ["Internal"],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {"application/json": {"schema": {}}}
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/error.BAD_REQUEST"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/error.NOT_FOUND"}
+              }
+            }
           },
           "500": {
             "description": "Internal server error",
@@ -52,6 +59,7 @@
     "/connect/token": {
       "post": {
         "operationId": "createConnectToken",
+        "summary": "Create a connect token",
         "tags": ["Connect"],
         "requestBody": {
           "required": true,
@@ -112,6 +120,7 @@
     "/connect/magic-link": {
       "post": {
         "operationId": "createMagicLink",
+        "summary": "Create a magic link",
         "tags": ["Connect"],
         "requestBody": {
           "required": true,
@@ -193,6 +202,7 @@
     "/passthrough": {
       "post": {
         "operationId": "passthrough",
+        "summary": "Passthrough",
         "tags": ["Internal"],
         "requestBody": {
           "required": true,
@@ -244,6 +254,7 @@
     "/core/resource/{id}/source_sync": {
       "post": {
         "operationId": "sourceSync",
+        "summary": "Source sync",
         "description": "Return records that would have otherwise been emitted during a sync and return it instead",
         "tags": ["Internal"],
         "parameters": [
@@ -310,6 +321,7 @@
     "/core/resource": {
       "post": {
         "operationId": "createResource",
+        "summary": "Create resource",
         "tags": ["Core"],
         "requestBody": {
           "required": true,
@@ -369,6 +381,7 @@
       },
       "get": {
         "operationId": "listResources",
+        "summary": "List resources",
         "tags": ["Core"],
         "parameters": [
           {"in": "query", "name": "limit", "schema": {"type": "number"}},
@@ -437,6 +450,7 @@
     "/core/resource/{id}": {
       "patch": {
         "operationId": "updateResource",
+        "summary": "Update resource",
         "tags": ["Core"],
         "parameters": [
           {
@@ -514,6 +528,7 @@
       },
       "delete": {
         "operationId": "deleteResource",
+        "summary": "Delete resource",
         "tags": ["Core"],
         "parameters": [
           {
@@ -562,6 +577,7 @@
       },
       "get": {
         "operationId": "getResource",
+        "summary": "Get resource",
         "tags": ["Core"],
         "parameters": [
           {
@@ -637,6 +653,7 @@
     "/core/resource/{id}/_check": {
       "post": {
         "operationId": "checkResource",
+        "summary": "Check resource",
         "tags": ["Core"],
         "parameters": [
           {
@@ -695,6 +712,7 @@
     "/core/resource/{id}/_sync": {
       "post": {
         "operationId": "syncResource",
+        "summary": "Sync resource",
         "tags": ["Core"],
         "parameters": [
           {
@@ -768,6 +786,7 @@
     "/core/connector_config": {
       "get": {
         "operationId": "adminListConnectorConfigs",
+        "summary": "Admin list connector configs",
         "tags": ["Core"],
         "responses": {
           "200": {
@@ -795,6 +814,7 @@
       },
       "post": {
         "operationId": "adminUpsertConnectorConfig",
+        "summary": "Admin upsert connector config",
         "tags": ["Core"],
         "requestBody": {
           "required": true,
@@ -896,6 +916,7 @@
     "/core/connector_config/{id}": {
       "patch": {
         "operationId": "adminUpdateConnectorConfig",
+        "summary": "Admin update connector config",
         "tags": ["Core"],
         "parameters": [
           {
@@ -968,6 +989,7 @@
       },
       "delete": {
         "operationId": "adminDeleteConnectorConfig",
+        "summary": "Admin delete connector config",
         "tags": ["Core"],
         "parameters": [
           {
@@ -1015,6 +1037,7 @@
       },
       "get": {
         "operationId": "adminGetConnectorConfig",
+        "summary": "Admin get connector config",
         "tags": ["Core"],
         "parameters": [
           {
@@ -1068,6 +1091,7 @@
     "/core/connector_config_info": {
       "get": {
         "operationId": "listConnectorConfigInfos",
+        "summary": "List connector config infos",
         "description": "For end user authentication and list a limited set of non private data",
         "tags": ["Core"],
         "parameters": [
@@ -1134,9 +1158,14 @@
                             "hris",
                             "payroll",
                             "calendar",
-                            "ats"
+                            "ats",
+                            "email"
                           ]
                         }
+                      },
+                      "integrations": {
+                        "type": "array",
+                        "items": {"type": "string"}
                       }
                     },
                     "required": [
@@ -1144,7 +1173,8 @@
                       "connectorName",
                       "isSource",
                       "isDestination",
-                      "verticals"
+                      "verticals",
+                      "integrations"
                     ]
                   }
                 }
@@ -1183,6 +1213,7 @@
     "/connector": {
       "get": {
         "operationId": "listConnectorMetas",
+        "summary": "List connector metas",
         "description": "Get catalog of all available connectors",
         "tags": ["Connectors"],
         "parameters": [
@@ -1225,6 +1256,7 @@
     "/connector/{name}": {
       "get": {
         "operationId": "getConnectorMeta",
+        "summary": "Get connector meta",
         "tags": ["Connectors"],
         "parameters": [
           {
@@ -1272,6 +1304,7 @@
     "/connector/{name}/oas": {
       "get": {
         "operationId": "getConnectorOpenApiSpec",
+        "summary": "Get connector open api spec",
         "tags": ["Connectors"],
         "parameters": [
           {
@@ -1319,6 +1352,7 @@
     "/connector/{name}/schemas": {
       "get": {
         "operationId": "getConnectorSchemas",
+        "summary": "Get connector schemas",
         "tags": ["Connectors"],
         "parameters": [
           {
@@ -1366,6 +1400,7 @@
     "/connector/{name}/integrations": {
       "get": {
         "operationId": "listConnectorIntegrations",
+        "summary": "List connector integrations",
         "tags": ["Connectors"],
         "parameters": [
           {
@@ -1389,6 +1424,14 @@
             "in": "query",
             "name": "search_text",
             "schema": {"type": ["string", "null"]}
+          },
+          {
+            "in": "query",
+            "name": "ccfgId",
+            "schema": {
+              "type": "string",
+              "description": "Must start with 'ccfg_'"
+            }
           }
         ],
         "responses": {
@@ -1443,6 +1486,7 @@
     "/configured_integrations": {
       "get": {
         "operationId": "listConfiguredIntegrations",
+        "summary": "List configured integrations",
         "tags": ["Connectors"],
         "parameters": [
           {
@@ -1517,6 +1561,7 @@
     "/core/pipeline": {
       "get": {
         "operationId": "listPipelines",
+        "summary": "List pipelines",
         "tags": ["Core"],
         "parameters": [
           {"in": "query", "name": "limit", "schema": {"type": "number"}},
@@ -1575,6 +1620,7 @@
       },
       "post": {
         "operationId": "createPipeline",
+        "summary": "Create pipeline",
         "tags": ["Core"],
         "requestBody": {
           "required": true,
@@ -1648,6 +1694,7 @@
     "/core/pipeline/{id}": {
       "patch": {
         "operationId": "updatePipeline",
+        "summary": "Update pipeline",
         "tags": ["Core"],
         "parameters": [
           {
@@ -1725,6 +1772,7 @@
       },
       "delete": {
         "operationId": "deletePipeline",
+        "summary": "Delete pipeline",
         "tags": ["Core"],
         "parameters": [
           {
@@ -1778,6 +1826,7 @@
     "/core/pipeline/{id}/_sync": {
       "post": {
         "operationId": "syncPipeline",
+        "summary": "Sync pipeline",
         "tags": ["Core"],
         "parameters": [
           {
@@ -1851,6 +1900,7 @@
     "/core/sync_run": {
       "get": {
         "operationId": "listSyncRuns",
+        "summary": "List sync runs",
         "tags": ["Core"],
         "parameters": [
           {"in": "query", "name": "limit", "schema": {"type": "number"}},
@@ -1896,6 +1946,7 @@
       "get": {
         "operationId": "getViewer",
         "summary": "Get current viewer accessing the API",
+        "tags": ["Internal"],
         "responses": {
           "200": {
             "description": "Successful response",
@@ -1922,6 +1973,7 @@
       "get": {
         "operationId": "getCurrentOrganization",
         "summary": "Get current organization of viewer accessing the API",
+        "tags": ["Internal"],
         "responses": {
           "200": {
             "description": "Successful response",
@@ -1984,6 +2036,8 @@
     "/openapi.json": {
       "get": {
         "operationId": "public-getOpenapiDocument",
+        "summary": "Get openapi document",
+        "tags": ["Internal"],
         "responses": {
           "200": {
             "description": "Successful response",
@@ -2005,6 +2059,8 @@
     "/unified/sales-engagement/contact": {
       "get": {
         "operationId": "salesEngagement-listContacts",
+        "summary": "List Contacts",
+        "tags": ["Sales Engagement"],
         "parameters": [
           {
             "in": "query",
@@ -2065,6 +2121,8 @@
     "/unified/sales-engagement/sequence": {
       "get": {
         "operationId": "salesEngagement-listSequences",
+        "summary": "List Sequences",
+        "tags": ["Sales Engagement"],
         "parameters": [
           {
             "in": "query",
@@ -2125,6 +2183,8 @@
     "/unified/sales-engagement/sequence_state": {
       "get": {
         "operationId": "salesEngagement-listSequenceStates",
+        "summary": "List Sequence States",
+        "tags": ["Sales Engagement"],
         "parameters": [
           {
             "in": "query",
@@ -2183,6 +2243,8 @@
       },
       "post": {
         "operationId": "salesEngagement-insertSequenceState",
+        "summary": "Insert Sequence State",
+        "tags": ["Sales Engagement"],
         "requestBody": {
           "required": true,
           "content": {
@@ -2260,6 +2322,8 @@
     "/unified/sales-engagement/user": {
       "get": {
         "operationId": "salesEngagement-listUsers",
+        "summary": "List Users",
+        "tags": ["Sales Engagement"],
         "parameters": [
           {
             "in": "query",
@@ -2320,6 +2384,8 @@
     "/unified/sales-engagement/account": {
       "get": {
         "operationId": "salesEngagement-listAccounts",
+        "summary": "List Accounts",
+        "tags": ["Sales Engagement"],
         "parameters": [
           {
             "in": "query",
@@ -2380,6 +2446,8 @@
     "/unified/sales-engagement/mailbox": {
       "get": {
         "operationId": "salesEngagement-listMailboxes",
+        "summary": "List Mailboxes",
+        "tags": ["Sales Engagement"],
         "parameters": [
           {
             "in": "query",
@@ -2440,6 +2508,8 @@
     "/unified/sales-engagement/account/_upsert": {
       "post": {
         "operationId": "salesEngagement-upsertAccount",
+        "summary": "Upsert Account",
+        "tags": ["Sales Engagement"],
         "requestBody": {
           "required": true,
           "content": {
@@ -2533,6 +2603,8 @@
     "/unified/sales-engagement/contact/_upsert": {
       "post": {
         "operationId": "salesEngagement-upsertContact",
+        "summary": "Upsert Contact",
+        "tags": ["Sales Engagement"],
         "requestBody": {
           "required": true,
           "content": {
@@ -2692,6 +2764,8 @@
     "/unified/crm/{entity}/_count": {
       "get": {
         "operationId": "crm-countEntity",
+        "summary": "Count Entities",
+        "tags": ["CRM"],
         "parameters": [
           {
             "in": "path",
@@ -2745,6 +2819,8 @@
     "/unified/crm/account": {
       "get": {
         "operationId": "crm-listAccounts",
+        "summary": "List Accounts",
+        "tags": ["CRM"],
         "parameters": [
           {
             "in": "query",
@@ -2808,6 +2884,8 @@
       },
       "post": {
         "operationId": "crm-createAccount",
+        "summary": "Create account",
+        "tags": ["CRM"],
         "requestBody": {
           "required": true,
           "content": {
@@ -2861,6 +2939,8 @@
     "/unified/crm/account/{id}": {
       "get": {
         "operationId": "crm-getAccount",
+        "summary": "Get Account",
+        "tags": ["CRM"],
         "parameters": [
           {
             "in": "path",
@@ -2915,6 +2995,8 @@
       },
       "patch": {
         "operationId": "crm-updateAccount",
+        "summary": "Update account",
+        "tags": ["CRM"],
         "parameters": [
           {
             "in": "path",
@@ -2984,6 +3066,8 @@
     "/unified/crm/account/_batch_read": {
       "post": {
         "operationId": "crm-batchReadAccounts",
+        "summary": "Batch read accounts",
+        "tags": ["CRM"],
         "requestBody": {
           "required": true,
           "content": {
@@ -3035,6 +3119,8 @@
     "/unified/crm/account/_upsert": {
       "post": {
         "operationId": "crm-upsertAccount",
+        "summary": "Upsert account",
+        "tags": ["CRM"],
         "requestBody": {
           "required": true,
           "content": {
@@ -3104,6 +3190,8 @@
     "/unified/crm/contact": {
       "get": {
         "operationId": "crm-listContacts",
+        "summary": "List Contacts",
+        "tags": ["CRM"],
         "parameters": [
           {
             "in": "query",
@@ -3167,6 +3255,8 @@
       },
       "post": {
         "operationId": "crm-createContact",
+        "summary": "Create contact",
+        "tags": ["CRM"],
         "requestBody": {
           "required": true,
           "content": {
@@ -3220,6 +3310,8 @@
     "/unified/crm/contact/{id}": {
       "get": {
         "operationId": "crm-getContact",
+        "summary": "Get Contact",
+        "tags": ["CRM"],
         "parameters": [
           {
             "in": "path",
@@ -3274,6 +3366,8 @@
       },
       "patch": {
         "operationId": "crm-updateContact",
+        "summary": "Update contact",
+        "tags": ["CRM"],
         "parameters": [
           {
             "in": "path",
@@ -3343,6 +3437,8 @@
     "/unified/crm/contact/_batch_read": {
       "post": {
         "operationId": "crm-batchReadContacts",
+        "summary": "Batch read contacts",
+        "tags": ["CRM"],
         "requestBody": {
           "required": true,
           "content": {
@@ -3394,6 +3490,8 @@
     "/unified/crm/contact/_upsert": {
       "post": {
         "operationId": "crm-upsertContact",
+        "summary": "Upsert contact",
+        "tags": ["CRM"],
         "requestBody": {
           "required": true,
           "content": {
@@ -3463,6 +3561,8 @@
     "/unified/crm/lead": {
       "get": {
         "operationId": "crm-listLeads",
+        "summary": "List Leads",
+        "tags": ["CRM"],
         "parameters": [
           {
             "in": "query",
@@ -3528,6 +3628,8 @@
     "/unified/crm/lead/{id}": {
       "get": {
         "operationId": "crm-getLead",
+        "summary": "Get Lead",
+        "tags": ["CRM"],
         "parameters": [
           {
             "in": "path",
@@ -3584,6 +3686,8 @@
     "/unified/crm/opportunity": {
       "get": {
         "operationId": "crm-listOpportunities",
+        "summary": "List Opportunities",
+        "tags": ["CRM"],
         "parameters": [
           {
             "in": "query",
@@ -3649,6 +3753,8 @@
     "/unified/crm/opportunity/{id}": {
       "get": {
         "operationId": "crm-getOpportunity",
+        "summary": "Get Opportunity",
+        "tags": ["CRM"],
         "parameters": [
           {
             "in": "path",
@@ -3705,6 +3811,8 @@
     "/unified/crm/note": {
       "get": {
         "operationId": "crm-listNotes",
+        "summary": "List notes",
+        "tags": ["CRM"],
         "parameters": [
           {
             "in": "query",
@@ -3768,6 +3876,8 @@
       },
       "post": {
         "operationId": "crm-createNote",
+        "summary": "Create note",
+        "tags": ["CRM"],
         "requestBody": {
           "required": true,
           "content": {
@@ -3821,6 +3931,8 @@
     "/unified/crm/user": {
       "get": {
         "operationId": "crm-listUsers",
+        "summary": "List users",
+        "tags": ["CRM"],
         "parameters": [
           {
             "in": "query",
@@ -3886,6 +3998,8 @@
     "/unified/crm/user/{id}": {
       "get": {
         "operationId": "crm-getUser",
+        "summary": "Get user",
+        "tags": ["CRM"],
         "parameters": [
           {
             "in": "path",
@@ -3942,6 +4056,8 @@
     "/unified/crm/custom_objects/{object_name}": {
       "get": {
         "operationId": "crm-listCustomObjectRecords",
+        "summary": "List custom object records",
+        "tags": ["CRM"],
         "parameters": [
           {
             "in": "path",
@@ -4008,6 +4124,8 @@
       },
       "post": {
         "operationId": "crm-createCustomObjectRecord",
+        "summary": "Create custom object record",
+        "tags": ["CRM"],
         "parameters": [
           {
             "in": "path",
@@ -4072,6 +4190,8 @@
     "/unified/crm/metadata/objects": {
       "get": {
         "operationId": "crm-metadataListObjects",
+        "summary": "Metadata list objects",
+        "tags": ["CRM"],
         "parameters": [
           {
             "in": "query",
@@ -4121,7 +4241,9 @@
       },
       "post": {
         "operationId": "crm-metadataCreateObject",
+        "summary": "Metadata create object",
         "description": "Create custom object schema",
+        "tags": ["CRM"],
         "requestBody": {
           "required": true,
           "content": {
@@ -4192,6 +4314,8 @@
     "/unified/crm/metadata/objects/{object_name}/properties": {
       "get": {
         "operationId": "crm-metadataListObjectProperties",
+        "summary": "Metadata list object properties",
+        "tags": ["CRM"],
         "parameters": [
           {
             "in": "path",
@@ -4242,6 +4366,8 @@
       },
       "post": {
         "operationId": "crm-metadataCreateObjectProperty",
+        "summary": "Metadata create object property",
+        "tags": ["CRM"],
         "parameters": [
           {
             "in": "path",
@@ -4317,6 +4443,8 @@
     "/unified/crm/metadata/associations": {
       "post": {
         "operationId": "crm-metadataCreateAssociation",
+        "summary": "Metadata create association",
+        "tags": ["CRM"],
         "requestBody": {
           "required": true,
           "content": {
@@ -4387,6 +4515,8 @@
     "/unified/banking/account": {
       "get": {
         "operationId": "banking-listAccounts",
+        "summary": "List Accounts",
+        "tags": ["Banking"],
         "parameters": [
           {
             "in": "query",
@@ -4452,6 +4582,8 @@
     "/unified/banking/merchant": {
       "get": {
         "operationId": "banking-listMerchants",
+        "summary": "List Merchants",
+        "tags": ["Banking"],
         "parameters": [
           {
             "in": "query",
@@ -4517,6 +4649,8 @@
     "/unified/banking/category": {
       "get": {
         "operationId": "banking-listCategories",
+        "summary": "List Categories",
+        "tags": ["Banking"],
         "parameters": [
           {
             "in": "query",
@@ -4582,6 +4716,8 @@
     "/unified/banking/transaction": {
       "get": {
         "operationId": "banking-listTransactions",
+        "summary": "List Transactions",
+        "tags": ["Banking"],
         "parameters": [
           {
             "in": "query",
@@ -4649,6 +4785,8 @@
     "/unified/accounting/account": {
       "get": {
         "operationId": "accounting-listAccounts",
+        "summary": "List Account",
+        "tags": ["Accounting"],
         "parameters": [
           {
             "in": "query",
@@ -4680,7 +4818,27 @@
                           "id": {"type": "string"},
                           "number": {"type": ["string", "null"]},
                           "name": {"type": "string"},
-                          "type": {"type": "string"}
+                          "type": {"type": "string"},
+                          "subAccount": {"type": "boolean"},
+                          "accountType": {"type": "string"},
+                          "accountSubType": {"type": "string"},
+                          "currentBalance": {"type": "number"},
+                          "currencyRef": {
+                            "type": "object",
+                            "properties": {
+                              "value": {"type": "string"},
+                              "name": {"type": "string"}
+                            },
+                            "required": ["value", "name"]
+                          },
+                          "metaData": {
+                            "type": "object",
+                            "properties": {
+                              "createTime": {"type": "string"},
+                              "lastUpdatedTime": {"type": "string"}
+                            },
+                            "required": ["createTime", "lastUpdatedTime"]
+                          }
                         },
                         "required": ["id", "name", "type"]
                       }
@@ -4723,6 +4881,8 @@
     "/unified/accounting/expense": {
       "get": {
         "operationId": "accounting-listExpenses",
+        "summary": "List Expenses",
+        "tags": ["Accounting"],
         "parameters": [
           {
             "in": "query",
@@ -4802,6 +4962,8 @@
     "/unified/accounting/vendor": {
       "get": {
         "operationId": "accounting-listVendors",
+        "summary": "List Vendors",
+        "tags": ["Accounting"],
         "parameters": [
           {
             "in": "query",
@@ -4875,6 +5037,8 @@
     "/unified/accounting/balance-sheet": {
       "get": {
         "operationId": "accounting-getBalanceSheet",
+        "summary": "Get Balance Sheet",
+        "tags": ["Accounting"],
         "parameters": [
           {"in": "query", "name": "start_date", "schema": {"type": "string"}},
           {"in": "query", "name": "end_date", "schema": {"type": "string"}},
@@ -4959,6 +5123,8 @@
     "/unified/accounting/profit-and-loss": {
       "get": {
         "operationId": "accounting-getProfitAndLoss",
+        "summary": "Get Profit and Loss",
+        "tags": ["Accounting"],
         "parameters": [
           {"in": "query", "name": "start_date", "schema": {"type": "string"}},
           {"in": "query", "name": "end_date", "schema": {"type": "string"}},
@@ -5034,6 +5200,8 @@
     "/unified/accounting/cash-flow": {
       "get": {
         "operationId": "accounting-getCashFlow",
+        "summary": "Get Cash Flow",
+        "tags": ["Accounting"],
         "parameters": [
           {"in": "query", "name": "start_date", "schema": {"type": "string"}},
           {"in": "query", "name": "end_date", "schema": {"type": "string"}},
@@ -5114,6 +5282,8 @@
     "/unified/accounting/transaction-list": {
       "get": {
         "operationId": "accounting-getTransactionList",
+        "summary": "Get Transaction List",
+        "tags": ["Accounting"],
         "parameters": [
           {"in": "query", "name": "start_date", "schema": {"type": "string"}},
           {"in": "query", "name": "end_date", "schema": {"type": "string"}},
@@ -5197,11 +5367,18 @@
     "/unified/accounting/customer-balance": {
       "get": {
         "operationId": "accounting-getCustomerBalance",
+        "summary": "Get Customer Balance",
+        "tags": ["Accounting"],
         "parameters": [
           {"in": "query", "name": "start_date", "schema": {"type": "string"}},
           {"in": "query", "name": "end_date", "schema": {"type": "string"}},
           {"in": "query", "name": "sort_order", "schema": {"type": "string"}},
-          {"in": "query", "name": "customer", "schema": {"type": "string"}},
+          {
+            "in": "query",
+            "name": "customer",
+            "schema": {"type": "string"},
+            "required": true
+          },
           {"in": "query", "name": "department", "schema": {"type": "string"}},
           {"in": "query", "name": "date_macro", "schema": {"type": "string"}},
           {"in": "query", "name": "summarize_by", "schema": {"type": "string"}}
@@ -5274,11 +5451,18 @@
     "/unified/accounting/customer-income": {
       "get": {
         "operationId": "accounting-getCustomerIncome",
+        "summary": "Get Customer Income",
+        "tags": ["Accounting"],
         "parameters": [
           {"in": "query", "name": "start_date", "schema": {"type": "string"}},
           {"in": "query", "name": "end_date", "schema": {"type": "string"}},
           {"in": "query", "name": "sort_order", "schema": {"type": "string"}},
-          {"in": "query", "name": "customer", "schema": {"type": "string"}},
+          {
+            "in": "query",
+            "name": "customer",
+            "schema": {"type": "string"},
+            "required": true
+          },
           {"in": "query", "name": "department", "schema": {"type": "string"}},
           {"in": "query", "name": "date_macro", "schema": {"type": "string"}},
           {"in": "query", "name": "summarize_by", "schema": {"type": "string"}}
@@ -5365,6 +5549,8 @@
     "/unified/accounting/bank-accounts": {
       "get": {
         "operationId": "accounting-getBankAccounts",
+        "summary": "Get Bank Accounts",
+        "tags": ["Accounting"],
         "parameters": [
           {
             "in": "query",
@@ -5443,6 +5629,8 @@
     "/unified/accounting/payment-receipt": {
       "get": {
         "operationId": "accounting-getPaymentReceipts",
+        "summary": "Get Payment Receipts",
+        "tags": ["Accounting"],
         "parameters": [
           {
             "in": "query",
@@ -5488,6 +5676,8 @@
     "/unified/pta/account": {
       "get": {
         "operationId": "pta-listAccounts",
+        "summary": "List Accounts",
+        "tags": ["PTA"],
         "parameters": [
           {
             "in": "query",
@@ -5553,6 +5743,8 @@
     "/unified/pta/transaction": {
       "get": {
         "operationId": "pta-listTransactions",
+        "summary": "List Transactions",
+        "tags": ["PTA"],
         "parameters": [
           {
             "in": "query",
@@ -5618,6 +5810,8 @@
     "/unified/pta/commodity": {
       "get": {
         "operationId": "pta-listCommodities",
+        "summary": "List Commodities",
+        "tags": ["PTA"],
         "parameters": [
           {
             "in": "query",
@@ -5683,6 +5877,8 @@
     "/unified/ats/job": {
       "get": {
         "operationId": "ats-listJobs",
+        "summary": "List Jobs",
+        "tags": ["ATS"],
         "parameters": [
           {
             "in": "query",
@@ -5748,6 +5944,8 @@
     "/unified/ats/job/{jobId}/opening": {
       "get": {
         "operationId": "ats-listJobOpenings",
+        "summary": "List Job Openings",
+        "tags": ["ATS"],
         "parameters": [
           {
             "in": "path",
@@ -5819,6 +6017,8 @@
     "/unified/ats/offer": {
       "get": {
         "operationId": "ats-listOffers",
+        "summary": "List Offers",
+        "tags": ["ATS"],
         "parameters": [
           {
             "in": "query",
@@ -5884,6 +6084,8 @@
     "/unified/ats/candidate": {
       "get": {
         "operationId": "ats-listCandidates",
+        "summary": "List Candidates",
+        "tags": ["ATS"],
         "parameters": [
           {
             "in": "query",
@@ -5949,6 +6151,8 @@
     "/unified/ats/department": {
       "get": {
         "operationId": "ats-listDepartments",
+        "summary": "List Departments",
+        "tags": ["ATS"],
         "parameters": [
           {
             "in": "query",
@@ -6014,6 +6218,8 @@
     "/unified/hris/individual": {
       "get": {
         "operationId": "hris-listIndividual",
+        "summary": "List Individuals",
+        "tags": ["HRIS"],
         "parameters": [
           {
             "in": "query",
@@ -6089,6 +6295,8 @@
     "/unified/etl/read/{stream}": {
       "get": {
         "operationId": "etl-readStream",
+        "summary": "Read Stream",
+        "tags": ["ETL"],
         "parameters": [
           {
             "in": "path",
@@ -6162,6 +6370,8 @@
     "/unified/etl/discover": {
       "get": {
         "operationId": "etl-discover",
+        "summary": "Discover",
+        "tags": ["ETL"],
         "responses": {
           "200": {
             "description": "Successful response",
@@ -6214,6 +6424,8 @@
     "/unified/etl/read": {
       "post": {
         "operationId": "etl-read",
+        "summary": "Read Data",
+        "tags": ["ETL"],
         "requestBody": {
           "required": true,
           "content": {
@@ -6349,6 +6561,8 @@
     "/unified/etl/write": {
       "post": {
         "operationId": "etl-write",
+        "summary": "Write Data",
+        "tags": ["ETL"],
         "requestBody": {
           "required": true,
           "content": {
@@ -6466,6 +6680,367 @@
           }
         }
       }
+    },
+    "/unified/file-storage/drive": {
+      "get": {
+        "operationId": "fileStorage-listDrives",
+        "summary": "List drives",
+        "tags": ["File Storage"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "sync_mode",
+            "schema": {"type": "string", "enum": ["full", "incremental"]}
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "schema": {"type": ["string", "null"]}
+          },
+          {"in": "query", "name": "page_size", "schema": {"type": "number"}}
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "next_cursor": {"type": ["string", "null"]},
+                    "has_next_page": {"type": "boolean"},
+                    "items": {
+                      "type": "array",
+                      "items": {"$ref": "#/components/schemas/unified.drive"}
+                    }
+                  },
+                  "required": ["has_next_page", "items"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/error.BAD_REQUEST"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/error.NOT_FOUND"}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/unified/file-storage/drive/{driveId}": {
+      "get": {
+        "operationId": "fileStorage-getDrive",
+        "summary": "Get drive",
+        "tags": ["File Storage"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "driveId",
+            "schema": {"type": "string"},
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/unified.drive"}
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/error.BAD_REQUEST"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/error.NOT_FOUND"}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/unified/file-storage/drive/{driveId}/folder": {
+      "get": {
+        "operationId": "fileStorage-listFolders",
+        "summary": "List folders",
+        "tags": ["File Storage"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "driveId",
+            "schema": {"type": "string"},
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "next_cursor": {"type": ["string", "null"]},
+                    "has_next_page": {"type": "boolean"},
+                    "items": {
+                      "type": "array",
+                      "items": {"$ref": "#/components/schemas/unified.folder"}
+                    }
+                  },
+                  "required": ["has_next_page", "items"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/error.BAD_REQUEST"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/error.NOT_FOUND"}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/unified/file-storage/drive/{driveId}/folder/{folderId}": {
+      "get": {
+        "operationId": "fileStorage-getFolder",
+        "summary": "Get folder",
+        "tags": ["File Storage"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "driveId",
+            "schema": {"type": "string"},
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "folderId",
+            "schema": {"type": "string"},
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/unified.folder"}
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/error.BAD_REQUEST"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/error.NOT_FOUND"}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/unified/file-storage/drive/{driveId}/file": {
+      "get": {
+        "operationId": "fileStorage-listFiles",
+        "summary": "List files",
+        "tags": ["File Storage"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "driveId",
+            "schema": {"type": "string"},
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "folderId",
+            "schema": {"type": ["string", "null"]}
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "next_cursor": {"type": ["string", "null"]},
+                    "has_next_page": {"type": "boolean"},
+                    "items": {
+                      "type": "array",
+                      "items": {"$ref": "#/components/schemas/unified.file"}
+                    }
+                  },
+                  "required": ["has_next_page", "items"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/error.BAD_REQUEST"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/error.NOT_FOUND"}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/unified/file-storage/drive/{driveId}/file/{fileId}": {
+      "get": {
+        "operationId": "fileStorage-getFile",
+        "summary": "Get file",
+        "tags": ["File Storage"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "driveId",
+            "schema": {"type": "string"},
+            "required": true
+          },
+          {
+            "in": "path",
+            "name": "fileId",
+            "schema": {"type": "string"},
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/unified.file"}
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/error.BAD_REQUEST"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/error.NOT_FOUND"}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "webhooks": {
@@ -6485,7 +7060,8 @@
   "components": {
     "securitySchemes": {
       "apikey": {"type": "apiKey", "name": "x-apikey", "in": "header"},
-      "resourceId": {"type": "apiKey", "name": "x-resource-id", "in": "header"}
+      "resourceId": {"type": "apiKey", "name": "x-resource-id", "in": "header"},
+      "token": {"type": "apiKey", "name": "authorization", "in": "header"}
     },
     "schemas": {
       "webhooks.sync.completed": {
@@ -6513,39 +7089,6 @@
           "id": {"type": "string"}
         },
         "required": ["data", "name"]
-      },
-      "error.INTERNAL_SERVER_ERROR": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "description": "The error message",
-            "example": "Internal server error"
-          },
-          "code": {
-            "type": "string",
-            "description": "The error code",
-            "example": "INTERNAL_SERVER_ERROR"
-          },
-          "issues": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {"message": {"type": "string"}},
-              "required": ["message"]
-            },
-            "description": "An array of issues that were responsible for the error",
-            "example": []
-          }
-        },
-        "required": ["message", "code"],
-        "title": "Error",
-        "description": "The error information",
-        "example": {
-          "code": "INTERNAL_SERVER_ERROR",
-          "message": "Internal server error",
-          "issues": []
-        }
       },
       "error.BAD_REQUEST": {
         "type": "object",
@@ -6577,6 +7120,68 @@
         "example": {
           "code": "BAD_REQUEST",
           "message": "Invalid input data",
+          "issues": []
+        }
+      },
+      "error.NOT_FOUND": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "The error message",
+            "example": "Not found"
+          },
+          "code": {
+            "type": "string",
+            "description": "The error code",
+            "example": "NOT_FOUND"
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {"message": {"type": "string"}},
+              "required": ["message"]
+            },
+            "description": "An array of issues that were responsible for the error",
+            "example": []
+          }
+        },
+        "required": ["message", "code"],
+        "title": "Error",
+        "description": "The error information",
+        "example": {"code": "NOT_FOUND", "message": "Not found", "issues": []}
+      },
+      "error.INTERNAL_SERVER_ERROR": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "The error message",
+            "example": "Internal server error"
+          },
+          "code": {
+            "type": "string",
+            "description": "The error code",
+            "example": "INTERNAL_SERVER_ERROR"
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {"message": {"type": "string"}},
+              "required": ["message"]
+            },
+            "description": "An array of issues that were responsible for the error",
+            "example": []
+          }
+        },
+        "required": ["message", "code"],
+        "title": "Error",
+        "description": "The error information",
+        "example": {
+          "code": "INTERNAL_SERVER_ERROR",
+          "message": "Internal server error",
           "issues": []
         }
       },
@@ -6626,35 +7231,6 @@
           "connectorName",
           "connectorConfigId"
         ]
-      },
-      "error.NOT_FOUND": {
-        "type": "object",
-        "properties": {
-          "message": {
-            "type": "string",
-            "description": "The error message",
-            "example": "Not found"
-          },
-          "code": {
-            "type": "string",
-            "description": "The error code",
-            "example": "NOT_FOUND"
-          },
-          "issues": {
-            "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {"message": {"type": "string"}},
-              "required": ["message"]
-            },
-            "description": "An array of issues that were responsible for the error",
-            "example": []
-          }
-        },
-        "required": ["message", "code"],
-        "title": "Error",
-        "description": "The error information",
-        "example": {"code": "NOT_FOUND", "message": "Not found", "issues": []}
       },
       "ConnectorConfig": {
         "type": "object",
@@ -6716,11 +7292,12 @@
       "Link": {
         "type": "string",
         "enum": [
-          "banking",
+          "unified_banking",
           "prefix_connector_name",
           "single_table",
-          "ats",
-          "ag_column_rename"
+          "unified_ats",
+          "ag_column_rename",
+          "unified_crm"
         ]
       },
       "core.integration": {
@@ -6757,7 +7334,8 @@
                 "hris",
                 "payroll",
                 "calendar",
-                "ats"
+                "ats",
+                "email"
               ]
             }
           },
@@ -7720,6 +8298,48 @@
         },
         "required": ["id"],
         "description": "A candidate for a job"
+      },
+      "unified.drive": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string"},
+          "name": {"type": "string"},
+          "created_at": {"type": ["string", "null"]},
+          "modified_at": {"type": ["string", "null"]},
+          "raw_data": {"type": "object", "additionalProperties": {}}
+        },
+        "required": ["id", "name"],
+        "description": "A unified representation of a storage drive"
+      },
+      "unified.folder": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string"},
+          "name": {"type": "string"},
+          "parent_id": {"type": ["string", "null"]},
+          "drive_id": {"type": "string"},
+          "created_at": {"type": ["string", "null"]},
+          "modified_at": {"type": ["string", "null"]},
+          "raw_data": {"type": "object", "additionalProperties": {}}
+        },
+        "required": ["id", "name", "drive_id"],
+        "description": "A unified representation of a folder within a drive"
+      },
+      "unified.file": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string"},
+          "name": {"type": "string"},
+          "file_url": {"type": "string"},
+          "mimeType": {"type": ["string", "null"]},
+          "size": {"type": ["number", "null"]},
+          "drive_id": {"type": "string"},
+          "created_at": {"type": ["string", "null"]},
+          "modified_at": {"type": ["string", "null"]},
+          "raw_data": {"type": "object", "additionalProperties": {}}
+        },
+        "required": ["id", "name", "file_url", "drive_id"],
+        "description": "A unified representation of a file within a drive"
       }
     }
   },

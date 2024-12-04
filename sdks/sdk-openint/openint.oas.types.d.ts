@@ -22,82 +22,113 @@ export interface paths {
     /** Health check */
     get: operations['health']
   }
-  '/debug/raw-schemas': {
-    /** @description Get raw schemas */
-    get: operations['getRawSchemas']
-  }
   '/connect/token': {
+    /** Create a connect token */
     post: operations['createConnectToken']
   }
   '/connect/magic-link': {
+    /** Create a magic link */
     post: operations['createMagicLink']
   }
   '/passthrough': {
+    /** Passthrough */
     post: operations['passthrough']
   }
   '/core/resource/{id}/source_sync': {
-    /** @description Return records that would have otherwise been emitted during a sync and return it instead */
+    /**
+     * Source sync
+     * @description Return records that would have otherwise been emitted during a sync and return it instead
+     */
     post: operations['sourceSync']
   }
   '/core/resource': {
+    /** List resources */
     get: operations['listResources']
+    /** Create resource */
     post: operations['createResource']
   }
   '/core/resource/{id}': {
+    /** Get resource */
     get: operations['getResource']
+    /** Delete resource */
     delete: operations['deleteResource']
+    /** Update resource */
     patch: operations['updateResource']
   }
   '/core/resource/{id}/_check': {
+    /** Check resource */
     post: operations['checkResource']
   }
   '/core/resource/{id}/_sync': {
+    /** Sync resource */
     post: operations['syncResource']
   }
   '/core/connector_config': {
+    /** Admin list connector configs */
     get: operations['adminListConnectorConfigs']
+    /** Admin upsert connector config */
     post: operations['adminUpsertConnectorConfig']
   }
   '/core/connector_config/{id}': {
+    /** Admin get connector config */
     get: operations['adminGetConnectorConfig']
+    /** Admin delete connector config */
     delete: operations['adminDeleteConnectorConfig']
+    /** Admin update connector config */
     patch: operations['adminUpdateConnectorConfig']
   }
   '/core/connector_config_info': {
-    /** @description For end user authentication and list a limited set of non private data */
+    /**
+     * List connector config infos
+     * @description For end user authentication and list a limited set of non private data
+     */
     get: operations['listConnectorConfigInfos']
   }
   '/connector': {
-    /** @description Get catalog of all available connectors */
+    /**
+     * List connector metas
+     * @description Get catalog of all available connectors
+     */
     get: operations['listConnectorMetas']
   }
   '/connector/{name}': {
+    /** Get connector meta */
     get: operations['getConnectorMeta']
   }
   '/connector/{name}/oas': {
+    /** Get connector open api spec */
     get: operations['getConnectorOpenApiSpec']
   }
   '/connector/{name}/schemas': {
+    /** Get connector schemas */
     get: operations['getConnectorSchemas']
   }
   '/connector/{name}/integrations': {
+    /** List connector integrations */
     get: operations['listConnectorIntegrations']
   }
   '/configured_integrations': {
+    /** List configured integrations */
     get: operations['listConfiguredIntegrations']
   }
   '/core/pipeline': {
+    /** List pipelines */
     get: operations['listPipelines']
+    /** Create pipeline */
     post: operations['createPipeline']
   }
   '/core/pipeline/{id}': {
+    /** Delete pipeline */
     delete: operations['deletePipeline']
+    /** Update pipeline */
     patch: operations['updatePipeline']
   }
   '/core/pipeline/{id}/_sync': {
+    /** Sync pipeline */
     post: operations['syncPipeline']
   }
   '/core/sync_run': {
+    /** List sync runs */
     get: operations['listSyncRuns']
   }
   '/viewer': {
@@ -109,185 +140,277 @@ export interface paths {
     get: operations['getCurrentOrganization']
   }
   '/openapi.json': {
+    /** Get openapi document */
     get: operations['public-getOpenapiDocument']
   }
   '/unified/sales-engagement/contact': {
+    /** List Contacts */
     get: operations['salesEngagement-listContacts']
   }
   '/unified/sales-engagement/sequence': {
+    /** List Sequences */
     get: operations['salesEngagement-listSequences']
   }
   '/unified/sales-engagement/sequence_state': {
+    /** List Sequence States */
     get: operations['salesEngagement-listSequenceStates']
+    /** Insert Sequence State */
     post: operations['salesEngagement-insertSequenceState']
   }
   '/unified/sales-engagement/user': {
+    /** List Users */
     get: operations['salesEngagement-listUsers']
   }
   '/unified/sales-engagement/account': {
+    /** List Accounts */
     get: operations['salesEngagement-listAccounts']
   }
   '/unified/sales-engagement/mailbox': {
+    /** List Mailboxes */
     get: operations['salesEngagement-listMailboxes']
   }
   '/unified/sales-engagement/account/_upsert': {
+    /** Upsert Account */
     post: operations['salesEngagement-upsertAccount']
   }
   '/unified/sales-engagement/contact/_upsert': {
+    /** Upsert Contact */
     post: operations['salesEngagement-upsertContact']
   }
   '/unified/crm/{entity}/_count': {
+    /** Count Entities */
     get: operations['crm-countEntity']
   }
   '/unified/crm/account': {
+    /** List Accounts */
     get: operations['crm-listAccounts']
+    /** Create account */
     post: operations['crm-createAccount']
   }
   '/unified/crm/account/{id}': {
+    /** Get Account */
     get: operations['crm-getAccount']
+    /** Update account */
     patch: operations['crm-updateAccount']
   }
   '/unified/crm/account/_batch_read': {
+    /** Batch read accounts */
     post: operations['crm-batchReadAccounts']
   }
   '/unified/crm/account/_upsert': {
+    /** Upsert account */
     post: operations['crm-upsertAccount']
   }
   '/unified/crm/contact': {
+    /** List Contacts */
     get: operations['crm-listContacts']
+    /** Create contact */
     post: operations['crm-createContact']
   }
   '/unified/crm/contact/{id}': {
+    /** Get Contact */
     get: operations['crm-getContact']
+    /** Update contact */
     patch: operations['crm-updateContact']
   }
   '/unified/crm/contact/_batch_read': {
+    /** Batch read contacts */
     post: operations['crm-batchReadContacts']
   }
   '/unified/crm/contact/_upsert': {
+    /** Upsert contact */
     post: operations['crm-upsertContact']
   }
   '/unified/crm/lead': {
+    /** List Leads */
     get: operations['crm-listLeads']
   }
   '/unified/crm/lead/{id}': {
+    /** Get Lead */
     get: operations['crm-getLead']
   }
   '/unified/crm/opportunity': {
+    /** List Opportunities */
     get: operations['crm-listOpportunities']
   }
   '/unified/crm/opportunity/{id}': {
+    /** Get Opportunity */
     get: operations['crm-getOpportunity']
   }
   '/unified/crm/note': {
+    /** List notes */
     get: operations['crm-listNotes']
+    /** Create note */
     post: operations['crm-createNote']
   }
   '/unified/crm/user': {
+    /** List users */
     get: operations['crm-listUsers']
   }
   '/unified/crm/user/{id}': {
+    /** Get user */
     get: operations['crm-getUser']
   }
   '/unified/crm/custom_objects/{object_name}': {
+    /** List custom object records */
     get: operations['crm-listCustomObjectRecords']
+    /** Create custom object record */
     post: operations['crm-createCustomObjectRecord']
   }
   '/unified/crm/metadata/objects': {
+    /** Metadata list objects */
     get: operations['crm-metadataListObjects']
-    /** @description Create custom object schema */
+    /**
+     * Metadata create object
+     * @description Create custom object schema
+     */
     post: operations['crm-metadataCreateObject']
   }
   '/unified/crm/metadata/objects/{object_name}/properties': {
+    /** Metadata list object properties */
     get: operations['crm-metadataListObjectProperties']
+    /** Metadata create object property */
     post: operations['crm-metadataCreateObjectProperty']
   }
   '/unified/crm/metadata/associations': {
+    /** Metadata create association */
     post: operations['crm-metadataCreateAssociation']
   }
   '/unified/banking/account': {
+    /** List Accounts */
     get: operations['banking-listAccounts']
   }
   '/unified/banking/merchant': {
+    /** List Merchants */
     get: operations['banking-listMerchants']
   }
   '/unified/banking/category': {
+    /** List Categories */
     get: operations['banking-listCategories']
   }
   '/unified/banking/transaction': {
+    /** List Transactions */
     get: operations['banking-listTransactions']
   }
   '/unified/accounting/account': {
+    /** List Account */
     get: operations['accounting-listAccounts']
   }
   '/unified/accounting/expense': {
+    /** List Expenses */
     get: operations['accounting-listExpenses']
   }
   '/unified/accounting/vendor': {
+    /** List Vendors */
     get: operations['accounting-listVendors']
   }
   '/unified/accounting/balance-sheet': {
+    /** Get Balance Sheet */
     get: operations['accounting-getBalanceSheet']
   }
   '/unified/accounting/profit-and-loss': {
+    /** Get Profit and Loss */
     get: operations['accounting-getProfitAndLoss']
   }
   '/unified/accounting/cash-flow': {
+    /** Get Cash Flow */
     get: operations['accounting-getCashFlow']
   }
   '/unified/accounting/transaction-list': {
+    /** Get Transaction List */
     get: operations['accounting-getTransactionList']
   }
   '/unified/accounting/customer-balance': {
+    /** Get Customer Balance */
     get: operations['accounting-getCustomerBalance']
   }
   '/unified/accounting/customer-income': {
+    /** Get Customer Income */
     get: operations['accounting-getCustomerIncome']
   }
   '/unified/accounting/bank-accounts': {
+    /** Get Bank Accounts */
     get: operations['accounting-getBankAccounts']
   }
   '/unified/accounting/payment-receipt': {
+    /** Get Payment Receipts */
     get: operations['accounting-getPaymentReceipts']
   }
   '/unified/pta/account': {
+    /** List Accounts */
     get: operations['pta-listAccounts']
   }
   '/unified/pta/transaction': {
+    /** List Transactions */
     get: operations['pta-listTransactions']
   }
   '/unified/pta/commodity': {
+    /** List Commodities */
     get: operations['pta-listCommodities']
   }
   '/unified/ats/job': {
+    /** List Jobs */
     get: operations['ats-listJobs']
   }
   '/unified/ats/job/{jobId}/opening': {
+    /** List Job Openings */
     get: operations['ats-listJobOpenings']
   }
   '/unified/ats/offer': {
+    /** List Offers */
     get: operations['ats-listOffers']
   }
   '/unified/ats/candidate': {
+    /** List Candidates */
     get: operations['ats-listCandidates']
   }
   '/unified/ats/department': {
+    /** List Departments */
     get: operations['ats-listDepartments']
   }
   '/unified/hris/individual': {
+    /** List Individuals */
     get: operations['hris-listIndividual']
   }
   '/unified/etl/read/{stream}': {
+    /** Read Stream */
     get: operations['etl-readStream']
   }
   '/unified/etl/discover': {
+    /** Discover */
     get: operations['etl-discover']
   }
   '/unified/etl/read': {
+    /** Read Data */
     post: operations['etl-read']
   }
   '/unified/etl/write': {
+    /** Write Data */
     post: operations['etl-write']
+  }
+  '/unified/file-storage/drive': {
+    /** List drives */
+    get: operations['fileStorage-listDrives']
+  }
+  '/unified/file-storage/drive/{driveId}': {
+    /** Get drive */
+    get: operations['fileStorage-getDrive']
+  }
+  '/unified/file-storage/drive/{driveId}/folder': {
+    /** List folders */
+    get: operations['fileStorage-listFolders']
+  }
+  '/unified/file-storage/drive/{driveId}/folder/{folderId}': {
+    /** Get folder */
+    get: operations['fileStorage-getFolder']
+  }
+  '/unified/file-storage/drive/{driveId}/file': {
+    /** List files */
+    get: operations['fileStorage-listFiles']
+  }
+  '/unified/file-storage/drive/{driveId}/file/{fileId}': {
+    /** Get file */
+    get: operations['fileStorage-getFile']
   }
 }
 
@@ -323,34 +446,6 @@ export interface components {
      * Error
      * @description The error information
      * @example {
-     *   "code": "INTERNAL_SERVER_ERROR",
-     *   "message": "Internal server error",
-     *   "issues": []
-     * }
-     */
-    'error.INTERNAL_SERVER_ERROR': {
-      /**
-       * @description The error message
-       * @example Internal server error
-       */
-      message: string
-      /**
-       * @description The error code
-       * @example INTERNAL_SERVER_ERROR
-       */
-      code: string
-      /**
-       * @description An array of issues that were responsible for the error
-       * @example []
-       */
-      issues?: {
-        message: string
-      }[]
-    }
-    /**
-     * Error
-     * @description The error information
-     * @example {
      *   "code": "BAD_REQUEST",
      *   "message": "Invalid input data",
      *   "issues": []
@@ -365,6 +460,62 @@ export interface components {
       /**
        * @description The error code
        * @example BAD_REQUEST
+       */
+      code: string
+      /**
+       * @description An array of issues that were responsible for the error
+       * @example []
+       */
+      issues?: {
+        message: string
+      }[]
+    }
+    /**
+     * Error
+     * @description The error information
+     * @example {
+     *   "code": "NOT_FOUND",
+     *   "message": "Not found",
+     *   "issues": []
+     * }
+     */
+    'error.NOT_FOUND': {
+      /**
+       * @description The error message
+       * @example Not found
+       */
+      message: string
+      /**
+       * @description The error code
+       * @example NOT_FOUND
+       */
+      code: string
+      /**
+       * @description An array of issues that were responsible for the error
+       * @example []
+       */
+      issues?: {
+        message: string
+      }[]
+    }
+    /**
+     * Error
+     * @description The error information
+     * @example {
+     *   "code": "INTERNAL_SERVER_ERROR",
+     *   "message": "Internal server error",
+     *   "issues": []
+     * }
+     */
+    'error.INTERNAL_SERVER_ERROR': {
+      /**
+       * @description The error message
+       * @example Internal server error
+       */
+      message: string
+      /**
+       * @description The error code
+       * @example INTERNAL_SERVER_ERROR
        */
       code: string
       /**
@@ -406,34 +557,6 @@ export interface components {
        *   During updates this object will be shallowly merged
        */
       metadata?: unknown
-    }
-    /**
-     * Error
-     * @description The error information
-     * @example {
-     *   "code": "NOT_FOUND",
-     *   "message": "Not found",
-     *   "issues": []
-     * }
-     */
-    'error.NOT_FOUND': {
-      /**
-       * @description The error message
-       * @example Not found
-       */
-      message: string
-      /**
-       * @description The error code
-       * @example NOT_FOUND
-       */
-      code: string
-      /**
-       * @description An array of issues that were responsible for the error
-       * @example []
-       */
-      issues?: {
-        message: string
-      }[]
     }
     ConnectorConfig: {
       createdAt: string
@@ -480,11 +603,12 @@ export interface components {
     }
     /** @enum {string} */
     Link:
-      | 'banking'
+      | 'unified_banking'
       | 'prefix_connector_name'
       | 'single_table'
-      | 'ats'
+      | 'unified_ats'
       | 'ag_column_rename'
+      | 'unified_crm'
     'core.integration': {
       id: string
       /** @description ISO8601 date string */
@@ -515,6 +639,7 @@ export interface components {
             | 'payroll'
             | 'calendar'
             | 'ats'
+            | 'email'
           )[]
         | null
       connector_name: string
@@ -1118,6 +1243,42 @@ export interface components {
         [key: string]: unknown
       }
     }
+    /** @description A unified representation of a storage drive */
+    'unified.drive': {
+      id: string
+      name: string
+      created_at?: string | null
+      modified_at?: string | null
+      raw_data?: {
+        [key: string]: unknown
+      }
+    }
+    /** @description A unified representation of a folder within a drive */
+    'unified.folder': {
+      id: string
+      name: string
+      parent_id?: string | null
+      drive_id: string
+      created_at?: string | null
+      modified_at?: string | null
+      raw_data?: {
+        [key: string]: unknown
+      }
+    }
+    /** @description A unified representation of a file within a drive */
+    'unified.file': {
+      id: string
+      name: string
+      file_url: string
+      mimeType?: string | null
+      size?: number | null
+      drive_id: string
+      created_at?: string | null
+      modified_at?: string | null
+      raw_data?: {
+        [key: string]: unknown
+      }
+    }
   }
   responses: never
   parameters: never
@@ -1133,11 +1294,31 @@ export type external = Record<string, never>
 export interface operations {
   /** Health check */
   health: {
+    parameters: {
+      query?: {
+        exp?: boolean
+      }
+    }
     responses: {
       /** @description Successful response */
       200: {
         content: {
-          'application/json': string
+          'application/json': {
+            healthy: boolean
+            error?: string
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
         }
       }
       /** @description Internal server error */
@@ -1148,23 +1329,7 @@ export interface operations {
       }
     }
   }
-  /** @description Get raw schemas */
-  getRawSchemas: {
-    responses: {
-      /** @description Successful response */
-      200: {
-        content: {
-          'application/json': unknown
-        }
-      }
-      /** @description Internal server error */
-      500: {
-        content: {
-          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
-        }
-      }
-    }
-  }
+  /** Create a connect token */
   createConnectToken: {
     requestBody: {
       content: {
@@ -1202,6 +1367,7 @@ export interface operations {
       }
     }
   }
+  /** Create a magic link */
   createMagicLink: {
     requestBody: {
       content: {
@@ -1251,6 +1417,7 @@ export interface operations {
       }
     }
   }
+  /** Passthrough */
   passthrough: {
     requestBody: {
       content: {
@@ -1291,7 +1458,10 @@ export interface operations {
       }
     }
   }
-  /** @description Return records that would have otherwise been emitted during a sync and return it instead */
+  /**
+   * Source sync
+   * @description Return records that would have otherwise been emitted during a sync and return it instead
+   */
   sourceSync: {
     parameters: {
       path: {
@@ -1333,6 +1503,7 @@ export interface operations {
       }
     }
   }
+  /** List resources */
   listResources: {
     parameters: {
       query?: {
@@ -1371,6 +1542,7 @@ export interface operations {
       }
     }
   }
+  /** Create resource */
   createResource: {
     requestBody: {
       content: {
@@ -1416,6 +1588,7 @@ export interface operations {
       }
     }
   }
+  /** Get resource */
   getResource: {
     parameters: {
       query?: {
@@ -1463,6 +1636,7 @@ export interface operations {
       }
     }
   }
+  /** Delete resource */
   deleteResource: {
     parameters: {
       query?: {
@@ -1499,6 +1673,7 @@ export interface operations {
       }
     }
   }
+  /** Update resource */
   updateResource: {
     parameters: {
       path: {
@@ -1553,6 +1728,7 @@ export interface operations {
       }
     }
   }
+  /** Check resource */
   checkResource: {
     parameters: {
       path: {
@@ -1591,6 +1767,7 @@ export interface operations {
       }
     }
   }
+  /** Sync resource */
   syncResource: {
     parameters: {
       path: {
@@ -1644,6 +1821,7 @@ export interface operations {
       }
     }
   }
+  /** Admin list connector configs */
   adminListConnectorConfigs: {
     responses: {
       /** @description Successful response */
@@ -1660,6 +1838,7 @@ export interface operations {
       }
     }
   }
+  /** Admin upsert connector config */
   adminUpsertConnectorConfig: {
     requestBody: {
       content: {
@@ -1719,6 +1898,7 @@ export interface operations {
       }
     }
   }
+  /** Admin get connector config */
   adminGetConnectorConfig: {
     parameters: {
       path: {
@@ -1752,6 +1932,7 @@ export interface operations {
       }
     }
   }
+  /** Admin delete connector config */
   adminDeleteConnectorConfig: {
     parameters: {
       path: {
@@ -1785,6 +1966,7 @@ export interface operations {
       }
     }
   }
+  /** Admin update connector config */
   adminUpdateConnectorConfig: {
     parameters: {
       path: {
@@ -1837,7 +2019,10 @@ export interface operations {
       }
     }
   }
-  /** @description For end user authentication and list a limited set of non private data */
+  /**
+   * List connector config infos
+   * @description For end user authentication and list a limited set of non private data
+   */
   listConnectorConfigInfos: {
     parameters: {
       query?: {
@@ -1877,7 +2062,9 @@ export interface operations {
               | 'payroll'
               | 'calendar'
               | 'ats'
+              | 'email'
             )[]
+            integrations: string[]
           }[]
         }
       }
@@ -1901,7 +2088,10 @@ export interface operations {
       }
     }
   }
-  /** @description Get catalog of all available connectors */
+  /**
+   * List connector metas
+   * @description Get catalog of all available connectors
+   */
   listConnectorMetas: {
     parameters: {
       query?: {
@@ -1935,6 +2125,7 @@ export interface operations {
       }
     }
   }
+  /** Get connector meta */
   getConnectorMeta: {
     parameters: {
       query?: {
@@ -1971,6 +2162,7 @@ export interface operations {
       }
     }
   }
+  /** Get connector open api spec */
   getConnectorOpenApiSpec: {
     parameters: {
       query?: {
@@ -2007,6 +2199,7 @@ export interface operations {
       }
     }
   }
+  /** Get connector schemas */
   getConnectorSchemas: {
     parameters: {
       query?: {
@@ -2043,6 +2236,7 @@ export interface operations {
       }
     }
   }
+  /** List connector integrations */
   listConnectorIntegrations: {
     parameters: {
       query?: {
@@ -2050,6 +2244,7 @@ export interface operations {
         cursor?: string | null
         page_size?: number
         search_text?: string | null
+        ccfgId?: string
       }
       path: {
         name: string
@@ -2086,6 +2281,7 @@ export interface operations {
       }
     }
   }
+  /** List configured integrations */
   listConfiguredIntegrations: {
     parameters: {
       query?: {
@@ -2127,6 +2323,7 @@ export interface operations {
       }
     }
   }
+  /** List pipelines */
   listPipelines: {
     parameters: {
       query?: {
@@ -2162,6 +2359,7 @@ export interface operations {
       }
     }
   }
+  /** Create pipeline */
   createPipeline: {
     requestBody: {
       content: {
@@ -2210,6 +2408,7 @@ export interface operations {
       }
     }
   }
+  /** Delete pipeline */
   deletePipeline: {
     parameters: {
       path: {
@@ -2243,6 +2442,7 @@ export interface operations {
       }
     }
   }
+  /** Update pipeline */
   updatePipeline: {
     parameters: {
       path: {
@@ -2296,6 +2496,7 @@ export interface operations {
       }
     }
   }
+  /** Sync pipeline */
   syncPipeline: {
     parameters: {
       path: {
@@ -2349,6 +2550,7 @@ export interface operations {
       }
     }
   }
+  /** List sync runs */
   listSyncRuns: {
     parameters: {
       query?: {
@@ -2445,6 +2647,7 @@ export interface operations {
       }
     }
   }
+  /** Get openapi document */
   'public-getOpenapiDocument': {
     responses: {
       /** @description Successful response */
@@ -2461,6 +2664,7 @@ export interface operations {
       }
     }
   }
+  /** List Contacts */
   'salesEngagement-listContacts': {
     parameters: {
       query?: {
@@ -2497,6 +2701,7 @@ export interface operations {
       }
     }
   }
+  /** List Sequences */
   'salesEngagement-listSequences': {
     parameters: {
       query?: {
@@ -2533,6 +2738,7 @@ export interface operations {
       }
     }
   }
+  /** List Sequence States */
   'salesEngagement-listSequenceStates': {
     parameters: {
       query?: {
@@ -2569,6 +2775,7 @@ export interface operations {
       }
     }
   }
+  /** Insert Sequence State */
   'salesEngagement-insertSequenceState': {
     requestBody: {
       content: {
@@ -2611,6 +2818,7 @@ export interface operations {
       }
     }
   }
+  /** List Users */
   'salesEngagement-listUsers': {
     parameters: {
       query?: {
@@ -2647,6 +2855,7 @@ export interface operations {
       }
     }
   }
+  /** List Accounts */
   'salesEngagement-listAccounts': {
     parameters: {
       query?: {
@@ -2683,6 +2892,7 @@ export interface operations {
       }
     }
   }
+  /** List Mailboxes */
   'salesEngagement-listMailboxes': {
     parameters: {
       query?: {
@@ -2719,6 +2929,7 @@ export interface operations {
       }
     }
   }
+  /** Upsert Account */
   'salesEngagement-upsertAccount': {
     requestBody: {
       content: {
@@ -2770,6 +2981,7 @@ export interface operations {
       }
     }
   }
+  /** Upsert Contact */
   'salesEngagement-upsertContact': {
     requestBody: {
       content: {
@@ -2870,6 +3082,7 @@ export interface operations {
       }
     }
   }
+  /** Count Entities */
   'crm-countEntity': {
     parameters: {
       path: {
@@ -2905,6 +3118,7 @@ export interface operations {
       }
     }
   }
+  /** List Accounts */
   'crm-listAccounts': {
     parameters: {
       query?: {
@@ -2944,6 +3158,7 @@ export interface operations {
       }
     }
   }
+  /** Create account */
   'crm-createAccount': {
     requestBody: {
       content: {
@@ -2975,6 +3190,7 @@ export interface operations {
       }
     }
   }
+  /** Get Account */
   'crm-getAccount': {
     parameters: {
       path: {
@@ -3011,6 +3227,7 @@ export interface operations {
       }
     }
   }
+  /** Update account */
   'crm-updateAccount': {
     parameters: {
       path: {
@@ -3053,6 +3270,7 @@ export interface operations {
       }
     }
   }
+  /** Batch read accounts */
   'crm-batchReadAccounts': {
     requestBody: {
       content: {
@@ -3083,6 +3301,7 @@ export interface operations {
       }
     }
   }
+  /** Upsert account */
   'crm-upsertAccount': {
     requestBody: {
       content: {
@@ -3123,6 +3342,7 @@ export interface operations {
       }
     }
   }
+  /** List Contacts */
   'crm-listContacts': {
     parameters: {
       query?: {
@@ -3162,6 +3382,7 @@ export interface operations {
       }
     }
   }
+  /** Create contact */
   'crm-createContact': {
     requestBody: {
       content: {
@@ -3193,6 +3414,7 @@ export interface operations {
       }
     }
   }
+  /** Get Contact */
   'crm-getContact': {
     parameters: {
       path: {
@@ -3229,6 +3451,7 @@ export interface operations {
       }
     }
   }
+  /** Update contact */
   'crm-updateContact': {
     parameters: {
       path: {
@@ -3271,6 +3494,7 @@ export interface operations {
       }
     }
   }
+  /** Batch read contacts */
   'crm-batchReadContacts': {
     requestBody: {
       content: {
@@ -3301,6 +3525,7 @@ export interface operations {
       }
     }
   }
+  /** Upsert contact */
   'crm-upsertContact': {
     requestBody: {
       content: {
@@ -3341,6 +3566,7 @@ export interface operations {
       }
     }
   }
+  /** List Leads */
   'crm-listLeads': {
     parameters: {
       query?: {
@@ -3380,6 +3606,7 @@ export interface operations {
       }
     }
   }
+  /** Get Lead */
   'crm-getLead': {
     parameters: {
       path: {
@@ -3416,6 +3643,7 @@ export interface operations {
       }
     }
   }
+  /** List Opportunities */
   'crm-listOpportunities': {
     parameters: {
       query?: {
@@ -3455,6 +3683,7 @@ export interface operations {
       }
     }
   }
+  /** Get Opportunity */
   'crm-getOpportunity': {
     parameters: {
       path: {
@@ -3491,6 +3720,7 @@ export interface operations {
       }
     }
   }
+  /** List notes */
   'crm-listNotes': {
     parameters: {
       query?: {
@@ -3530,6 +3760,7 @@ export interface operations {
       }
     }
   }
+  /** Create note */
   'crm-createNote': {
     requestBody: {
       content: {
@@ -3561,6 +3792,7 @@ export interface operations {
       }
     }
   }
+  /** List users */
   'crm-listUsers': {
     parameters: {
       query?: {
@@ -3600,6 +3832,7 @@ export interface operations {
       }
     }
   }
+  /** Get user */
   'crm-getUser': {
     parameters: {
       path: {
@@ -3636,6 +3869,7 @@ export interface operations {
       }
     }
   }
+  /** List custom object records */
   'crm-listCustomObjectRecords': {
     parameters: {
       query?: {
@@ -3678,6 +3912,7 @@ export interface operations {
       }
     }
   }
+  /** Create custom object record */
   'crm-createCustomObjectRecord': {
     parameters: {
       path: {
@@ -3717,6 +3952,7 @@ export interface operations {
       }
     }
   }
+  /** Metadata list objects */
   'crm-metadataListObjects': {
     parameters: {
       query?: {
@@ -3750,7 +3986,10 @@ export interface operations {
       }
     }
   }
-  /** @description Create custom object schema */
+  /**
+   * Metadata create object
+   * @description Create custom object schema
+   */
   'crm-metadataCreateObject': {
     requestBody: {
       content: {
@@ -3787,6 +4026,7 @@ export interface operations {
       }
     }
   }
+  /** Metadata list object properties */
   'crm-metadataListObjectProperties': {
     parameters: {
       path: {
@@ -3820,6 +4060,7 @@ export interface operations {
       }
     }
   }
+  /** Metadata create object property */
   'crm-metadataCreateObjectProperty': {
     parameters: {
       path: {
@@ -3875,6 +4116,7 @@ export interface operations {
       }
     }
   }
+  /** Metadata create association */
   'crm-metadataCreateAssociation': {
     requestBody: {
       content: {
@@ -3911,6 +4153,7 @@ export interface operations {
       }
     }
   }
+  /** List Accounts */
   'banking-listAccounts': {
     parameters: {
       query?: {
@@ -3950,6 +4193,7 @@ export interface operations {
       }
     }
   }
+  /** List Merchants */
   'banking-listMerchants': {
     parameters: {
       query?: {
@@ -3989,6 +4233,7 @@ export interface operations {
       }
     }
   }
+  /** List Categories */
   'banking-listCategories': {
     parameters: {
       query?: {
@@ -4028,6 +4273,7 @@ export interface operations {
       }
     }
   }
+  /** List Transactions */
   'banking-listTransactions': {
     parameters: {
       query?: {
@@ -4067,6 +4313,7 @@ export interface operations {
       }
     }
   }
+  /** List Account */
   'accounting-listAccounts': {
     parameters: {
       query?: {
@@ -4087,6 +4334,18 @@ export interface operations {
               number?: string | null
               name: string
               type: string
+              subAccount?: boolean
+              accountType?: string
+              accountSubType?: string
+              currentBalance?: number
+              currencyRef?: {
+                value: string
+                name: string
+              }
+              metaData?: {
+                createTime: string
+                lastUpdatedTime: string
+              }
             }[]
           }
         }
@@ -4111,6 +4370,7 @@ export interface operations {
       }
     }
   }
+  /** List Expenses */
   'accounting-listExpenses': {
     parameters: {
       query?: {
@@ -4155,6 +4415,7 @@ export interface operations {
       }
     }
   }
+  /** List Vendors */
   'accounting-listVendors': {
     parameters: {
       query?: {
@@ -4198,6 +4459,7 @@ export interface operations {
       }
     }
   }
+  /** Get Balance Sheet */
   'accounting-getBalanceSheet': {
     parameters: {
       query?: {
@@ -4254,6 +4516,7 @@ export interface operations {
       }
     }
   }
+  /** Get Profit and Loss */
   'accounting-getProfitAndLoss': {
     parameters: {
       query?: {
@@ -4305,6 +4568,7 @@ export interface operations {
       }
     }
   }
+  /** Get Cash Flow */
   'accounting-getCashFlow': {
     parameters: {
       query?: {
@@ -4357,6 +4621,7 @@ export interface operations {
       }
     }
   }
+  /** Get Transaction List */
   'accounting-getTransactionList': {
     parameters: {
       query?: {
@@ -4412,13 +4677,14 @@ export interface operations {
       }
     }
   }
+  /** Get Customer Balance */
   'accounting-getCustomerBalance': {
     parameters: {
-      query?: {
+      query: {
         start_date?: string
         end_date?: string
         sort_order?: string
-        customer?: string
+        customer: string
         department?: string
         date_macro?: string
         summarize_by?: string
@@ -4461,13 +4727,14 @@ export interface operations {
       }
     }
   }
+  /** Get Customer Income */
   'accounting-getCustomerIncome': {
     parameters: {
-      query?: {
+      query: {
         start_date?: string
         end_date?: string
         sort_order?: string
-        customer?: string
+        customer: string
         department?: string
         date_macro?: string
         summarize_by?: string
@@ -4515,6 +4782,7 @@ export interface operations {
       }
     }
   }
+  /** Get Bank Accounts */
   'accounting-getBankAccounts': {
     parameters: {
       query: {
@@ -4559,6 +4827,7 @@ export interface operations {
       }
     }
   }
+  /** Get Payment Receipts */
   'accounting-getPaymentReceipts': {
     parameters: {
       query: {
@@ -4592,6 +4861,7 @@ export interface operations {
       }
     }
   }
+  /** List Accounts */
   'pta-listAccounts': {
     parameters: {
       query?: {
@@ -4631,6 +4901,7 @@ export interface operations {
       }
     }
   }
+  /** List Transactions */
   'pta-listTransactions': {
     parameters: {
       query?: {
@@ -4670,6 +4941,7 @@ export interface operations {
       }
     }
   }
+  /** List Commodities */
   'pta-listCommodities': {
     parameters: {
       query?: {
@@ -4709,6 +4981,7 @@ export interface operations {
       }
     }
   }
+  /** List Jobs */
   'ats-listJobs': {
     parameters: {
       query?: {
@@ -4748,6 +5021,7 @@ export interface operations {
       }
     }
   }
+  /** List Job Openings */
   'ats-listJobOpenings': {
     parameters: {
       query?: {
@@ -4790,6 +5064,7 @@ export interface operations {
       }
     }
   }
+  /** List Offers */
   'ats-listOffers': {
     parameters: {
       query?: {
@@ -4829,6 +5104,7 @@ export interface operations {
       }
     }
   }
+  /** List Candidates */
   'ats-listCandidates': {
     parameters: {
       query?: {
@@ -4868,6 +5144,7 @@ export interface operations {
       }
     }
   }
+  /** List Departments */
   'ats-listDepartments': {
     parameters: {
       query?: {
@@ -4907,6 +5184,7 @@ export interface operations {
       }
     }
   }
+  /** List Individuals */
   'hris-listIndividual': {
     parameters: {
       query?: {
@@ -4951,6 +5229,7 @@ export interface operations {
       }
     }
   }
+  /** Read Stream */
   'etl-readStream': {
     parameters: {
       query?: {
@@ -4994,6 +5273,7 @@ export interface operations {
       }
     }
   }
+  /** Discover */
   'etl-discover': {
     responses: {
       /** @description Successful response */
@@ -5020,6 +5300,7 @@ export interface operations {
       }
     }
   }
+  /** Read Data */
   'etl-read': {
     requestBody: {
       content: {
@@ -5083,6 +5364,7 @@ export interface operations {
       }
     }
   }
+  /** Write Data */
   'etl-write': {
     requestBody: {
       content: {
@@ -5136,6 +5418,229 @@ export interface operations {
       400: {
         content: {
           'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  /** List drives */
+  'fileStorage-listDrives': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: components['schemas']['unified.drive'][]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  /** Get drive */
+  'fileStorage-getDrive': {
+    parameters: {
+      path: {
+        driveId: string
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': components['schemas']['unified.drive']
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  /** List folders */
+  'fileStorage-listFolders': {
+    parameters: {
+      path: {
+        driveId: string
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: components['schemas']['unified.folder'][]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  /** Get folder */
+  'fileStorage-getFolder': {
+    parameters: {
+      path: {
+        driveId: string
+        folderId: string
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': components['schemas']['unified.folder']
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  /** List files */
+  'fileStorage-listFiles': {
+    parameters: {
+      query?: {
+        folderId?: string | null
+      }
+      path: {
+        driveId: string
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: components['schemas']['unified.file'][]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  /** Get file */
+  'fileStorage-getFile': {
+    parameters: {
+      path: {
+        driveId: string
+        fileId: string
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        content: {
+          'application/json': components['schemas']['unified.file']
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
         }
       }
       /** @description Internal server error */
