@@ -7,6 +7,10 @@ export type OpenIntSDKTypes = SDKTypes<
   openintTypes,
   Omit<ClientOptions, 'headers'> & {
     headers: {
+      /** organization auth */
+      'x-apikey'?: string
+      /** Bearer token, for end user auth */
+      authorization?: `Bearer ${string}`
       /** For passthrough and resource specific api */
       'x-resource-id'?: string
       /** Alternative ways to pass the resource id, works in case there is a single connector */
@@ -27,19 +31,37 @@ export const openintSdkDef = {
   oasMeta: openintOasMeta,
 } satisfies SdkDefinition<OpenIntSDKTypes>
 
+function generateHeaders(opts: OpenIntSDKTypes['options']) {
+  const headers: Record<string, string> = {};
+
+  if (opts.apiKey) {
+    headers['x-apikey'] = opts.apiKey;
+  }
+  if (opts.token) {
+    headers['authorization'] = `Bearer ${opts.token}`;
+  }
+  if (opts.resourceId) {
+    headers['x-resource-id'] = opts.resourceId;
+  }
+  if (opts.endUserId) {
+    headers['x-resource-end-user-id'] = opts.endUserId;
+  }
+  if (opts.connectorName) {
+    headers['x-resource-connector-name'] = opts.connectorName;
+  }
+
+  return headers;
+}
+
 export function initOpenIntSDK(opts: OpenIntSDKTypes['options']) {
+  // @ts-expect-error
+  const headers = {...opts.headers, ...generateHeaders({...opts, ...opts?.auth?.openInt})}  
+  // @ts-expect-error
+  delete opts?.auth?.openInt;
+  
   return initSDK(openintSdkDef, {
     ...opts,
-    // new way of passing auth options
-    auth: {
-      openInt: {
-        token: opts.token,
-        apiKey: opts.apiKey,
-        resourceId: opts.resourceId,
-        endUserId: opts.endUserId,
-        connectorName: opts.connectorName,
-      }
-    }
+    headers
   })
 }
 
