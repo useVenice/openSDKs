@@ -6,14 +6,17 @@ import {
   fetchLink,
   type HTTPMethod,
   type Link,
+  authLink, ClientAuthOptions
 } from '@opensdks/fetch-links'
 import {HTTPError} from './HTTPError.js'
-import {flattenNestedObject, FlattenOptions} from './utils.js'
+import type {FlattenOptions} from './utils.js'
+import {flattenNestedObject} from './utils.js'
 
 type _ClientOptions = NonNullable<Parameters<typeof _createClient>[0]>
 
 export interface ClientOptions extends _ClientOptions {
   links?: Link[] | ((defaultLinks: Link[]) => Link[])
+  auth?: ClientAuthOptions
 }
 
 export type OpenAPIClient<Paths extends {}> = ReturnType<
@@ -25,13 +28,18 @@ export type OpenAPIClient<Paths extends {}> = ReturnType<
 // to get a list of servers and all that?
 // Really do feel that they should be generated as well..
 
-export const defaultLinks = [fetchLink()]
-
 export function createClient<Paths extends {}>({
-  links: _links = defaultLinks,
+  links: _links,
   ...clientOptions
 }: ClientOptions = {}) {
-  const links = typeof _links === 'function' ? _links(defaultLinks) : _links
+  const defaultLinks = [
+    ...(clientOptions.auth
+      ? [authLink(clientOptions.auth, clientOptions.baseUrl ?? '')]
+      : []),
+    fetchLink(),
+  ]
+  const links =
+    typeof _links === 'function' ? _links(defaultLinks) : _links ?? defaultLinks
 
   const customFetch: typeof fetch = (url, init) =>
     applyLinks(new Request(url, init), links)

@@ -42,7 +42,8 @@
   "dependencies": {},
   "devDependencies": {
     "axios": "^1.6.2",
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "type-fest": "^4.28.0"
   },
   "publishConfig": {
     "access": "public"

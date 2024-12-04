@@ -4,6 +4,8 @@ import type {Link} from '../link.js'
 export * from './axiosLink.js'
 export * from './corsLink.js'
 export * from './oauthLink.js'
+export * from './openIntProxyLink.js'
+export * from './authLink.js'
 // codegen:end
 
 // MARK: Built-in links

@@ -177,6 +177,9 @@ importers:
       concurrently:
         specifier: ^8.2.2
         version: 8.2.2
+      type-fest:
+        specifier: ^4.28.0
+        version: 4.28.0
 
   packages/runtime:
     dependencies:
@@ -5945,6 +5948,10 @@ packages:
   type-fest@3.13.1:
     resolution: {integrity: sha512-tLq3bSNx+xSpwvAJnzrK0Ep5CLNWjvFTOp71URMaAEWBfRb9nnJiBoUe0tF8bI4ZFO3omgBR6NvnbzVUT3Ly4g==}
     engines: {node: '>=14.16'}
+
+  type-fest@4.28.0:
+    resolution: {integrity: sha512-jXMwges/FVbFRe5lTMJZVEZCrO9kI9c8k0PA/z7nF3bo0JSCCLysvokFjNPIUK/itEMas10MQM+AiHoHt/T/XA==}
+    engines: {node: '>=16'}
 
   type-fest@4.8.3:
     resolution: {integrity: sha512-//BaTm14Q/gHBn09xlnKNqfI8t6bmdzx2DXYfPBNofN0WUybCEUDcbCWcTa0oF09lzLjZgPphXAsvRiMK0V6Bw==}
@@ -12303,6 +12310,8 @@ snapshots:
   type-fest@1.4.0: {}
 
   type-fest@3.13.1: {}
+
+  type-fest@4.28.0: {}
 
   type-fest@4.8.3: {}
 
