@@ -7,6 +7,10 @@ export type OpenIntSDKTypes = SDKTypes<
   openintTypes,
   Omit<ClientOptions, 'headers'> & {
     headers: {
+      /** organization auth */
+      'x-apikey'?: string
+      /** Bearer token, for end user auth */
+      authorization?: `Bearer ${string}`
       /** For passthrough and resource specific api */
       'x-resource-id'?: string
       /** Alternative ways to pass the resource id, works in case there is a single connector */
