@@ -1,4 +1,4 @@
-import type {ClientOptions, SdkDefinition, SDKTypes} from '@opensdks/runtime'
+import type {ClientOptions, OpenIntProxyLinkOptions, SdkDefinition, SDKTypes} from '@opensdks/runtime'
 import {initSDK} from '@opensdks/runtime'
 import type openintTypes from '../openint.oas.types.js'
 import {default as openintOasMeta} from './openint.oas.meta.js'
@@ -7,10 +7,6 @@ export type OpenIntSDKTypes = SDKTypes<
   openintTypes,
   Omit<ClientOptions, 'headers'> & {
     headers: {
-      /** organization auth */
-      'x-apikey'?: string
-      /** Bearer token, for end user auth */
-      authorization?: `Bearer ${string}`
       /** For passthrough and resource specific api */
       'x-resource-id'?: string
       /** Alternative ways to pass the resource id, works in case there is a single connector */
@@ -23,7 +19,7 @@ export type OpenIntSDKTypes = SDKTypes<
       'x-resource-end-user-id'?: string
       [k: string]: string | undefined
     }
-  }
+  } & OpenIntProxyLinkOptions
 >
 
 export const openintSdkDef = {
@@ -32,7 +28,19 @@ export const openintSdkDef = {
 } satisfies SdkDefinition<OpenIntSDKTypes>
 
 export function initOpenIntSDK(opts: OpenIntSDKTypes['options']) {
-  return initSDK(openintSdkDef, opts)
+  return initSDK(openintSdkDef, {
+    ...opts,
+    // new way of passing auth options
+    auth: {
+      openInt: {
+        token: opts.token,
+        apiKey: opts.apiKey,
+        resourceId: opts.resourceId,
+        endUserId: opts.endUserId,
+        connectorName: opts.connectorName,
+      }
+    }
+  })
 }
 
 export type OpenIntSDK = ReturnType<typeof initOpenIntSDK>
