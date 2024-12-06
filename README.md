@@ -16,8 +16,8 @@
   </a>
 </p>
 
-> **NOTE:**
-> This repo is fully working but documentation is still work in progress. In the mean time please check the [examples folder](./examples) folder for usage guide and the [sdks folder](./sdks) for a list of pre-packaged SDKs.
+
+OpenSDKs is maintained by the [OpenInt](https://openint.dev) team. We just participated [Mega Launch Week Dec 2–6](https://launchweek.dev/lw/MEGA). Check out our [announcement blogpost](https://openint.dev/launch-week/introducing-opensdks/) for OpenSDKs.
 
 OpenSDKs is a repository of type-safe and standardized SDKs for all your APIs - powered by a single lightweight and extensible `runtime` that embraces Web Standards and HTTP, and a `cli` that can generate a custom SDKs from any OpenAPI spec.
 
@@ -27,6 +27,9 @@ npm install -D @opensdks/cli
 ```
 
 ![Demo](./examples/demo.gif)
+
+> **NOTE:**
+> This repo is fully working but documentation is still work in progress. In the mean time please check the [examples folder](./examples) folder for usage guide and the [sdks folder](./sdks) for a list of pre-packaged SDKs.
 
 <h2>Table of Contents</h2>
 
