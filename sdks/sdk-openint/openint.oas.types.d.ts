@@ -607,8 +607,8 @@ export interface components {
       | 'prefix_connector_name'
       | 'single_table'
       | 'unified_ats'
-      | 'ag_column_rename'
       | 'unified_crm'
+      | 'custom_link_ag'
     'core.integration': {
       id: string
       /** @description ISO8601 date string */
@@ -1269,8 +1269,9 @@ export interface components {
     'unified.file': {
       id: string
       name: string
-      file_url: string
-      mimeType?: string | null
+      file_url?: string | null
+      download_url?: string | null
+      mime_type?: string | null
       size?: number | null
       drive_id: string
       created_at?: string | null
@@ -1513,13 +1514,29 @@ export interface operations {
         connectorConfigId?: string | null
         connectorName?: string | null
         forceRefresh?: boolean
+        expand?: string
       }
     }
     responses: {
       /** @description Successful response */
       200: {
         content: {
-          'application/json': components['schemas']['Resource'][]
+          'application/json': ({
+            integration?: {
+              /** @description Must start with 'int_' */
+              id: string
+              name: string
+              /** Format: uri */
+              logoUrl: string
+            } | null
+            connector?: {
+              /** @description Must start with 'ccfg_' */
+              id: string
+              name: string
+              /** Format: uri */
+              logoUrl: string
+            } | null
+          } & components['schemas']['Resource'])[]
         }
       }
       /** @description Invalid input data */
@@ -1593,6 +1610,7 @@ export interface operations {
     parameters: {
       query?: {
         forceRefresh?: boolean
+        expand?: string
       }
       path: {
         id: string
@@ -1611,6 +1629,20 @@ export interface operations {
                 orgId: string
                 connectorName: string
               }
+              integration?: {
+                /** @description Must start with 'int_' */
+                id: string
+                name: string
+                /** Format: uri */
+                logoUrl: string
+              } | null
+              connector?: {
+                /** @description Must start with 'ccfg_' */
+                id: string
+                name: string
+                /** Format: uri */
+                logoUrl: string
+              } | null
             } & components['schemas']['Resource'],
             'connector_config'
           >
@@ -5505,6 +5537,11 @@ export interface operations {
   /** List folders */
   'fileStorage-listFolders': {
     parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
       path: {
         driveId: string
       }
@@ -5579,6 +5616,9 @@ export interface operations {
   'fileStorage-listFiles': {
     parameters: {
       query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
         folderId?: string | null
       }
       path: {
