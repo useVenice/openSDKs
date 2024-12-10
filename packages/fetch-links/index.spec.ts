@@ -2,7 +2,14 @@ import axios from 'axios'
 import type {HTTPMethod} from './link.js'
 import {applyLinks} from './link.js'
 import {axiosLink} from './links/axiosLink.js'
-import {authLink, echoLink, fetchLink, logLink, retryLink, throwLink} from './links/index.js'
+import {
+  authLink,
+  echoLink,
+  fetchLink,
+  logLink,
+  retryLink,
+  throwLink,
+} from './links/index.js'
 import {modifyRequest, modifyResponse} from './modifyRequestResponse.js'
 
 const req = new Request('https://httpbin.org/anything', {method: 'GET'})
@@ -155,16 +162,24 @@ describe.each([
 
 describe('authLink', () => {
   test('openInt user auth fails with no resourceId', async () => {
-    try {
-      await applyLinks(req, [authLink({openInt: {token: '123'}}, 'https://httpbin.org'), fetchLink()])
-    } catch (e) {
-      expect(e).toBeInstanceOf(Error)
-    }
+    await expect(() =>
+      applyLinks(req, [
+        authLink({openInt: {token: '123'}}, 'https://httpbin.org'),
+        fetchLink(),
+      ]),
+    ).rejects.toThrow()
   })
 
   test('OpenInt user auth succeeds with resourceId', async () => {
-    const res = await applyLinks(req, [authLink({openInt: {token: '123', resourceId: '123'}}, 'https://httpbin.org'), echoLink()])
-    const json: any = await res.json()
+    const res = await applyLinks(req, [
+      authLink(
+        {openInt: {token: '123', resourceId: '123'}},
+        'https://httpbin.org',
+      ),
+      echoLink(),
+    ])
+    const json: {headers: Record<string, unknown>; url: string} =
+      await res.json()
     expect(json.headers['authorization']).toEqual('Bearer 123')
     expect(json.headers['x-resource-id']).toEqual('123')
     expect(json.headers['x-resource-connector-name']).toEqual(undefined)
@@ -174,8 +189,15 @@ describe('authLink', () => {
   })
 
   test('openInt admin auth', async () => {
-    const res = await applyLinks(req, [authLink({openInt: {apiKey: '123', resourceId: '456'}}, 'https://httpbin.org'), echoLink()])
-    const json: any = await res.json()
+    const res = await applyLinks(req, [
+      authLink(
+        {openInt: {apiKey: '123', resourceId: '456'}},
+        'https://httpbin.org',
+      ),
+      echoLink(),
+    ])
+    const json: {headers: Record<string, unknown>; url: string} =
+      await res.json()
     expect(json.headers['x-apikey']).toEqual('123')
     expect(json.headers['x-resource-id']).toEqual('456')
     expect(json.headers['x-resource-connector-name']).toEqual(undefined)
@@ -185,31 +207,52 @@ describe('authLink', () => {
   })
 
   test('openInt user auth fails with token and no connectorName', async () => {
-    try {
-      await applyLinks(req, [authLink({openInt: {token: '123'}}, 'https://httpbin.org'), fetchLink()])
-    } catch (e) {
-      expect(e).toBeInstanceOf(Error)
-    }
+    await expect(() =>
+      applyLinks(req, [
+        authLink({openInt: {token: '123'}}, 'https://httpbin.org'),
+        fetchLink(),
+      ]),
+    ).rejects.toThrow()
   })
 
   test('openInt user auth succeeds with token and connectorName', async () => {
-    const res = await applyLinks(req, [authLink({openInt: {token: '123', connectorName: 'myConnector'}}, 'https://httpbin.org'), echoLink()])
+    const res = await applyLinks(req, [
+      authLink(
+        {openInt: {token: '123', connectorName: 'myConnector'}},
+        'https://httpbin.org',
+      ),
+      echoLink(),
+    ])
     const json: any = await res.json()
     expect(json.headers['authorization']).toEqual('Bearer 123')
     expect(json.headers['x-resource-connector-name']).toEqual('myConnector')
   })
 
   test('openInt admin auth fails with apiKey and no endUserId or connectorName', async () => {
-    try {
-      await applyLinks(req, [authLink({openInt: {apiKey: '123'}}, 'https://httpbin.org'), fetchLink()])
-    } catch (e) {
-      expect(e).toBeInstanceOf(Error)
-    }
+    await expect(() =>
+      applyLinks(req, [
+        authLink({openInt: {apiKey: '123'}}, 'https://httpbin.org'),
+        fetchLink(),
+      ]),
+    ).rejects.toThrow()
   })
 
   test('openInt admin auth succeeds with apiKey, endUserId, and connectorName', async () => {
-    const res = await applyLinks(req, [authLink({openInt: {apiKey: '123', endUserId: '789', connectorName: 'myConnector'}}, 'https://httpbin.org'), echoLink()])
-    const json: any = await res.json()
+    const res = await applyLinks(req, [
+      authLink(
+        {
+          openInt: {
+            apiKey: '123',
+            endUserId: '789',
+            connectorName: 'myConnector',
+          },
+        },
+        'https://httpbin.org',
+      ),
+      echoLink(),
+    ])
+    const json: {headers: Record<string, unknown>; url: string} =
+      await res.json()
     expect(json.headers['x-apikey']).toEqual('123')
     expect(json.headers['x-resource-end-user-id']).toEqual('789')
     expect(json.headers['x-resource-connector-name']).toEqual('myConnector')
