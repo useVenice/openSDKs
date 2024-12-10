@@ -404,7 +404,12 @@
             "name": "connectorName",
             "schema": {"type": ["string", "null"]}
           },
-          {"in": "query", "name": "forceRefresh", "schema": {"type": "boolean"}}
+          {
+            "in": "query",
+            "name": "forceRefresh",
+            "schema": {"type": "boolean"}
+          },
+          {"in": "query", "name": "expand", "schema": {"type": "string"}}
         ],
         "responses": {
           "200": {
@@ -413,7 +418,36 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": {"$ref": "#/components/schemas/Resource"}
+                  "items": {
+                    "allOf": [{"$ref": "#/components/schemas/Resource"}],
+                    "type": "object",
+                    "properties": {
+                      "integration": {
+                        "type": ["object", "null"],
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "Must start with 'int_'"
+                          },
+                          "name": {"type": "string"},
+                          "logoUrl": {"type": "string", "format": "uri"}
+                        },
+                        "required": ["id", "name", "logoUrl"]
+                      },
+                      "connector": {
+                        "type": ["object", "null"],
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "Must start with 'ccfg_'"
+                          },
+                          "name": {"type": "string"},
+                          "logoUrl": {"type": "string", "format": "uri"}
+                        },
+                        "required": ["id", "name", "logoUrl"]
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -589,7 +623,12 @@
             },
             "required": true
           },
-          {"in": "query", "name": "forceRefresh", "schema": {"type": "boolean"}}
+          {
+            "in": "query",
+            "name": "forceRefresh",
+            "schema": {"type": "boolean"}
+          },
+          {"in": "query", "name": "expand", "schema": {"type": "string"}}
         ],
         "responses": {
           "200": {
@@ -614,6 +653,30 @@
                         "connectorName": {"type": "string"}
                       },
                       "required": ["id", "orgId", "connectorName"]
+                    },
+                    "integration": {
+                      "type": ["object", "null"],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Must start with 'int_'"
+                        },
+                        "name": {"type": "string"},
+                        "logoUrl": {"type": "string", "format": "uri"}
+                      },
+                      "required": ["id", "name", "logoUrl"]
+                    },
+                    "connector": {
+                      "type": ["object", "null"],
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "description": "Must start with 'ccfg_'"
+                        },
+                        "name": {"type": "string"},
+                        "logoUrl": {"type": "string", "format": "uri"}
+                      },
+                      "required": ["id", "name", "logoUrl"]
                     }
                   },
                   "required": ["connector_config"]
@@ -6810,7 +6873,18 @@
             "name": "driveId",
             "schema": {"type": "string"},
             "required": true
-          }
+          },
+          {
+            "in": "query",
+            "name": "sync_mode",
+            "schema": {"type": "string", "enum": ["full", "incremental"]}
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "schema": {"type": ["string", "null"]}
+          },
+          {"in": "query", "name": "page_size", "schema": {"type": "number"}}
         ],
         "responses": {
           "200": {
@@ -6930,6 +7004,17 @@
             "schema": {"type": "string"},
             "required": true
           },
+          {
+            "in": "query",
+            "name": "sync_mode",
+            "schema": {"type": "string", "enum": ["full", "incremental"]}
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "schema": {"type": ["string", "null"]}
+          },
+          {"in": "query", "name": "page_size", "schema": {"type": "number"}},
           {
             "in": "query",
             "name": "folderId",
@@ -7296,8 +7381,8 @@
           "prefix_connector_name",
           "single_table",
           "unified_ats",
-          "ag_column_rename",
-          "unified_crm"
+          "unified_crm",
+          "custom_link_ag"
         ]
       },
       "core.integration": {
@@ -8330,15 +8415,16 @@
         "properties": {
           "id": {"type": "string"},
           "name": {"type": "string"},
-          "file_url": {"type": "string"},
-          "mimeType": {"type": ["string", "null"]},
+          "file_url": {"type": ["string", "null"]},
+          "download_url": {"type": ["string", "null"]},
+          "mime_type": {"type": ["string", "null"]},
           "size": {"type": ["number", "null"]},
           "drive_id": {"type": "string"},
           "created_at": {"type": ["string", "null"]},
           "modified_at": {"type": ["string", "null"]},
           "raw_data": {"type": "object", "additionalProperties": {}}
         },
-        "required": ["id", "name", "file_url", "drive_id"],
+        "required": ["id", "name", "drive_id"],
         "description": "A unified representation of a file within a drive"
       }
     }
