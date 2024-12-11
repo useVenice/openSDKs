@@ -30,7 +30,7 @@ maybeTest(
     const qbo = initSDK(qboSdkDef, {
       realmId,
       envName: 'sandbox',
-      auth: {openInt: {apiKey, resourceId}},
+      auth: {openInt: {apiKey, connectionId: resourceId}},
     })
 
     const res = await qbo.GET('/companyinfo/{id}', {

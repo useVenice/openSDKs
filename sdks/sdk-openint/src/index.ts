@@ -11,16 +11,16 @@ export type OpenIntSDKTypes = SDKTypes<
       'x-apikey'?: string
       /** Bearer token, for end user auth */
       authorization?: `Bearer ${string}`
-      /** For passthrough and resource specific api */
-      'x-resource-id'?: string
-      /** Alternative ways to pass the resource id, works in case there is a single connector */
-      'x-resource-connector-name'?: string
-      'x-resource-connector-config-id'?: string
+      /** For passthrough and connection specific api */
+      'x-connection-id'?: string
+      /** Alternative ways to pass the connection id, works in case there is a single connector */
+      'x-connection-connector-name'?: string
+      'x-connection-connector-config-id'?: string
       /**
        * Implied (and thus noop) in end user authentication.
        * Typically used together with x-connector-name for admin level auth
        */
-      'x-resource-end-user-id'?: string
+      'x-connection-customer-id'?: string
       [k: string]: string | undefined
     }
   } & OpenIntProxyLinkOptions
@@ -40,14 +40,14 @@ function generateHeaders(opts: OpenIntSDKTypes['options']) {
   if (opts.token) {
     headers['authorization'] = `Bearer ${opts.token}`;
   }
-  if (opts.resourceId) {
-    headers['x-resource-id'] = opts.resourceId;
+  if (opts.connectionId) {
+    headers['x-connection-id'] = opts.connectionId;
   }
-  if (opts.endUserId) {
-    headers['x-resource-end-user-id'] = opts.endUserId;
+  if (opts.customerId) {
+    headers['x-connection-customer-id'] = opts.customerId;
   }
   if (opts.connectorName) {
-    headers['x-resource-connector-name'] = opts.connectorName;
+    headers['x-connection-connector-name'] = opts.connectorName;
   }
 
   return headers;

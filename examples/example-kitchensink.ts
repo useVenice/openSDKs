@@ -10,7 +10,6 @@ import {plaidSdkDef} from '@opensdks/sdk-plaid'
 import {salesloftSdkDef} from '@opensdks/sdk-salesloft'
 import {slackSdkDef} from '@opensdks/sdk-slack'
 import {twilioSdkDef} from '@opensdks/sdk-twilio'
-import {veniceSdkDef} from '@opensdks/sdk-venice'
 
 // Comparison between GitHub vanilla octokit client and openSDKs client
 const github = initSDK(githubSdkDef, {
@@ -104,17 +103,12 @@ export const slack = initSDK(slackSdkDef, {
   headers: {token: process.env['SLACK_TOKEN']!},
 })
 
-export const venice = initSDK(veniceSdkDef, {
-  headers: {'x-apikey': process.env['VENICE_API_KEY']},
-})
-
 await github
   .GET('/orgs/{org}/actions/secrets', {params: {path: {org: 'tonyxiao'}}})
   .then((r) => {
     console.log(r.data.secrets[0]?.selected_repositories_url)
   })
 
-await venice.GET('/core/resource').then((r) => console.log(r.data))
 
 await slack.POST('/chat.postMessage', {
   body: {channel: 'C01U6P7LZ9M', text: 'Hello world!'},

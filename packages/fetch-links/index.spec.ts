@@ -161,7 +161,7 @@ describe.each([
 })
 
 describe('authLink', () => {
-  test('openInt user auth fails with no resourceId', async () => {
+  test('openInt user auth fails with no connectionId', async () => {
     await expect(() =>
       applyLinks(req, [
         authLink({openInt: {token: '123'}}, 'https://httpbin.org'),
@@ -170,10 +170,10 @@ describe('authLink', () => {
     ).rejects.toThrow()
   })
 
-  test('OpenInt user auth succeeds with resourceId', async () => {
+  test('OpenInt user auth succeeds with connectionId', async () => {
     const res = await applyLinks(req, [
       authLink(
-        {openInt: {token: '123', resourceId: '123'}},
+        {openInt: {token: '123', connectionId: '123'}},
         'https://httpbin.org',
       ),
       echoLink(),
@@ -181,17 +181,17 @@ describe('authLink', () => {
     const json: {headers: Record<string, unknown>; url: string} =
       await res.json()
     expect(json.headers['authorization']).toEqual('Bearer 123')
-    expect(json.headers['x-resource-id']).toEqual('123')
-    expect(json.headers['x-resource-connector-name']).toEqual(undefined)
-    expect(json.headers['x-resource-connector-config-id']).toEqual(undefined)
-    expect(json.headers['x-resource-end-user-id']).toEqual(undefined)
+    expect(json.headers['x-connection-id']).toEqual('123')
+    expect(json.headers['x-connection-connector-name']).toEqual(undefined)
+    expect(json.headers['x-connection-connector-config-id']).toEqual(undefined)
+    expect(json.headers['x-connection-customer-id']).toEqual(undefined)
     expect(json.url).toContain('openint.dev')
   })
 
   test('openInt admin auth', async () => {
     const res = await applyLinks(req, [
       authLink(
-        {openInt: {apiKey: '123', resourceId: '456'}},
+        {openInt: {apiKey: '123', connectionId: '456'}},
         'https://httpbin.org',
       ),
       echoLink(),
@@ -199,10 +199,10 @@ describe('authLink', () => {
     const json: {headers: Record<string, unknown>; url: string} =
       await res.json()
     expect(json.headers['x-apikey']).toEqual('123')
-    expect(json.headers['x-resource-id']).toEqual('456')
-    expect(json.headers['x-resource-connector-name']).toEqual(undefined)
-    expect(json.headers['x-resource-connector-config-id']).toEqual(undefined)
-    expect(json.headers['x-resource-end-user-id']).toEqual(undefined)
+    expect(json.headers['x-connection-id']).toEqual('456')
+    expect(json.headers['x-connection-connector-name']).toEqual(undefined)
+    expect(json.headers['x-connection-connector-config-id']).toEqual(undefined)
+    expect(json.headers['x-connection-customer-id']).toEqual(undefined)
     expect(json.url).toContain('openint.dev')
   })
 
@@ -225,10 +225,10 @@ describe('authLink', () => {
     ])
     const json: any = await res.json()
     expect(json.headers['authorization']).toEqual('Bearer 123')
-    expect(json.headers['x-resource-connector-name']).toEqual('myConnector')
+    expect(json.headers['x-connection-connector-name']).toEqual('myConnector')
   })
 
-  test('openInt admin auth fails with apiKey and no endUserId or connectorName', async () => {
+  test('openInt admin auth fails with apiKey and no customerId or connectorName', async () => {
     await expect(() =>
       applyLinks(req, [
         authLink({openInt: {apiKey: '123'}}, 'https://httpbin.org'),
@@ -237,13 +237,13 @@ describe('authLink', () => {
     ).rejects.toThrow()
   })
 
-  test('openInt admin auth succeeds with apiKey, endUserId, and connectorName', async () => {
+  test('openInt admin auth succeeds with apiKey, customerId, and connectorName', async () => {
     const res = await applyLinks(req, [
       authLink(
         {
           openInt: {
             apiKey: '123',
-            endUserId: '789',
+            customerId: '789',
             connectorName: 'myConnector',
           },
         },
@@ -254,7 +254,7 @@ describe('authLink', () => {
     const json: {headers: Record<string, unknown>; url: string} =
       await res.json()
     expect(json.headers['x-apikey']).toEqual('123')
-    expect(json.headers['x-resource-end-user-id']).toEqual('789')
-    expect(json.headers['x-resource-connector-name']).toEqual('myConnector')
+    expect(json.headers['x-connection-customer-id']).toEqual('789')
+    expect(json.headers['x-connection-connector-name']).toEqual('myConnector')
   })
 })
