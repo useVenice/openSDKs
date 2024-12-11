@@ -161,13 +161,13 @@ describe.each([
 })
 
 describe('authLink', () => {
-  test('openInt user auth fails with no connectionId', async () => {
-    await expect(() =>
+  test('openInt user auth fails with no connectionId', () => {
+    expect(() =>
       applyLinks(req, [
         authLink({openInt: {token: '123'}}, 'https://httpbin.org'),
         fetchLink(),
       ]),
-    ).rejects.toThrow()
+    ).toThrow()
   })
 
   test('OpenInt user auth succeeds with connectionId', async () => {
@@ -206,13 +206,13 @@ describe('authLink', () => {
     expect(json.url).toContain('openint.dev')
   })
 
-  test('openInt user auth fails with token and no connectorName', async () => {
-    await expect(() =>
+  test('openInt user auth fails with token and no connectorName', () => {
+    expect(() =>
       applyLinks(req, [
         authLink({openInt: {token: '123'}}, 'https://httpbin.org'),
         fetchLink(),
       ]),
-    ).rejects.toThrow()
+    ).toThrow()
   })
 
   test('openInt user auth succeeds with token and connectorName', async () => {
@@ -228,13 +228,13 @@ describe('authLink', () => {
     expect(json.headers['x-connection-connector-name']).toEqual('myConnector')
   })
 
-  test('openInt admin auth fails with apiKey and no customerId or connectorName', async () => {
-    await expect(() =>
+  test('openInt admin auth fails with apiKey and no customerId or connectorName', () => {
+    expect(() =>
       applyLinks(req, [
         authLink({openInt: {apiKey: '123'}}, 'https://httpbin.org'),
         fetchLink(),
       ]),
-    ).rejects.toThrow()
+    ).toThrow()
   })
 
   test('openInt admin auth succeeds with apiKey, customerId, and connectorName', async () => {
