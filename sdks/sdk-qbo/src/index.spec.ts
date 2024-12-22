@@ -5,12 +5,13 @@ import qboSdkDef from './index.js'
 const realmId = process.env['QBO_REALM_ID']!
 /** TODO: Setup qbo access + refresh token on CI  */
 const accessToken = process.env['QBO_ACCESS_TOKEN']!
+const qboEnv = process.env['QBO_ENV']! as 'sandbox' | 'production'
 const maybeTest = realmId ? test : test.skip
 
 maybeTest('get QBO company directly with access token', async () => {
   const qbo = initSDK(qboSdkDef, {
     realmId,
-    envName: 'sandbox',
+    envName: qboEnv,
     auth: {oauth: {accessToken}},
   })
 
@@ -19,18 +20,18 @@ maybeTest('get QBO company directly with access token', async () => {
   })
 
   expect(res.response.status).toEqual(200)
-  expect(res.data.CompanyInfo.CompanyName).toEqual('Sandbox Company_US_1')
+  expect(res.data.CompanyInfo.CompanyName).toEqual(expect.any(String))
 })
 
-const resourceId = process.env['QBO_RESOURCE_ID']!
+const connectionId = process.env['QBO_CONNECTION_ID']!
 const apiKey = process.env['OPENINT_API_KEY']!
 maybeTest(
   'get QBO company via proxy with api key and resource id',
   async () => {
     const qbo = initSDK(qboSdkDef, {
       realmId,
-      envName: 'sandbox',
-      auth: {openInt: {apiKey, connectionId: resourceId}},
+      envName: qboEnv,
+      auth: {openInt: {apiKey, connectionId}},
     })
 
     const res = await qbo.GET('/companyinfo/{id}', {
@@ -38,7 +39,7 @@ maybeTest(
     })
 
     expect(res.response.status).toEqual(200)
-    expect(res.data.CompanyInfo.CompanyName).toEqual('Sandbox Company_US_1')
+    expect(res.data.CompanyInfo.CompanyName).toEqual(expect.any(String))
   },
 )
 
@@ -49,7 +50,7 @@ maybeTest(
   async () => {
     const qbo = initSDK(qboSdkDef, {
       realmId,
-      envName: 'sandbox',
+      envName: qboEnv,
       auth: {openInt: {token, connectorName}},
     })
 
@@ -58,6 +59,6 @@ maybeTest(
     })
 
     expect(res.response.status).toEqual(200)
-    expect(res.data.CompanyInfo.CompanyName).toEqual('Sandbox Company_US_1')
+    expect(res.data.CompanyInfo.CompanyName).toEqual(expect.any(String))
   },
 )
