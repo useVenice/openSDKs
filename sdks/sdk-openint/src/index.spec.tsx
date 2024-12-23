@@ -1,4 +1,3 @@
-import {jest} from '@jest/globals'
 import createReactQuery from 'openapi-react-query'
 import {createQueryHook} from 'swr-openapi'
 import initOpenIntSDK from './index.js'
