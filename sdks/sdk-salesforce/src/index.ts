@@ -27,23 +27,24 @@ export type QueryResponse<T> = {
 // TODO: Add handling for instanceUrl, apiVersion and auth tokens into this
 export const salesforceSdkDef = {
   types: {} as SalesforceSDKTypes,
-  defaultOptions: {}, // needed due to instance-specific server url in oasMeta 
+  defaultOptions: {}, // needed due to instance-specific server url in oasMeta
   // Cannot use the oasMeta because the serverUrl is going to be instance dependent
   createClient: (ctx, options) => {
     const client = ctx.createClient(options)
-    // TODO: Add typesafe handling of response from query just like supablue postgREST.js client
-    // @see https://github.com/supabase/postgrest-js?tab=readme-ov-file
-    /** NOTE: `SELECT *` is now allowed by Salesforce. Exact columns need to be specified */
-    function query<T = {[k: string]: any}>(query: string) {
-      return client
-        .request('GET', '/query', {params: {query: {q: query}}})
-        .then((r) => r.data as QueryResponse<T>)
-    }
-    return {
-      ...client,
-      query,
+
+    const extension = {
+      // TODO: Add typesafe handling of response from query just like supablue postgREST.js client
+      // @see https://github.com/supabase/postgrest-js?tab=readme-ov-file
+      /** NOTE: `SELECT *` is now allowed by Salesforce. Exact columns need to be specified */
+      query<T = {[k: string]: any}>(query: string) {
+        return client
+          .request('GET', '/query', {params: {query: {q: query}}})
+          .then((r) => r.data as QueryResponse<T>)
+      },
       // TODO: Add other api such as tooling / bulk etc.
     }
+    Object.assign(client, extension)
+    return client as typeof client & typeof extension
   },
 } satisfies SdkDefinition<SalesforceSDKTypes>
 
