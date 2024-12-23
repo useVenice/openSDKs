@@ -46,8 +46,10 @@
     "@opensdks/runtime": "workspace:*",
     "concurrently": "^8.2.2",
     "openapi-fetch": "^0.13.3",
+    "openapi-react-query": "^0.2.8",
     "openapi-typescript": "6.7.1",
-    "prettier": "^3.1.0"
+    "prettier": "^3.1.0",
+    "swr-openapi": "^5.1.2"
   },
   "peerDependencies": {
     "@opensdks/runtime": "workspace:*"
