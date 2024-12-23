@@ -1,3 +1,4 @@
+/** TODO: Leverage typescript helper instead. */
 export type HTTPMethod =
   | 'GET'
   | 'PUT'

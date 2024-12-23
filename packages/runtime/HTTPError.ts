@@ -1,11 +1,14 @@
 import type {FetchResponse} from 'openapi-fetch'
-import type {HTTPMethod} from '@opensdks/fetch-links'
+import type {HttpMethod, MediaType} from 'openapi-typescript-helpers'
 
-export class HTTPError<T> extends Error {
+export class HTTPError<T extends Record<string | number, any>> extends Error {
   override name = 'HTTPError'
-  readonly method: HTTPMethod
-  readonly error: Extract<FetchResponse<T>, {error: unknown}>['error']
-  readonly response: FetchResponse<T>['response']
+  readonly method: Uppercase<HttpMethod>
+  readonly error: Extract<
+    FetchResponse<T, {}, MediaType>,
+    {error: unknown}
+  >['error']
+  readonly response: FetchResponse<T, {}, MediaType>['response']
 
   get code() {
     return this.response?.status
@@ -15,7 +18,9 @@ export class HTTPError<T> extends Error {
     method,
     error,
     response: r,
-  }: Extract<FetchResponse<T>, {error: unknown}> & {method: HTTPMethod}) {
+  }: Extract<FetchResponse<T, {}, MediaType>, {error: unknown}> & {
+    method: Uppercase<HttpMethod>
+  }) {
     super(
       [
         `[${r.status} ${r.statusText}] ${method.toUpperCase()} ${r.url}`,

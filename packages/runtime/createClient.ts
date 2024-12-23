@@ -1,12 +1,23 @@
-import type {BodySerializer, FetchOptions, FetchResponse} from 'openapi-fetch'
+import type {
+  BodySerializer,
+  FetchOptions,
+  FetchResponse,
+  InitParam,
+  MaybeOptionalInit,
+} from 'openapi-fetch'
 import _createClient from 'openapi-fetch'
-import type {PathsWithMethod} from 'openapi-typescript-helpers'
+import type {
+  HttpMethod,
+  MediaType,
+  PathsWithMethod,
+} from 'openapi-typescript-helpers'
+import type {ClientAuthOptions} from '@opensdks/fetch-links'
 import {
   applyLinks,
+  authLink,
   fetchLink,
-  type HTTPMethod,
+  // type HTTPMethod,
   type Link,
-  authLink, ClientAuthOptions
 } from '@opensdks/fetch-links'
 import {HTTPError} from './HTTPError.js'
 import type {FlattenOptions} from './utils.js'
@@ -28,10 +39,21 @@ export type OpenAPIClient<Paths extends {}> = ReturnType<
 // to get a list of servers and all that?
 // Really do feel that they should be generated as well..
 
-export function createClient<Paths extends {}>({
-  links: _links,
-  ...clientOptions
-}: ClientOptions = {}) {
+const HTTP_METHODS = [
+  'GET',
+  'PUT',
+  'POST',
+  'DELETE',
+  'OPTIONS',
+  'HEAD',
+  'PATCH',
+  'TRACE',
+] satisfies ReadonlyArray<Uppercase<HttpMethod>>
+
+export function createClient<
+  Paths extends {},
+  Media extends MediaType = MediaType,
+>({links: _links, ...clientOptions}: ClientOptions = {}) {
   const defaultLinks = [
     ...(clientOptions.auth
       ? [authLink(clientOptions.auth, clientOptions.baseUrl ?? '')]
@@ -43,7 +65,26 @@ export function createClient<Paths extends {}>({
 
   const customFetch: typeof fetch = (url, init) =>
     applyLinks(new Request(url, init), links)
-  const client = _createClient<Paths>({...clientOptions, fetch: customFetch})
+  const client = _createClient<Paths, Media>({
+    ...clientOptions,
+    fetch: customFetch,
+  })
+
+  const clientThatThrows = Object.fromEntries(
+    HTTP_METHODS.map((method) => [
+      method,
+      /* eslint-disable */
+      (...args: unknown[]) =>
+        (client as any)[method](...args).then(throwIfNotOk(method)),
+      /* eslint-enable */
+    ]),
+  ) as {
+    [K in Uppercase<HttpMethod>]: ClientMethodThatThrows<
+      Paths,
+      Lowercase<K>,
+      Media
+    >
+  }
 
   return {
     clientOptions,
@@ -51,7 +92,7 @@ export function createClient<Paths extends {}>({
     client,
     /** Untyped request */
     request: <T>(
-      method: HTTPMethod,
+      method: Uppercase<HttpMethod>,
       url: string,
       options?: Omit<FetchOptions<unknown>, 'body'> & {body?: unknown},
     ) =>
@@ -59,37 +100,16 @@ export function createClient<Paths extends {}>({
         throwIfNotOk(method),
       ) as Promise<{
         data: T
-        response: FetchResponse<unknown>['response']
+        response: FetchResponse<{}, {}, MediaType>['response']
       }>,
-    GET: <P extends PathsWithMethod<Paths, 'get'>>(
-      ...args: Parameters<typeof client.GET<P>>
-    ) => client.GET<P>(...args).then(throwIfNotOk('GET')),
-    PUT: <P extends PathsWithMethod<Paths, 'put'>>(
-      ...args: Parameters<typeof client.PUT<P>>
-    ) => client.PUT(...args).then(throwIfNotOk('PUT')),
-    POST: <P extends PathsWithMethod<Paths, 'post'>>(
-      ...args: Parameters<typeof client.POST<P>>
-    ) => client.POST(...args).then(throwIfNotOk('POST')),
-    DELETE: <P extends PathsWithMethod<Paths, 'delete'>>(
-      ...args: Parameters<typeof client.DELETE<P>>
-    ) => client.DELETE(...args).then(throwIfNotOk('DELETE')),
-    OPTIONS: <P extends PathsWithMethod<Paths, 'options'>>(
-      ...args: Parameters<typeof client.OPTIONS<P>>
-    ) => client.OPTIONS(...args).then(throwIfNotOk('OPTIONS')),
-    HEAD: <P extends PathsWithMethod<Paths, 'head'>>(
-      ...args: Parameters<typeof client.HEAD<P>>
-    ) => client.HEAD(...args).then(throwIfNotOk('HEAD')),
-    PATCH: <P extends PathsWithMethod<Paths, 'patch'>>(
-      ...args: Parameters<typeof client.PATCH<P>>
-    ) => client.PATCH(...args).then(throwIfNotOk('PATCH')),
-    TRACE: <P extends PathsWithMethod<Paths, 'trace'>>(
-      ...args: Parameters<typeof client.TRACE<P>>
-    ) => client.TRACE(...args).then(throwIfNotOk('TRACE')),
+    ...clientThatThrows,
   }
 }
 
-export function throwIfNotOk<T>(method: HTTPMethod) {
-  return (res: FetchResponse<T>) => {
+export function throwIfNotOk<T extends Record<string | number, any>>(
+  method: Uppercase<HttpMethod>,
+) {
+  return (res: FetchResponse<T, {}, MediaType>) => {
     if (res.error) {
       throw new HTTPError<T>({method, error: res.error, response: res.response})
     }
@@ -123,3 +143,17 @@ export const createFormUrlEncodedBodySerializer =
     // const data = new URLSearchParams(flattened)
     // return data.toString()
   }
+
+export type ClientMethodThatThrows<
+  Paths extends Record<string, Record<HttpMethod, {}>>,
+  Method extends HttpMethod,
+  Media extends MediaType,
+> = <
+  Path extends PathsWithMethod<Paths, Method>,
+  Init extends MaybeOptionalInit<Paths[Path], Method>,
+>(
+  url: Path,
+  ...init: InitParam<Init>
+) => Promise<
+  Extract<FetchResponse<Paths[Path][Method], Init, Media>, {data: unknown}>
+>
