@@ -1,8 +1,8 @@
 const {initSDK} = require('@opensdks/runtime')
-const {veniceSdkDef} = require('@opensdks/sdk-venice')
+const {openintSdkDef} = require('@opensdks/sdk-openint')
 
-const venice = initSDK(veniceSdkDef)
+const openint = initSDK(openintSdkDef)
 
-void venice.GET('/health').then((r) => {
+void openint.GET('/health').then((r) => {
   console.log(r.data)
 })
