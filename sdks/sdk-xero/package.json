@@ -51,7 +51,7 @@
     "change-case": "^5.4.2",
     "concurrently": "^8.2.2",
     "js-yaml": "^4.1.0",
-    "openapi-typescript": "6.7.1",
+    "openapi-typescript": "^7.4.4",
     "prettier": "^3.1.0"
   },
   "publishConfig": {

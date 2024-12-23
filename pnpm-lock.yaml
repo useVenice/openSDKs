@@ -141,8 +141,8 @@ importers:
         specifier: ^4.4.0
         version: 4.4.0
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
       prettier:
         specifier: ^3.1.0
         version: 3.1.0
@@ -244,8 +244,8 @@ importers:
         specifier: ^4.4.0
         version: 4.4.0
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-apollo:
     devDependencies:
@@ -259,8 +259,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
       prettier:
         specifier: ^3.1.0
         version: 3.1.0
@@ -280,8 +280,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-chargepoint:
     devDependencies:
@@ -292,8 +292,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-clerk:
     devDependencies:
@@ -304,8 +304,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-coda:
     devDependencies:
@@ -316,8 +316,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-discord:
     devDependencies:
@@ -328,8 +328,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-dropbox:
     devDependencies:
@@ -340,8 +340,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-finch:
     devDependencies:
@@ -352,8 +352,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
       prettier:
         specifier: ^3.1.0
         version: 3.1.0
@@ -367,8 +367,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
       prettier:
         specifier: ^3.1.0
         version: 3.1.0
@@ -382,8 +382,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-google:
     devDependencies:
@@ -394,8 +394,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-greenhouse:
     dependencies:
@@ -410,8 +410,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
       prettier:
         specifier: ^3.1.0
         version: 3.1.0
@@ -431,8 +431,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-hubspot:
     devDependencies:
@@ -449,8 +449,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-lever:
     dependencies:
@@ -465,8 +465,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
       prettier:
         specifier: ^3.1.0
         version: 3.1.0
@@ -480,8 +480,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-merge:
     devDependencies:
@@ -498,8 +498,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-msgraph:
     devDependencies:
@@ -510,8 +510,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-nango:
     devDependencies:
@@ -525,8 +525,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
       prettier:
         specifier: ^3.1.0
         version: 3.1.0
@@ -540,8 +540,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-onebrick:
     devDependencies:
@@ -552,8 +552,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-openai:
     devDependencies:
@@ -564,8 +564,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-openint:
     devDependencies:
@@ -582,14 +582,14 @@ importers:
         specifier: ^0.2.8
         version: 0.2.8(@tanstack/react-query@5.62.8(react@18.2.0))(openapi-fetch@0.13.3)
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
       prettier:
         specifier: ^3.1.0
         version: 3.1.0
       swr-openapi:
         specifier: ^5.1.2
-        version: 5.1.2(openapi-fetch@0.13.3)(openapi-typescript@6.7.1)(react@18.2.0)(swr@2.2.5(react@18.2.0))(typescript@5.3.2)
+        version: 5.1.2(openapi-fetch@0.13.3)(openapi-typescript@7.4.4(typescript@5.3.2))(react@18.2.0)(swr@2.2.5(react@18.2.0))(typescript@5.3.2)
 
   sdks/sdk-outreach:
     devDependencies:
@@ -600,8 +600,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
       prettier:
         specifier: ^3.1.0
         version: 3.1.0
@@ -615,8 +615,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-plaid:
     devDependencies:
@@ -627,8 +627,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
       prettier:
         specifier: ^3.1.0
         version: 3.1.0
@@ -645,8 +645,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
       prettier:
         specifier: ^3.1.0
         version: 3.1.0
@@ -660,8 +660,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
       prettier:
         specifier: ^3.1.0
         version: 3.1.0
@@ -675,8 +675,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-salesloft:
     devDependencies:
@@ -687,8 +687,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
       prettier:
         specifier: ^3.1.0
         version: 3.1.0
@@ -702,8 +702,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
       prettier:
         specifier: ^3.1.0
         version: 3.1.0
@@ -717,8 +717,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
       prettier:
         specifier: ^3.1.0
         version: 3.1.0
@@ -738,8 +738,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-twenty:
     devDependencies:
@@ -750,8 +750,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-twilio:
     devDependencies:
@@ -762,8 +762,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-venice:
     devDependencies:
@@ -774,8 +774,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
       prettier:
         specifier: ^3.1.0
         version: 3.1.0
@@ -789,8 +789,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   sdks/sdk-xero:
     dependencies:
@@ -811,8 +811,8 @@ importers:
         specifier: ^4.1.0
         version: 4.1.0
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
       prettier:
         specifier: ^3.1.0
         version: 3.1.0
@@ -826,8 +826,8 @@ importers:
         specifier: ^8.2.2
         version: 8.2.2
       openapi-typescript:
-        specifier: 6.7.1
-        version: 6.7.1
+        specifier: ^7.4.4
+        version: 7.4.4(typescript@5.3.2)
 
   website:
     dependencies:
@@ -1935,10 +1935,6 @@ packages:
   '@exodus/schemasafe@1.3.0':
     resolution: {integrity: sha512-5Aap/GaRupgNx/feGBwLLTVv8OQFfv3pq2lPRzPg9R+IOBnDgghTGW7l7EuVXOvg5cc/xSAlRW8rBrjIC3Nvqw==}
 
-  '@fastify/busboy@2.1.0':
-    resolution: {integrity: sha512-+KpH+QxZU7O4675t3mnkQKcZZg56u+K/Ct2K+N2AZYNVK8kyeo/bI18tI8aPm3tvNNRyTWfj6s5tnGNlcbQRsA==}
-    engines: {node: '>=14'}
-
   '@humanwhocodes/config-array@0.11.13':
     resolution: {integrity: sha512-JSBDMiDKSzQVngfRjOdFXgFfklaXI4K9nLF49Auh21lmBWRLIK3+xTErTWD4KU54pb6coM6ESE7Awz/FNU3zgQ==}
     engines: {node: '>=10.10.0'}
@@ -2154,6 +2150,16 @@ packages:
   '@pkgr/utils@2.4.2':
     resolution: {integrity: sha512-POgTXhjrTfbTV63DiFXav4lBHiICLKKwDeaKn9Nphwj7WH6m0hMMCaJkMyRWjgtPFyRKRVoMXXjczsTQRDEhYw==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
+
+  '@redocly/ajv@8.11.2':
+    resolution: {integrity: sha512-io1JpnwtIcvojV7QKDUSIuMN/ikdOUd1ReEnUnMKGfDVridQZ31J0MmIuqwuRjWDZfmvr+Q0MqCcfHM2gTivOg==}
+
+  '@redocly/config@0.17.1':
+    resolution: {integrity: sha512-CEmvaJuG7pm2ylQg53emPmtgm4nW2nxBgwXzbVEHpGas/lGnMyN8Zlkgiz6rPw0unASg6VW3wlz27SOL5XFHYQ==}
+
+  '@redocly/openapi-core@1.26.1':
+    resolution: {integrity: sha512-xRuVZqMVRFzqjbUCpOTra4tbnmQMWsya996omZMV3WgD084Z6OWB3FXflhAp93E/yAmbWlWZpddw758AyoaLSw==}
+    engines: {node: '>=14.19.0', npm: '>=7.0.0'}
 
   '@rushstack/eslint-patch@1.6.0':
     resolution: {integrity: sha512-2/U3GXA6YiPYQDLGwtGlnNgKYBSwCFIHf8Y9LUY5VATHdtbLlU0Y1R3QoBnT0aB4qv/BEiVVsj7LJXoQCgJ2vA==}
@@ -2428,6 +2434,10 @@ packages:
     resolution: {integrity: sha512-nc0Axzp/0FILLEVsm4fNwLCwMttvhEI263QtVPQcbpfZZ3ts0hLsZGOpE6czNlid7CJ9MlyH8reXkpsf3YUY4w==}
     engines: {node: '>=0.4.0'}
     hasBin: true
+
+  agent-base@7.1.3:
+    resolution: {integrity: sha512-jRR5wdylq8CkOe6hei19GGZnxM6rBGwFl3Bg0YItGDimvjGtAvdZk4Pu6Cl4u4Igsws4a1fd1Vq3ezrhn4KmFw==}
+    engines: {node: '>= 14'}
 
   ajv@6.12.6:
     resolution: {integrity: sha512-j3fVLgvTo527anyYyJOGTYJbG+vnnQYvE0m5mmkc1TK+nxAppkCLMIL0aZ4dblVCNoGShhm+kzE4ZUykBoMg4g==}
@@ -2888,6 +2898,9 @@ packages:
 
   color-name@1.1.4:
     resolution: {integrity: sha512-dOy+3AuW3a2wNbZHIuMZpTcgjGuLU/uBL/ubcZF9OXbDo8ff4O8yVp5Bf0efS8uEoYo5q4Fx7dY9OgQGXgAsQA==}
+
+  colorette@1.4.0:
+    resolution: {integrity: sha512-Y2oEozpomLn7Q3HFP7dpww7AtMJplbM9lGZP6RDfHqmbeRjiwRg4n6VM6j4KLmRke85uWEI7JqF17f3pqdRA0g==}
 
   colorette@2.0.20:
     resolution: {integrity: sha512-IfEDxwoWIjkeXL1eXcDiow4UbKjhLdq6/EuSVR9GMN7KVH3r9gQ83e73hsz1Nd1T3ijd5xv1wcWRYO+D6kCI2w==}
@@ -3781,6 +3794,10 @@ packages:
   http2-client@1.3.5:
     resolution: {integrity: sha512-EC2utToWl4RKfs5zd36Mxq7nzHHBuomZboI0yYL6Y0RmBgT7Sgkq4rQ0ezFTYoIsSs7Tm9SJe+o2FcAg6GBhGA==}
 
+  https-proxy-agent@7.0.6:
+    resolution: {integrity: sha512-vK9P5/iUfdl95AI+JVyUuIcVtd4ofvtrOr3HNtM2yxC9bnMbEdp3x01OhQNnjb8IJYi38VlTE3mBXwcfvywuSw==}
+    engines: {node: '>= 14'}
+
   human-signals@2.1.0:
     resolution: {integrity: sha512-B4FFZ6q/T2jhhksgkbEW3HBvWIfDW85snkQgawt07S7J5QXTk6BkNV+0yAeZrM5QpMAdYlocGoljn0sJ/WQkFw==}
     engines: {node: '>=10.17.0'}
@@ -3829,6 +3846,10 @@ packages:
   indent-string@4.0.0:
     resolution: {integrity: sha512-EdDDZu4A2OyIK7Lr/2zG+w5jmbuk1DVBnEwREQvBzspBJkCEbRa8GxU1lghYcaGJCnRWibjDXlq779X1/y5xwg==}
     engines: {node: '>=8'}
+
+  index-to-position@0.1.2:
+    resolution: {integrity: sha512-MWDKS3AS1bGCHLBA2VLImJz42f7bJh8wQsTGCzI3j519/CASStoDONUBVz2I/VID0MpiX3SGSnbOD2xUalbE5g==}
+    engines: {node: '>=18'}
 
   inflight@1.0.6:
     resolution: {integrity: sha512-k92I/b08q4wvFscXCLvqfsHCrjrF7yiXsQuIVvVE7N82W3+aqpzuUdBbfhWcy/FZR3/4IgflMgKLOsvPDrGCJA==}
@@ -4299,6 +4320,10 @@ packages:
     resolution: {integrity: sha512-gFqAIbuKyyso/3G2qhiO2OM6shY6EPP/R0+mkDbyspxKazh8BXDC5FiFsUjlczgdNz/vfra0da2y+aHrusLG/Q==}
     hasBin: true
 
+  js-levenshtein@1.1.6:
+    resolution: {integrity: sha512-X2BB11YZtrRqY4EnQcLX5Rh373zbK4alC1FW7D7MBhL2gtcC17cTnr6DmfHZeS0s2rTHjUTMMHfG7gO8SSdw+g==}
+    engines: {node: '>=0.10.0'}
+
   js-tokens@4.0.0:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
 
@@ -4709,6 +4734,10 @@ packages:
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
 
+  minimatch@5.1.6:
+    resolution: {integrity: sha512-lKwV/1brpG6mBUFHtb7NUmtABCb2WZZmm2wNiOA5hAb8VdCS4B3dtMWyvcoViccwAW/COERjXLt0zP1zXUN26g==}
+    engines: {node: '>=10'}
+
   minimatch@9.0.3:
     resolution: {integrity: sha512-RHiac9mvaRw0x3AYRgDC1CxAP7HTcNrrECeA8YYJeWnpo+2Q5CegtZjaotWTWxDG3UeGA1coE05iH1mPjT/2mg==}
     engines: {node: '>=16 || 14 >=14.17'}
@@ -4964,9 +4993,11 @@ packages:
   openapi-typescript-helpers@0.0.15:
     resolution: {integrity: sha512-opyTPaunsklCBpTK8JGef6mfPhLSnyy5a0IN9vKtx3+4aExf+KxEqYwIy3hqkedXIB97u357uLMJsOnm3GVjsw==}
 
-  openapi-typescript@6.7.1:
-    resolution: {integrity: sha512-Q3Ltt0KUm2smcPrsaR8qKmSwQ1KM4yGDJVoQdpYa0yvKPeN8huDx5utMT7DvwvJastHHzUxajjivK3WN2+fobg==}
+  openapi-typescript@7.4.4:
+    resolution: {integrity: sha512-7j3nktnRzlQdlHnHsrcr6Gqz8f80/RhfA2I8s1clPI+jkY0hLNmnYVKBfuUEli5EEgK1B6M+ibdS5REasPlsUw==}
     hasBin: true
+    peerDependencies:
+      typescript: ^5.x
 
   openapi3-ts@4.4.0:
     resolution: {integrity: sha512-9asTNB9IkKEzWMcHmVZE7Ts3kC9G7AFHfs8i7caD8HbI76gEjdkId4z/AkP83xdZsH7PLAnnbl47qZkXuxpArw==}
@@ -5028,6 +5059,10 @@ packages:
   parse-json@7.1.1:
     resolution: {integrity: sha512-SgOTCX/EZXtZxBE5eJ97P4yGM5n37BwRU+YMsH4vNzFqJV/oWFXXCmwFlgWUM4PrakybVOueJJ6pwHqSVhTFDw==}
     engines: {node: '>=16'}
+
+  parse-json@8.1.0:
+    resolution: {integrity: sha512-rum1bPifK5SSar35Z6EKZuYPJx85pkNaFrxBK3mwdfSJ1/WKbYrjoW/zTPSjRRamfmVX1ACBIdFAO0VRErW/EA==}
+    engines: {node: '>=18'}
 
   pascalcase@0.1.1:
     resolution: {integrity: sha512-XHXfu/yOQRy9vYOtUDVMN60OEJjW013GoObG1o+xwQTpB9eYJX/BjXMsdW13ZDPruFhYYn0AG22w0xgQMwl3Nw==}
@@ -6028,10 +6063,6 @@ packages:
   undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
-  undici@5.28.2:
-    resolution: {integrity: sha512-wh1pHJHnUeQV5Xa8/kyQhO7WFa8M34l026L5P/+2TYiakvGy5Rdc8jWZVyG7ieht/0WgJLEd3kcU5gKx+6GC8w==}
-    engines: {node: '>=14.0'}
-
   unicode-canonical-property-names-ecmascript@2.0.0:
     resolution: {integrity: sha512-yY5PpDlfVIU5+y/BSCxAJRBIS1Zc2dDG3Ujq+sR0U+JjUevW2JhocOF+soROYDSaAezOzOKuyyixhD6mBknSmQ==}
     engines: {node: '>=4'}
@@ -6099,6 +6130,9 @@ packages:
     hasBin: true
     peerDependencies:
       browserslist: '>= 4.21.0'
+
+  uri-js-replace@1.0.1:
+    resolution: {integrity: sha512-W+C9NWNLFOoBI2QWDp4UT9pv65r2w5Cx+3sTYFvtMdDBxkKt1syCqsUdSFAChbEe1uK5TfS04wt/nGwmaeIQ0g==}
 
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
@@ -6225,6 +6259,9 @@ packages:
   yallist@4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
 
+  yaml-ast-parser@0.0.43:
+    resolution: {integrity: sha512-2PTINUwsRqSd+s8XxKaJWQlUuEMHJQyEuh2edBbW8KNJz0SJPwUSD2zRWqezFEdN7IzAgeuYHFUCF7o8zRdZ0A==}
+
   yaml@1.10.2:
     resolution: {integrity: sha512-r3vXyErRCYJ7wg28yvBY5VSoAF8ZvlcW9/BwUzEtUsjvX/DKs24dIkuwjtuprwJJHsbyUbLApepYTR1BN4uHrg==}
     engines: {node: '>= 6'}
@@ -6297,7 +6334,7 @@ snapshots:
       '@babel/traverse': 7.23.5
       '@babel/types': 7.23.5
       convert-source-map: 2.0.0
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@9.4.0)
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -6366,7 +6403,7 @@ snapshots:
       '@babel/core': 7.23.5
       '@babel/helper-compilation-targets': 7.23.6
       '@babel/helper-plugin-utils': 7.22.5
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@9.4.0)
       lodash.debounce: 4.0.8
       resolve: 1.22.8
     transitivePeerDependencies:
@@ -7061,7 +7098,7 @@ snapshots:
       '@babel/helper-split-export-declaration': 7.22.6
       '@babel/parser': 7.23.5
       '@babel/types': 7.23.5
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@9.4.0)
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -7333,7 +7370,7 @@ snapshots:
   '@eslint/eslintrc@2.1.4':
     dependencies:
       ajv: 6.12.6
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@9.4.0)
       espree: 9.6.1
       globals: 13.23.0
       ignore: 5.3.0
@@ -7348,12 +7385,10 @@ snapshots:
 
   '@exodus/schemasafe@1.3.0': {}
 
-  '@fastify/busboy@2.1.0': {}
-
   '@humanwhocodes/config-array@0.11.13':
     dependencies:
       '@humanwhocodes/object-schema': 2.0.1
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@9.4.0)
       minimatch: 3.1.2
     transitivePeerDependencies:
       - supports-color
@@ -7677,6 +7712,31 @@ snapshots:
       picocolors: 1.0.0
       tslib: 2.6.2
 
+  '@redocly/ajv@8.11.2':
+    dependencies:
+      fast-deep-equal: 3.1.3
+      json-schema-traverse: 1.0.0
+      require-from-string: 2.0.2
+      uri-js-replace: 1.0.1
+
+  '@redocly/config@0.17.1': {}
+
+  '@redocly/openapi-core@1.26.1(supports-color@9.4.0)':
+    dependencies:
+      '@redocly/ajv': 8.11.2
+      '@redocly/config': 0.17.1
+      colorette: 1.4.0
+      https-proxy-agent: 7.0.6(supports-color@9.4.0)
+      js-levenshtein: 1.1.6
+      js-yaml: 4.1.0
+      minimatch: 5.1.6
+      node-fetch: 2.7.0
+      pluralize: 8.0.0
+      yaml-ast-parser: 0.0.43
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+
   '@rushstack/eslint-patch@1.6.0': {}
 
   '@sinclair/typebox@0.27.8': {}
@@ -7868,7 +7928,7 @@ snapshots:
       '@typescript-eslint/type-utils': 6.13.1(eslint@8.55.0)(typescript@5.3.2)
       '@typescript-eslint/utils': 6.13.1(eslint@8.55.0)(typescript@5.3.2)
       '@typescript-eslint/visitor-keys': 6.13.1
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@9.4.0)
       eslint: 8.55.0
       graphemer: 1.4.0
       ignore: 5.3.0
@@ -7886,7 +7946,7 @@ snapshots:
       '@typescript-eslint/types': 6.13.1
       '@typescript-eslint/typescript-estree': 6.13.1(typescript@5.3.2)
       '@typescript-eslint/visitor-keys': 6.13.1
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@9.4.0)
       eslint: 8.55.0
     optionalDependencies:
       typescript: 5.3.2
@@ -7907,7 +7967,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/typescript-estree': 6.13.1(typescript@5.3.2)
       '@typescript-eslint/utils': 6.13.1(eslint@8.55.0)(typescript@5.3.2)
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@9.4.0)
       eslint: 8.55.0
       ts-api-utils: 1.0.3(typescript@5.3.2)
     optionalDependencies:
@@ -7923,7 +7983,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 5.62.0
       '@typescript-eslint/visitor-keys': 5.62.0
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@9.4.0)
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.5.4
@@ -7937,7 +7997,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 6.13.1
       '@typescript-eslint/visitor-keys': 6.13.1
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@9.4.0)
       globby: 11.1.0
       is-glob: 4.0.3
       semver: 7.5.4
@@ -8000,6 +8060,8 @@ snapshots:
       acorn: 8.11.2
 
   acorn@8.11.2: {}
+
+  agent-base@7.1.3: {}
 
   ajv@6.12.6:
     dependencies:
@@ -8544,6 +8606,8 @@ snapshots:
 
   color-name@1.1.4: {}
 
+  colorette@1.4.0: {}
+
   colorette@2.0.20: {}
 
   colors@1.4.0: {}
@@ -8680,9 +8744,11 @@ snapshots:
     dependencies:
       ms: 2.1.3
 
-  debug@4.3.4:
+  debug@4.3.4(supports-color@9.4.0):
     dependencies:
       ms: 2.1.2
+    optionalDependencies:
+      supports-color: 9.4.0
 
   decamelize-keys@1.1.1:
     dependencies:
@@ -8979,7 +9045,7 @@ snapshots:
 
   eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.13.1(eslint@8.55.0)(typescript@5.3.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0(@typescript-eslint/parser@6.13.1(eslint@8.55.0)(typescript@5.3.2))(eslint@8.55.0))(eslint@8.55.0):
     dependencies:
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@9.4.0)
       enhanced-resolve: 5.15.0
       eslint: 8.55.0
       eslint-module-utils: 2.8.0(@typescript-eslint/parser@6.13.1(eslint@8.55.0)(typescript@5.3.2))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.13.1(eslint@8.55.0)(typescript@5.3.2))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.0(@typescript-eslint/parser@6.13.1(eslint@8.55.0)(typescript@5.3.2))(eslint@8.55.0))(eslint@8.55.0))(eslint@8.55.0)
@@ -9223,7 +9289,7 @@ snapshots:
       ajv: 6.12.6
       chalk: 4.1.2
       cross-spawn: 7.0.3
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@9.4.0)
       doctrine: 3.0.0
       escape-string-regexp: 4.0.0
       eslint-scope: 7.2.2
@@ -9701,6 +9767,13 @@ snapshots:
 
   http2-client@1.3.5: {}
 
+  https-proxy-agent@7.0.6(supports-color@9.4.0):
+    dependencies:
+      agent-base: 7.1.3
+      debug: 4.3.4(supports-color@9.4.0)
+    transitivePeerDependencies:
+      - supports-color
+
   human-signals@2.1.0: {}
 
   human-signals@4.3.1: {}
@@ -9732,6 +9805,8 @@ snapshots:
   indent-string@3.2.0: {}
 
   indent-string@4.0.0: {}
+
+  index-to-position@0.1.2: {}
 
   inflight@1.0.6:
     dependencies:
@@ -10016,7 +10091,7 @@ snapshots:
 
   istanbul-lib-source-maps@4.0.1:
     dependencies:
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@9.4.0)
       istanbul-lib-coverage: 3.2.2
       source-map: 0.6.1
     transitivePeerDependencies:
@@ -10404,6 +10479,8 @@ snapshots:
 
   jiti@1.21.0: {}
 
+  js-levenshtein@1.1.6: {}
+
   js-tokens@4.0.0: {}
 
   js-yaml@3.14.1:
@@ -10526,7 +10603,7 @@ snapshots:
     dependencies:
       chalk: 5.3.0
       commander: 11.1.0
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@9.4.0)
       execa: 8.0.1
       lilconfig: 2.1.0
       listr2: 7.0.2
@@ -10949,7 +11026,7 @@ snapshots:
 
   micromark@2.11.4:
     dependencies:
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@9.4.0)
       parse-entities: 2.0.0
     transitivePeerDependencies:
       - supports-color
@@ -10957,7 +11034,7 @@ snapshots:
   micromark@4.0.0:
     dependencies:
       '@types/debug': 4.1.12
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@9.4.0)
       decode-named-character-reference: 1.0.2
       devlop: 1.1.0
       micromark-core-commonmark: 2.0.0
@@ -11014,6 +11091,10 @@ snapshots:
   minimatch@3.1.2:
     dependencies:
       brace-expansion: 1.1.11
+
+  minimatch@5.1.6:
+    dependencies:
+      brace-expansion: 2.0.1
 
   minimatch@9.0.3:
     dependencies:
@@ -11314,14 +11395,17 @@ snapshots:
 
   openapi-typescript-helpers@0.0.15: {}
 
-  openapi-typescript@6.7.1:
+  openapi-typescript@7.4.4(typescript@5.3.2):
     dependencies:
+      '@redocly/openapi-core': 1.26.1(supports-color@9.4.0)
       ansi-colors: 4.1.3
-      fast-glob: 3.3.2
-      js-yaml: 4.1.0
+      change-case: 5.4.4
+      parse-json: 8.1.0
       supports-color: 9.4.0
-      undici: 5.28.2
+      typescript: 5.3.2
       yargs-parser: 21.1.1
+    transitivePeerDependencies:
+      - encoding
 
   openapi3-ts@4.4.0:
     dependencies:
@@ -11405,6 +11489,12 @@ snapshots:
       json-parse-even-better-errors: 3.0.1
       lines-and-columns: 2.0.4
       type-fest: 3.13.1
+
+  parse-json@8.1.0:
+    dependencies:
+      '@babel/code-frame': 7.23.5
+      index-to-position: 0.1.2
+      type-fest: 4.28.0
 
   pascalcase@0.1.1: {}
 
@@ -12183,7 +12273,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  swr-openapi@5.1.2(openapi-fetch@0.13.3)(openapi-typescript@6.7.1)(react@18.2.0)(swr@2.2.5(react@18.2.0))(typescript@5.3.2):
+  swr-openapi@5.1.2(openapi-fetch@0.13.3)(openapi-typescript@7.4.4(typescript@5.3.2))(react@18.2.0)(swr@2.2.5(react@18.2.0))(typescript@5.3.2):
     dependencies:
       openapi-fetch: 0.13.3
       openapi-typescript-helpers: 0.0.15
@@ -12192,7 +12282,7 @@ snapshots:
       type-fest: 4.28.0
       typescript: 5.3.2
     optionalDependencies:
-      openapi-typescript: 6.7.1
+      openapi-typescript: 7.4.4(typescript@5.3.2)
 
   swr@2.2.5(react@18.2.0):
     dependencies:
@@ -12429,10 +12519,6 @@ snapshots:
 
   undici-types@5.26.5: {}
 
-  undici@5.28.2:
-    dependencies:
-      '@fastify/busboy': 2.1.0
-
   unicode-canonical-property-names-ecmascript@2.0.0: {}
 
   unicode-match-property-ecmascript@2.0.0:
@@ -12453,7 +12539,7 @@ snapshots:
       '@types/unist': 3.0.2
       '@ungap/structured-clone': 1.2.0
       concat-stream: 2.0.0
-      debug: 4.3.4
+      debug: 4.3.4(supports-color@9.4.0)
       glob: 10.3.10
       ignore: 5.3.0
       is-empty: 1.2.0
@@ -12543,6 +12629,8 @@ snapshots:
       browserslist: 4.22.2
       escalade: 3.1.1
       picocolors: 1.0.0
+
+  uri-js-replace@1.0.1: {}
 
   uri-js@4.4.1:
     dependencies:
@@ -12723,6 +12811,8 @@ snapshots:
   yallist@3.1.1: {}
 
   yallist@4.0.0: {}
+
+  yaml-ast-parser@0.0.43: {}
 
   yaml@1.10.2: {}
 
