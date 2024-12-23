@@ -5,7 +5,7 @@ import type {
   InitParam,
   MaybeOptionalInit,
 } from 'openapi-fetch'
-import _createClient from 'openapi-fetch'
+import _createClient, {wrapAsPathBasedClient} from 'openapi-fetch'
 import type {
   HttpMethod,
   MediaType,
@@ -55,17 +55,20 @@ export function createClient<
 
   const customFetch: typeof fetch = (url, init) =>
     applyLinks(new Request(url, init), links)
-  const client = _createClient<Paths, Media>({
+
+  const fetchClient = _createClient<Paths, Media>({
     ...clientOptions,
     fetch: customFetch,
   })
+
+  const pathBasedClient = wrapAsPathBasedClient(fetchClient)
 
   const clientThatThrows = Object.fromEntries(
     HTTP_METHODS.map((method) => [
       method,
       /* eslint-disable */
       (...args: unknown[]) =>
-        (client as any)[method](...args).then(throwIfNotOk(method)),
+        (fetchClient as any)[method](...args).then(throwIfNotOk(method)),
       /* eslint-enable */
     ]),
   ) as {
@@ -76,36 +79,46 @@ export function createClient<
     >
   }
 
-  return {
+  const pathBasecClientThatThrows = new Proxy(pathBasedClient, {
+    /* eslint-disable */
+    get(target, prop) {
+      if (prop in target) {
+        return (target as any)[prop]
+      }
+      return Object.fromEntries(
+        HTTP_METHODS.map((method) => [
+          method,
+          (...args: unknown[]) =>
+            (target as any)[prop][method](...args).then(throwIfNotOk(method)),
+        ]),
+      )
+    },
+    /* eslint-enable */
+  }) as PathBasedClientThatThrows<Paths, Media>
+
+  const _ret = {
+    fetchClient,
     clientOptions,
     links,
-    client,
     /** Untyped request */
     request: <T>(
       method: Uppercase<HttpMethod>,
       url: string,
       options?: Omit<FetchOptions<unknown>, 'body'> & {body?: unknown},
     ) =>
-      client[method as 'GET'](url as never, options as never).then(
+      fetchClient[method as 'GET'](url as never, options as never).then(
         throwIfNotOk(method),
       ) as Promise<{
         data: T
         response: FetchResponse<{}, {}, MediaType>['response']
       }>,
-    ...clientThatThrows,
   }
-}
+  Object.assign(pathBasecClientThatThrows, clientThatThrows)
+  Object.assign(pathBasecClientThatThrows, _ret)
 
-export function throwIfNotOk<T extends Record<string | number, any>>(
-  method: Uppercase<HttpMethod>,
-) {
-  return (res: FetchResponse<T, {}, MediaType>) => {
-    if (res.error) {
-      throw new HTTPError<T>({method, error: res.error, response: res.response})
-    }
-    // error is not set, so safely casting..
-    return res as Extract<typeof res, {data: unknown}>
-  }
+  return pathBasecClientThatThrows as typeof pathBasecClientThatThrows &
+    typeof clientThatThrows &
+    typeof _ret
 }
 
 /**
@@ -134,6 +147,21 @@ export const createFormUrlEncodedBodySerializer =
     // return data.toString()
   }
 
+// MARK: - Type helpers to handle throwing
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export function throwIfNotOk<T extends Record<string | number, any>>(
+  method: Uppercase<HttpMethod>,
+) {
+  return (res: FetchResponse<T, {}, MediaType>) => {
+    if (res.error) {
+      throw new HTTPError<T>({method, error: res.error, response: res.response})
+    }
+    // error is not set, so safely casting..
+    return res as Extract<typeof res, {data: unknown}>
+  }
+}
+
 export type ClientMethodThatThrows<
   Paths extends Record<string, Record<HttpMethod, {}>>,
   Method extends HttpMethod,
@@ -147,3 +175,25 @@ export type ClientMethodThatThrows<
 ) => Promise<
   Extract<FetchResponse<Paths[Path][Method], Init, Media>, {data: unknown}>
 >
+
+export type PathBasedClientThatThrows<
+  Paths extends Record<string | number, any>,
+  Media extends MediaType = MediaType,
+> = {
+  [Path in keyof Paths]: ClientThatThrowsForPath<Paths[Path], Media>
+}
+
+export type ClientThatThrowsForPath<
+  PathInfo extends Record<string | number, any>,
+  Media extends MediaType,
+> = {
+  [Method in keyof PathInfo as Uppercase<string & Method>]: <
+    Init extends MaybeOptionalInit<PathInfo, Method>,
+  >(
+    ...init: InitParam<Init>
+  ) => Promise<
+    Extract<FetchResponse<PathInfo[Method], Init, Media>, {data: unknown}>
+  >
+}
+
+/* eslint-enable @typescript-eslint/no-explicit-any */
