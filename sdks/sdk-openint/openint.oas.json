@@ -380,8 +380,8 @@
         }
       },
       "get": {
-        "operationId": "listConnectionsRaw",
-        "summary": "List connections raw",
+        "operationId": "listConnection",
+        "summary": "List connections",
         "tags": ["Core"],
         "parameters": [
           {"in": "query", "name": "limit", "schema": {"type": "number"}},

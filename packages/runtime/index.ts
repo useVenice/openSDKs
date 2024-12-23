@@ -74,8 +74,11 @@ export function initSDK<
     sdkDef.createClient?.({createClient}, clientOptions) ??
     createClient(clientOptions)
 
+  // make sure this works with proxy based client
+  Object.assign(client, {def: sdkDef})
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return {...client, def: sdkDef} as any
+  return client as any
 }
 
 // MARK: - Type utils

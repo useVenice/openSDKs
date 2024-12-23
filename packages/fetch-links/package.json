@@ -43,6 +43,7 @@
   "devDependencies": {
     "axios": "^1.6.2",
     "concurrently": "^8.2.2",
+    "openapi-typescript-helpers": "^0.0.15",
     "type-fest": "^4.28.0"
   },
   "publishConfig": {

@@ -9,7 +9,7 @@
   "dependencies": {
     "@octokit/rest": "^20.0.2",
     "@opensdks/fetch-links": "0.0.13",
-    "@opensdks/runtime": "0.0.14",
+    "@opensdks/runtime": "^0.0.20",
     "@opensdks/sdk-apollo": "0.0.14",
     "@opensdks/sdk-discord": "0.0.14",
     "@opensdks/sdk-github": "0.0.14",
@@ -22,7 +22,8 @@
     "@opensdks/sdk-salesloft": "0.0.15",
     "@opensdks/sdk-slack": "0.0.14",
     "@opensdks/sdk-twilio": "0.0.14",
-    "openapi-fetch": "^0.8.2",
+    "@opensdks/sdk-openint": "0.1.1",
+    "openapi-fetch": "^0.13.3",
     "remark-toc": "^9.0.0",
     "twilio": "^4.19.3"
   },

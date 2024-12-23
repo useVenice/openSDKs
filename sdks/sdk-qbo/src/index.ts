@@ -80,7 +80,8 @@ export const qboSdkDef = {
         }
       },
     }
-    return {...client, ...extension} as typeof client & typeof extension
+    Object.assign(client, extension)
+    return client as typeof client & typeof extension
   },
 } satisfies SdkDefinition<QBOSDKTypes>
 

@@ -1,8 +1,8 @@
 import {initSDK} from '@opensdks/runtime'
-import {veniceSdkDef} from '@opensdks/sdk-venice'
+import {openintSdkDef} from '@opensdks/sdk-openint'
 
-const venice = initSDK(veniceSdkDef)
+const openint = initSDK(openintSdkDef)
 
-const res = await venice.GET('/health')
+const res = await openint.GET('/health')
 
 console.log(res.data)

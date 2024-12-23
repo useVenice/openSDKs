@@ -3,7 +3,7 @@
 
 import * as fs from 'node:fs'
 import type {OpenAPI3} from 'openapi-typescript'
-import openapiTS from 'openapi-typescript'
+import openapiTS, {astToString} from 'openapi-typescript'
 import prettier from 'prettier'
 import R from 'remeda'
 import yaml from 'yaml'
@@ -49,7 +49,8 @@ export async function generateTypes(
   oas: OpenAPISpec,
   opts: {exportDefault?: boolean} = {},
 ) {
-  const types = await openapiTS(oas as OpenAPI3)
+  const nodes = await openapiTS(oas as OpenAPI3)
+  const types = astToString(nodes)
 
   return `${types}
 

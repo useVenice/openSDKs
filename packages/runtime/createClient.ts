@@ -1,12 +1,24 @@
-import type {BodySerializer, FetchOptions, FetchResponse} from 'openapi-fetch'
-import _createClient from 'openapi-fetch'
-import type {PathsWithMethod} from 'openapi-typescript-helpers'
+import type {
+  BodySerializer,
+  FetchOptions,
+  FetchResponse,
+  InitParam,
+  MaybeOptionalInit,
+} from 'openapi-fetch'
+import _createClient, {wrapAsPathBasedClient} from 'openapi-fetch'
+import type {
+  HttpMethod,
+  MediaType,
+  PathsWithMethod,
+} from 'openapi-typescript-helpers'
+import type {ClientAuthOptions} from '@opensdks/fetch-links'
 import {
   applyLinks,
+  authLink,
   fetchLink,
-  type HTTPMethod,
+  HTTP_METHODS,
+  // type HTTPMethod,
   type Link,
-  authLink, ClientAuthOptions
 } from '@opensdks/fetch-links'
 import {HTTPError} from './HTTPError.js'
 import type {FlattenOptions} from './utils.js'
@@ -28,10 +40,10 @@ export type OpenAPIClient<Paths extends {}> = ReturnType<
 // to get a list of servers and all that?
 // Really do feel that they should be generated as well..
 
-export function createClient<Paths extends {}>({
-  links: _links,
-  ...clientOptions
-}: ClientOptions = {}) {
+export function createClient<
+  Paths extends {},
+  Media extends MediaType = MediaType,
+>({links: _links, ...clientOptions}: ClientOptions = {}) {
   const defaultLinks = [
     ...(clientOptions.auth
       ? [authLink(clientOptions.auth, clientOptions.baseUrl ?? '')]
@@ -43,59 +55,70 @@ export function createClient<Paths extends {}>({
 
   const customFetch: typeof fetch = (url, init) =>
     applyLinks(new Request(url, init), links)
-  const client = _createClient<Paths>({...clientOptions, fetch: customFetch})
 
-  return {
+  const fetchClient = _createClient<Paths, Media>({
+    ...clientOptions,
+    fetch: customFetch,
+  })
+
+  const pathBasedClient = wrapAsPathBasedClient(fetchClient)
+
+  const clientThatThrows = Object.fromEntries(
+    HTTP_METHODS.map((method) => [
+      method,
+      /* eslint-disable */
+      (...args: unknown[]) =>
+        (fetchClient as any)[method](...args).then(throwIfNotOk(method)),
+      /* eslint-enable */
+    ]),
+  ) as {
+    [K in Uppercase<HttpMethod>]: ClientMethodThatThrows<
+      Paths,
+      Lowercase<K>,
+      Media
+    >
+  }
+
+  const pathBasecClientThatThrows = new Proxy(pathBasedClient, {
+    /* eslint-disable */
+    get(target, prop) {
+      if (prop in target) {
+        return (target as any)[prop]
+      }
+      return Object.fromEntries(
+        HTTP_METHODS.map((method) => [
+          method,
+          (...args: unknown[]) =>
+            (target as any)[prop][method](...args).then(throwIfNotOk(method)),
+        ]),
+      )
+    },
+    /* eslint-enable */
+  }) as PathBasedClientThatThrows<Paths, Media>
+
+  const _ret = {
+    fetchClient,
     clientOptions,
     links,
-    client,
     /** Untyped request */
     request: <T>(
-      method: HTTPMethod,
+      method: Uppercase<HttpMethod>,
       url: string,
       options?: Omit<FetchOptions<unknown>, 'body'> & {body?: unknown},
     ) =>
-      client[method as 'GET'](url as never, options as never).then(
+      fetchClient[method as 'GET'](url as never, options as never).then(
         throwIfNotOk(method),
       ) as Promise<{
         data: T
-        response: FetchResponse<unknown>['response']
+        response: FetchResponse<{}, {}, MediaType>['response']
       }>,
-    GET: <P extends PathsWithMethod<Paths, 'get'>>(
-      ...args: Parameters<typeof client.GET<P>>
-    ) => client.GET<P>(...args).then(throwIfNotOk('GET')),
-    PUT: <P extends PathsWithMethod<Paths, 'put'>>(
-      ...args: Parameters<typeof client.PUT<P>>
-    ) => client.PUT(...args).then(throwIfNotOk('PUT')),
-    POST: <P extends PathsWithMethod<Paths, 'post'>>(
-      ...args: Parameters<typeof client.POST<P>>
-    ) => client.POST(...args).then(throwIfNotOk('POST')),
-    DELETE: <P extends PathsWithMethod<Paths, 'delete'>>(
-      ...args: Parameters<typeof client.DELETE<P>>
-    ) => client.DELETE(...args).then(throwIfNotOk('DELETE')),
-    OPTIONS: <P extends PathsWithMethod<Paths, 'options'>>(
-      ...args: Parameters<typeof client.OPTIONS<P>>
-    ) => client.OPTIONS(...args).then(throwIfNotOk('OPTIONS')),
-    HEAD: <P extends PathsWithMethod<Paths, 'head'>>(
-      ...args: Parameters<typeof client.HEAD<P>>
-    ) => client.HEAD(...args).then(throwIfNotOk('HEAD')),
-    PATCH: <P extends PathsWithMethod<Paths, 'patch'>>(
-      ...args: Parameters<typeof client.PATCH<P>>
-    ) => client.PATCH(...args).then(throwIfNotOk('PATCH')),
-    TRACE: <P extends PathsWithMethod<Paths, 'trace'>>(
-      ...args: Parameters<typeof client.TRACE<P>>
-    ) => client.TRACE(...args).then(throwIfNotOk('TRACE')),
   }
-}
+  Object.assign(pathBasecClientThatThrows, clientThatThrows)
+  Object.assign(pathBasecClientThatThrows, _ret)
 
-export function throwIfNotOk<T>(method: HTTPMethod) {
-  return (res: FetchResponse<T>) => {
-    if (res.error) {
-      throw new HTTPError<T>({method, error: res.error, response: res.response})
-    }
-    // error is not set, so safely casting..
-    return res as Extract<typeof res, {data: unknown}>
-  }
+  return pathBasecClientThatThrows as typeof pathBasecClientThatThrows &
+    typeof clientThatThrows &
+    typeof _ret
 }
 
 /**
@@ -123,3 +146,54 @@ export const createFormUrlEncodedBodySerializer =
     // const data = new URLSearchParams(flattened)
     // return data.toString()
   }
+
+// MARK: - Type helpers to handle throwing
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
+export function throwIfNotOk<T extends Record<string | number, any>>(
+  method: Uppercase<HttpMethod>,
+) {
+  return (res: FetchResponse<T, {}, MediaType>) => {
+    if (res.error) {
+      throw new HTTPError<T>({method, error: res.error, response: res.response})
+    }
+    // error is not set, so safely casting..
+    return res as Extract<typeof res, {data: unknown}>
+  }
+}
+
+export type ClientMethodThatThrows<
+  Paths extends Record<string, Record<HttpMethod, {}>>,
+  Method extends HttpMethod,
+  Media extends MediaType,
+> = <
+  Path extends PathsWithMethod<Paths, Method>,
+  Init extends MaybeOptionalInit<Paths[Path], Method>,
+>(
+  url: Path,
+  ...init: InitParam<Init>
+) => Promise<
+  Extract<FetchResponse<Paths[Path][Method], Init, Media>, {data: unknown}>
+>
+
+export type PathBasedClientThatThrows<
+  Paths extends Record<string | number, any>,
+  Media extends MediaType = MediaType,
+> = {
+  [Path in keyof Paths]: ClientThatThrowsForPath<Paths[Path], Media>
+}
+
+export type ClientThatThrowsForPath<
+  PathInfo extends Record<string | number, any>,
+  Media extends MediaType,
+> = {
+  [Method in keyof PathInfo as Uppercase<string & Method>]: <
+    Init extends MaybeOptionalInit<PathInfo, Method>,
+  >(
+    ...init: InitParam<Init>
+  ) => Promise<
+    Extract<FetchResponse<PathInfo[Method], Init, Media>, {data: unknown}>
+  >
+}
+
+/* eslint-enable @typescript-eslint/no-explicit-any */
