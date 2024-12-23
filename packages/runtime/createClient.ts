@@ -16,6 +16,7 @@ import {
   applyLinks,
   authLink,
   fetchLink,
+  HTTP_METHODS,
   // type HTTPMethod,
   type Link,
 } from '@opensdks/fetch-links'
@@ -38,17 +39,6 @@ export type OpenAPIClient<Paths extends {}> = ReturnType<
 // and for example do things such as parsing jsonschema
 // to get a list of servers and all that?
 // Really do feel that they should be generated as well..
-
-const HTTP_METHODS = [
-  'GET',
-  'PUT',
-  'POST',
-  'DELETE',
-  'OPTIONS',
-  'HEAD',
-  'PATCH',
-  'TRACE',
-] satisfies ReadonlyArray<Uppercase<HttpMethod>>
 
 export function createClient<
   Paths extends {},

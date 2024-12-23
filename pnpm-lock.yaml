@@ -177,6 +177,9 @@ importers:
       concurrently:
         specifier: ^8.2.2
         version: 8.2.2
+      openapi-typescript-helpers:
+        specifier: ^0.0.15
+        version: 0.0.15
       type-fest:
         specifier: ^4.28.0
         version: 4.28.0

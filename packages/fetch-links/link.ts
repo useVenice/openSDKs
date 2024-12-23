@@ -1,13 +1,17 @@
-/** TODO: Leverage typescript helper instead. */
-export type HTTPMethod =
-  | 'GET'
-  | 'PUT'
-  | 'POST'
-  | 'DELETE'
-  | 'OPTIONS'
-  | 'HEAD'
-  | 'PATCH'
-  | 'TRACE'
+import type {HttpMethod} from 'openapi-typescript-helpers'
+
+export const HTTP_METHODS = [
+  'GET',
+  'PUT',
+  'POST',
+  'DELETE',
+  'OPTIONS',
+  'HEAD',
+  'PATCH',
+  'TRACE',
+] satisfies ReadonlyArray<Uppercase<HttpMethod>>
+
+export type HTTPMethod = (typeof HTTP_METHODS)[number]
 
 /**
  * The BetterRequest object is an extension of the native [Request](https://developer.mozilla.org/en-US/docs/Web/API/Request)
