@@ -10,14 +10,32 @@ import type {
   SDKTypes,
 } from '@opensdks/runtime'
 import {initSDK} from '@opensdks/runtime'
+import type Oas_calendar_v3 from '../google_calendar_v3.oas.types.js'
 import type Oas_drive_v2 from '../google_drive_v2.oas.types.js'
 import type Oas_drive_v3 from '../google_drive_v3.oas.types.js'
+import type Oas_gmail_v1 from '../google_gmail_v1.oas.types.js'
+import type Oas_sheets_v4 from '../google_sheets_v4.oas.types.js'
+import {default as oas_calendar_v3} from './google_calendar_v3.oas.meta.js'
 import {default as oas_drive_v2} from './google_drive_v2.oas.meta.js'
 import {default as oas_drive_v3} from './google_drive_v3.oas.meta.js'
+import {default as oas_gmail_v1} from './google_gmail_v1.oas.meta.js'
+import {default as oas_sheets_v4} from './google_sheets_v4.oas.meta.js'
 
-export type {Oas_drive_v2, Oas_drive_v3}
+export type {
+  Oas_calendar_v3,
+  Oas_drive_v2,
+  Oas_drive_v3,
+  Oas_gmail_v1,
+  Oas_sheets_v4,
+}
 
-export {oas_drive_v2, oas_drive_v3}
+export {
+  oas_calendar_v3,
+  oas_drive_v2,
+  oas_drive_v3,
+  oas_gmail_v1,
+  oas_sheets_v4,
+}
 
 export type GoogleSDKTypes = SDKTypes<OpenAPITypes, ClientOptions>
 
@@ -25,6 +43,10 @@ export const googleSdkDef = {
   types: {} as GoogleSDKTypes,
   defaultOptions: {},
   createClient(ctx, options) {
+    const calendar_v3 = ctx.createClient<Oas_calendar_v3['paths']>({
+      ...options,
+      baseUrl: options.baseUrl ?? oas_calendar_v3.servers[0]?.url,
+    })
     const drive_v2 = ctx.createClient<Oas_drive_v2['paths']>({
       ...options,
       baseUrl: options.baseUrl ?? oas_drive_v2.servers[0]?.url,
@@ -33,10 +55,21 @@ export const googleSdkDef = {
       ...options,
       baseUrl: options.baseUrl ?? oas_drive_v3.servers[0]?.url,
     })
+    const gmail_v1 = ctx.createClient<Oas_gmail_v1['paths']>({
+      ...options,
+      baseUrl: options.baseUrl ?? oas_gmail_v1.servers[0]?.url,
+    })
+    const sheets_v4 = ctx.createClient<Oas_sheets_v4['paths']>({
+      ...options,
+      baseUrl: options.baseUrl ?? oas_sheets_v4.servers[0]?.url,
+    })
 
     return {
+      calendar_v3,
       drive_v2,
       drive_v3,
+      gmail_v1,
+      sheets_v4,
     }
   },
 } satisfies SdkDefinition<GoogleSDKTypes>

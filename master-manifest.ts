@@ -31,6 +31,18 @@ export default {
             name: 'google_drive_v2',
             url: 'https://api.apis.guru/v2/specs/googleapis.com/drive/v2/openapi.json',
           },
+          {
+            name: 'google_sheets_v4',
+            url: 'https://api.apis.guru/v2/specs/googleapis.com/sheets/v4/openapi.json',
+          },
+          {
+            name: 'google_calendar_v3',
+            url: 'https://api.apis.guru/v2/specs/googleapis.com/calendar/v3/openapi.json',
+          },
+          {
+            name: 'google_gmail_v1',
+            url: 'https://api.apis.guru/v2/specs/googleapis.com/gmail/v1/openapi.json',
+          },
         ]
       }
       return getJson<{

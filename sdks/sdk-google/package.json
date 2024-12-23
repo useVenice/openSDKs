@@ -1,6 +1,6 @@
 {
   "name": "@opensdks/sdk-google",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "type": "module",
   "exports": {
     ".": {
@@ -42,7 +42,7 @@
   "devDependencies": {
     "@opensdks/runtime": "workspace:*",
     "concurrently": "^8.2.2",
-    "openapi-typescript": "^7.4.4"
+    "openapi-typescript": "6.7.1"
   },
   "publishConfig": {
     "access": "public"
