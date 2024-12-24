@@ -1,6 +1,12 @@
 name: Validate
 
-on: [push, pull_request]
+# Ideally there should be a way to run this workflow on every push to any branch
+# but not on branch associated with a pull request to avoid doubling the work unnecessarily.
+# But we don't know how to do that in github actions so falling back to only running on 
+# main and production branches and explicit pull requests for now.
+on:
+  push: {branches: [main, production]}
+  pull_request:
 
 jobs:
   main:
