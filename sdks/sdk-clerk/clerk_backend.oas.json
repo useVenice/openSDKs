@@ -183,6 +183,8 @@
         "summary": "Returns the markup for the interstitial page",
         "description": "The Clerk interstitial endpoint serves an html page that loads clerk.js in order to check the user's authentication state.\nIt is used by Clerk SDKs when the user's authentication state cannot be immediately determined.",
         "operationId": "GetPublicInterstitial",
+        "x-sdk-ruby-operationGroup": "miscellaneous",
+        "x-sdk-ruby-operationId": "get_interstitial",
         "tags": [
           "Miscellaneous"
         ],
@@ -222,6 +224,8 @@
     "/jwks": {
       "get": {
         "operationId": "GetJWKS",
+        "x-sdk-ruby-operationGroup": "jwks",
+        "x-sdk-ruby-operationId": "get",
         "summary": "Retrieve the JSON Web Key Set of the instance",
         "description": "Retrieve the JSON Web Key Set of the instance",
         "tags": [
@@ -229,7 +233,7 @@
         ],
         "responses": {
           "200": {
-            "description": "The JSON Web Key Set"
+            "$ref": "#/components/responses/WellKnown.JWKS"
           }
         }
       }
@@ -238,6 +242,8 @@
       "get": {
         "deprecated": true,
         "operationId": "GetClientList",
+        "x-sdk-ruby-operationGroup": "clients",
+        "x-sdk-ruby-operationId": "all",
         "tags": [
           "Clients"
         ],
@@ -273,13 +279,15 @@
     "/clients/verify": {
       "post": {
         "operationId": "VerifyClient",
+        "x-sdk-ruby-operationGroup": "clients",
+        "x-sdk-ruby-operationId": "verify",
         "tags": [
           "Clients"
         ],
         "summary": "Verify a client",
         "description": "Verifies the client in the provided token",
         "requestBody": {
-          "description": "Parameters.",
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -288,7 +296,7 @@
                 "properties": {
                   "token": {
                     "type": "string",
-                    "description": "A JWT Token that represents the active client."
+                    "description": "A JWT that represents the active client."
                   }
                 }
               }
@@ -314,6 +322,8 @@
     "/clients/{client_id}": {
       "get": {
         "operationId": "GetClient",
+        "x-sdk-ruby-operationGroup": "clients",
+        "x-sdk-ruby-operationId": "find",
         "tags": [
           "Clients"
         ],
@@ -349,12 +359,15 @@
     "/email_addresses": {
       "post": {
         "operationId": "CreateEmailAddress",
+        "x-sdk-ruby-operationGroup": "email_addresses",
+        "x-sdk-ruby-operationId": "create",
         "tags": [
           "Email Addresses"
         ],
         "summary": "Create an email address",
         "description": "Create a new email address",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -408,6 +421,8 @@
     "/email_addresses/{email_address_id}": {
       "get": {
         "operationId": "GetEmailAddress",
+        "x-sdk-ruby-operationGroup": "email_addresses",
+        "x-sdk-ruby-operationId": "find",
         "tags": [
           "Email Addresses"
         ],
@@ -444,6 +459,8 @@
       },
       "delete": {
         "operationId": "DeleteEmailAddress",
+        "x-sdk-ruby-operationGroup": "email_addresses",
+        "x-sdk-ruby-operationId": "delete",
         "tags": [
           "Email Addresses"
         ],
@@ -480,6 +497,8 @@
       },
       "patch": {
         "operationId": "UpdateEmailAddress",
+        "x-sdk-ruby-operationGroup": "email_addresses",
+        "x-sdk-ruby-operationId": "update",
         "tags": [
           "Email Addresses"
         ],
@@ -497,6 +516,7 @@
           }
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -539,12 +559,15 @@
     "/phone_numbers": {
       "post": {
         "operationId": "CreatePhoneNumber",
+        "x-sdk-ruby-operationGroup": "phone_numbers",
+        "x-sdk-ruby-operationId": "create",
         "tags": [
           "Phone Numbers"
         ],
         "summary": "Create a phone number",
         "description": "Create a new phone number",
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -603,6 +626,8 @@
     "/phone_numbers/{phone_number_id}": {
       "get": {
         "operationId": "GetPhoneNumber",
+        "x-sdk-ruby-operationGroup": "phone_numbers",
+        "x-sdk-ruby-operationId": "find",
         "tags": [
           "Phone Numbers"
         ],
@@ -639,6 +664,8 @@
       },
       "delete": {
         "operationId": "DeletePhoneNumber",
+        "x-sdk-ruby-operationGroup": "phone_numbers",
+        "x-sdk-ruby-operationId": "delete",
         "tags": [
           "Phone Numbers"
         ],
@@ -675,6 +702,8 @@
       },
       "patch": {
         "operationId": "UpdatePhoneNumber",
+        "x-sdk-ruby-operationGroup": "phone_numbers",
+        "x-sdk-ruby-operationId": "update",
         "tags": [
           "Phone Numbers"
         ],
@@ -692,6 +721,7 @@
           }
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -739,6 +769,8 @@
     "/sessions": {
       "get": {
         "operationId": "GetSessionList",
+        "x-sdk-ruby-operationGroup": "sessions",
+        "x-sdk-ruby-operationId": "all",
         "tags": [
           "Sessions"
         ],
@@ -807,6 +839,8 @@
     "/sessions/{session_id}": {
       "get": {
         "operationId": "GetSession",
+        "x-sdk-ruby-operationGroup": "sessions",
+        "x-sdk-ruby-operationId": "find",
         "tags": [
           "Sessions"
         ],
@@ -842,6 +876,8 @@
     "/sessions/{session_id}/revoke": {
       "post": {
         "operationId": "RevokeSession",
+        "x-sdk-ruby-operationGroup": "sessions",
+        "x-sdk-ruby-operationId": "revoke",
         "tags": [
           "Sessions"
         ],
@@ -878,6 +914,8 @@
       "post": {
         "deprecated": true,
         "operationId": "VerifySession",
+        "x-sdk-ruby-operationGroup": "sessions",
+        "x-sdk-ruby-operationId": "verify",
         "tags": [
           "Sessions"
         ],
@@ -933,6 +971,8 @@
     "/sessions/{session_id}/tokens/{template_name}": {
       "post": {
         "operationId": "CreateSessionTokenFromTemplate",
+        "x-sdk-ruby-operationGroup": "sessions",
+        "x-sdk-ruby-operationId": "create_token_from_template",
         "tags": [
           "Sessions"
         ],
@@ -993,6 +1033,8 @@
       "get": {
         "deprecated": true,
         "operationId": "GetTemplateList",
+        "x-sdk-ruby-operationGroup": "templates",
+        "x-sdk-ruby-operationId": "all",
         "summary": "List all templates",
         "description": "Returns a list of all templates.\nThe templates are returned sorted by position.",
         "tags": [
@@ -1033,6 +1075,8 @@
       "get": {
         "deprecated": true,
         "operationId": "GetTemplate",
+        "x-sdk-ruby-operationGroup": "templates",
+        "x-sdk-ruby-operationId": "find",
         "summary": "Retrieve a template",
         "description": "Returns the details of a template",
         "tags": [
@@ -1080,6 +1124,8 @@
       "put": {
         "deprecated": true,
         "operationId": "UpsertTemplate",
+        "x-sdk-ruby-operationGroup": "templates",
+        "x-sdk-ruby-operationId": "update",
         "summary": "Update a template for a given type and slug",
         "description": "Updates the existing template of the given type and slug",
         "tags": [
@@ -1181,6 +1227,8 @@
       "post": {
         "deprecated": true,
         "operationId": "RevertTemplate",
+        "x-sdk-ruby-operationGroup": "templates",
+        "x-sdk-ruby-operationId": "revert",
         "summary": "Revert a template",
         "description": "Reverts an updated template to its default state",
         "tags": [
@@ -1233,6 +1281,8 @@
       "post": {
         "deprecated": true,
         "operationId": "PreviewTemplate",
+        "x-sdk-ruby-operationGroup": "templates",
+        "x-sdk-ruby-operationId": "preview",
         "summary": "Preview changes to a template",
         "description": "Returns a preview of a template for a given template_type, slug and body",
         "tags": [
@@ -1318,6 +1368,8 @@
       "post": {
         "deprecated": true,
         "operationId": "ToggleTemplateDelivery",
+        "x-sdk-ruby-operationGroup": "templates",
+        "x-sdk-ruby-operationId": "toggle_delivery",
         "summary": "Toggle the delivery by Clerk for a template of a given type and slug",
         "description": "Toggles the delivery by Clerk for a template of a given type and slug.\nIf disabled, Clerk will not deliver the resulting email or SMS.\nThe app developer will need to listen to the `email.created` or `sms.created` webhooks in order to handle delivery themselves.",
         "tags": [
@@ -1383,6 +1435,8 @@
     "/users": {
       "get": {
         "operationId": "GetUserList",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "all",
         "summary": "List all users",
         "description": "Returns a list of all users.\nThe users are returned sorted by creation date, with the newest users appearing first.",
         "tags": [
@@ -1525,6 +1579,8 @@
       },
       "post": {
         "operationId": "CreateUser",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "create",
         "summary": "Create a new user",
         "description": "Creates a new user. Your user management settings determine how you should setup your user model.\n\nAny email address and phone number created using this method will be marked as verified.\n\nNote: If you are performing a migration, check out our guide on [zero downtime migrations](https://clerk.com/docs/deployments/migrate-overview).\n\nA rate limit rule of 20 requests per 10 seconds is applied to this endpoint.",
         "tags": [
@@ -1589,24 +1645,7 @@
                     "description": "In case you already have the password digests and not the passwords, you can use them for the newly created user via this property.\nThe digests should be generated with one of the supported algorithms.\nThe hashing algorithm can be specified using the `password_hasher` property."
                   },
                   "password_hasher": {
-                    "type": "string",
-                    "description": "The hashing algorithm that was used to generate the password digest.\nThe algorithms we support at the moment are [bcrypt](https://en.wikipedia.org/wiki/Bcrypt), [bcrypt_sha256_django](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/),\n[md5](https://en.wikipedia.org/wiki/MD5), pbkdf2_sha256, pbkdf2_sha512, [pbkdf2_sha256_django](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/),\n[phpass](https://www.openwall.com/phpass/), [scrypt_firebase](https://firebaseopensource.com/projects/firebase/scrypt/),\n[scrypt_werkzeug](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [sha256](https://en.wikipedia.org/wiki/SHA-2)\nand the [argon2](https://argon2.online/) variants argon2i and argon2id.\n\nIf you need support for any particular hashing algorithm, [please let us know](https://clerk.com/support).\n\nNote: for password hashers considered insecure (at this moment MD5 and SHA256), the corresponding user password hashes will be transparently migrated to Bcrypt (a secure hasher) upon the user's first successful password sign in.\nInsecure schemes are marked with `(insecure)` in the list below.\n\nEach of the supported hashers expects the incoming digest to be in a particular format. Specifically:\n\n**bcrypt:** The digest should be of the following form:\n\n`$<algorithm version>$<cost>$<salt & hash>`\n\n**bcrypt_sha256_django:** This is the Django-specific variant of Bcrypt, using SHA256 hashing function. The format should be as follows (as exported from Django):\n\n`bcrypt_sha256$$<algorithm version>$<cost>$<salt & hash>`\n\n**md5** (insecure): The digest should follow the regular form e.g.:\n\n`5f4dcc3b5aa765d61d8327deb882cf99`\n\n**pbkdf2_sha256:** This is the PBKDF2 algorithm using the SHA256 hashing function. The format should be as follows:\n\n`pbkdf2_sha256$<iterations>$<salt>$<hash>`\n\nNote: Both the salt and the hash are expected to be base64-encoded.\n\n**pbkdf2_sha512:** This is the PBKDF2 algorithm using the SHA512 hashing function. The format should be as follows:\n\n`pbkdf2_sha512$<iterations>$<salt>$<hash>`\n\n  _iterations:_ The number of iterations used. Must be an integer less than 420000.\n  _salt:_ The salt used when generating the hash. Must be less than 1024 bytes.\n  _hash:_ The hex-encoded hash. Must have been generated with a key length less than 1024 bytes.\n\n**pbkdf2_sha256_django:** This is the Django-specific variant of PBKDF2 and the digest should have the following format (as exported from Django):\n\n`pbkdf2_sha256$<iterations>$<salt>$<hash>`\n\nNote: The salt is expected to be un-encoded, the hash is expected base64-encoded.\n\n**pbkdf2_sha1:** This is similar to pkbdf2_sha256_django, but with two differences:\n1. uses sha1 instead of sha256\n2. accepts the hash as a hex-encoded string\n\nThe format is the following:\n\n`pbkdf2_sha1$<iterations>$<salt>$<hash-as-hex-string>`\n\n**phpass:** Portable public domain password hashing framework for use in PHP applications. Digests hashed with phpass have the following sections:\n\nThe format is the following:\n\n`$P$<rounds><salt><encoded-checksum>`\n\n- $P$ is the prefix used to identify phpass hashes.\n- rounds is a single character encoding a 6-bit integer representing the number of rounds used.\n- salt is eight characters drawn from [./0-9A-Za-z], providing a 48-bit salt.\n- checksum is 22 characters drawn from the same set, encoding the 128-bit checksum with MD5.\n\n**scrypt_firebase:** The Firebase-specific variant of scrypt.\nThe value is expected to have 6 segments separated by the $ character and include the following information:\n\n_hash:_ The actual Base64 hash. This can be retrieved when exporting the user from Firebase.\n_salt:_ The salt used to generate the above hash. Again, this is given when exporting the user.\n_signer key:_ The base64 encoded signer key.\n_salt separator:_ The base64 encoded salt separator.\n_rounds:_ The number of rounds the algorithm needs to run.\n_memory cost:_ The cost of the algorithm run\n\nThe first 2 (hash and salt) are per user and can be retrieved when exporting the user from Firebase.\nThe other 4 values (signer key, salt separator, rounds and memory cost) are project-wide settings and can be retrieved from the project's password hash parameters.\n\nOnce you have all these, you can combine it in the following format and send this as the digest in order for Clerk to accept it:\n\n`<hash>$<salt>$<signer key>$<salt separator>$<rounds>$<memory cost>`\n\n**scrypt_werkzeug:** The Werkzeug-specific variant of scrypt.\n\n  The value is expected to have 3 segments separated by the $ character and include the following information:\n\n  _algorithm args:_ The algorithm used to generate the hash.\n  _salt:_ The salt used to generate the above hash.\n  _hash:_ The actual Base64 hash.\n\n  The algorithm args are the parameters used to generate the hash and are included in the digest.\n\n**argon2i:** Algorithms in the argon2 family generate digests that encode the following information:\n\n_version (v):_ The argon version, version 19 is assumed\n_memory (m):_ The memory used by the algorithm (in kibibytes)\n_iterations (t):_ The number of iterations to perform\n_parallelism (p):_ The number of threads to use\n\nParts are demarcated by the `$` character, with the first part identifying the algorithm variant.\nThe middle part is a comma-separated list of the encoding options (memory, iterations, parallelism).\nThe final part is the actual digest.\n\n`$argon2i$v=19$m=4096,t=3,p=1$4t6CL3P7YiHBtwESXawI8Hm20zJj4cs7/4/G3c187e0$m7RQFczcKr5bIR0IIxbpO2P0tyrLjf3eUW3M3QSwnLc`\n\n**argon2id:** See the previous algorithm for an explanation of the formatting.\n\nFor the argon2id case, the value of the algorithm in the first part of the digest is `argon2id`:\n\n`$argon2id$v=19$m=64,t=4,p=8$Z2liZXJyaXNo$iGXEpMBTDYQ8G/71tF0qGjxRHEmR3gpGULcE93zUJVU`\n\n**sha256** (insecure): The digest should be a 64-length hex string, e.g.:\n\n`9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08`\n\n**sha256_salted** (insecure): The digest should be a 64-length hex string with a salt.\n\nThe format is the following:\n  `<hash>$<salt>`\n\nThe value is expected to have 2 segments separated by the $ character and include the following information:\n  _hash:_ The sha256 hash, a 64-length hex string.\n  _salt:_ The salt used to generate the above hash. Must be between 1 and 1024 bits.",
-                    "enum": [
-                      "argon2i",
-                      "argon2id",
-                      "bcrypt",
-                      "bcrypt_sha256_django",
-                      "md5",
-                      "pbkdf2_sha256",
-                      "pbkdf2_sha512",
-                      "pbkdf2_sha256_django",
-                      "pbkdf2_sha1",
-                      "phpass",
-                      "scrypt_firebase",
-                      "scrypt_werkzeug",
-                      "sha256",
-                      "sha256_salted"
-                    ]
+                    "$ref": "#/components/schemas/PasswordHasher"
                   },
                   "skip_password_checks": {
                     "type": "boolean",
@@ -1639,6 +1678,31 @@
                     "type": "object",
                     "description": "Metadata saved on the user, that can be updated from both the Frontend and Backend APIs.\nNote: Since this data can be modified from the frontend, it is not guaranteed to be safe."
                   },
+                  "delete_self_enabled": {
+                    "type": "boolean",
+                    "description": "If enabled, user can delete themselves via FAPI.\n",
+                    "nullable": true
+                  },
+                  "legal_accepted_at": {
+                    "type": "string",
+                    "description": "A custom timestamp denoting _when_ the user accepted legal requirements, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).",
+                    "nullable": true
+                  },
+                  "skip_legal_checks": {
+                    "type": "boolean",
+                    "description": "When set to `true` all legal checks are skipped.\nIt is not recommended to skip legal checks unless you are migrating a user to Clerk.",
+                    "nullable": true
+                  },
+                  "create_organization_enabled": {
+                    "type": "boolean",
+                    "description": "If enabled, user can create organizations via FAPI.\n",
+                    "nullable": true
+                  },
+                  "create_organizations_limit": {
+                    "type": "integer",
+                    "description": "The maximum number of organizations the user can create. 0 means unlimited.\n",
+                    "nullable": true
+                  },
                   "created_at": {
                     "type": "string",
                     "description": "A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."
@@ -1670,6 +1734,8 @@
     "/users/count": {
       "get": {
         "operationId": "GetUsersCount",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "count",
         "summary": "Count users",
         "description": "Returns a total count of all users that match the given filtering criteria.",
         "tags": [
@@ -1771,6 +1837,8 @@
     "/users/{user_id}": {
       "get": {
         "operationId": "GetUser",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "find",
         "summary": "Retrieve a user",
         "description": "Retrieve the details of a user",
         "tags": [
@@ -1804,6 +1872,8 @@
       },
       "patch": {
         "operationId": "UpdateUser",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "update",
         "summary": "Update a user",
         "description": "Update a user's attributes.\n\nYou can set the user's primary contact identifiers (email address and phone numbers) by updating the `primary_email_address_id` and `primary_phone_number_id` attributes respectively.\nBoth IDs should correspond to verified identifications that belong to the user.\n\nYou can remove a user's username by setting the username attribute to null or the blank string \"\".\nThis is a destructive action; the identification will be deleted forever.\nUsernames can be removed only if they are optional in your instance settings and there's at least one other identifier which can be used for authentication.\n\nThis endpoint allows changing a user's password. When passing the `password` parameter directly you have two further options.\nYou can ignore the password policy checks for your instance by setting the `skip_password_checks` parameter to `true`.\nYou can also choose to sign the user out of all their active sessions on any device once the password is updated. Just set `sign_out_of_other_sessions` to `true`.",
         "tags": [
@@ -1880,23 +1950,7 @@
                     "description": "In case you already have the password digests and not the passwords, you can use them for the newly created user via this property.\nThe digests should be generated with one of the supported algorithms.\nThe hashing algorithm can be specified using the `password_hasher` property."
                   },
                   "password_hasher": {
-                    "type": "string",
-                    "description": "The hashing algorithm that was used to generate the password digest.\nThe algorithms we support at the moment are [bcrypt](https://en.wikipedia.org/wiki/Bcrypt), [bcrypt_sha256_django](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/),\n[md5](https://en.wikipedia.org/wiki/MD5), pbkdf2_sha256, pbkdf2_sha512, [pbkdf2_sha256_django](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/),\n[phpass](https://www.openwall.com/phpass/), [scrypt_firebase](https://firebaseopensource.com/projects/firebase/scrypt/),\n[sha256](https://en.wikipedia.org/wiki/SHA-2), [scrypt_werkzeug](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash)\nand the [argon2](https://argon2.online/) variants argon2i and argon2id.\n\nIf you need support for any particular hashing algorithm, [please let us know](https://clerk.com/support).\n\nNote: for password hashers considered insecure (at this moment MD5 and SHA256), the corresponding user password hashes will be transparently migrated to Bcrypt (a secure hasher) upon the user's first successful password sign in.\nInsecure schemes are marked with `(insecure)` in the list below.\n\nEach of the supported hashers expects the incoming digest to be in a particular format. Specifically:\n\n**bcrypt:** The digest should be of the following form:\n\n`$<algorithm version>$<cost>$<salt & hash>`\n\n**bcrypt_sha256_django:** This is the Django-specific variant of Bcrypt, using SHA256 hashing function. The format should be as follows (as exported from Django):\n\n`bcrypt_sha256$$<algorithm version>$<cost>$<salt & hash>`\n\n**md5** (insecure): The digest should follow the regular form e.g.:\n\n`5f4dcc3b5aa765d61d8327deb882cf99`\n\n**pbkdf2_sha256:** This is the PBKDF2 algorithm using the SHA256 hashing function. The format should be as follows:\n\n`pbkdf2_sha256$<iterations>$<salt>$<hash>`\n\nNote: Both the salt and the hash are expected to be base64-encoded.\n\n**pbkdf2_sha512:** This is the PBKDF2 algorithm using the SHA512 hashing function. The format should be as follows:\n\n`pbkdf2_sha512$<iterations>$<salt>$<hash>`\n\n  _iterations:_ The number of iterations used. Must be an integer less than 420000.\n  _salt:_ The salt used when generating the hash. Must be less than bytes.\n  _hash:_ The hex-encoded hash. Must have been generated with a key length less than 1024 bytes.\n\n**pbkdf2_sha256_django:** This is the Django-specific variant of PBKDF2 and the digest should have the following format (as exported from Django):\n\n`pbkdf2_sha256$<iterations>$<salt>$<hash>`\n\nNote: The salt is expected to be un-encoded, the hash is expected base64-encoded.\n\n**pbkdf2_sha1:** This is similar to pkbdf2_sha256_django, but with two differences:\n1. uses sha1 instead of sha256\n2. accepts the hash as a hex-encoded string\n\nThe format is the following:\n\n`pbkdf2_sha1$<iterations>$<salt>$<hash-as-hex-string>`\n\n**phpass:** Portable public domain password hashing framework for use in PHP applications. Digests hashed with phpass have the following sections:\n\nThe format is the following:\n\n`$P$<rounds><salt><encoded-checksum>`\n\n- $P$ is the prefix used to identify phpass hashes.\n- rounds is a single character encoding a 6-bit integer representing the number of rounds used.\n- salt is eight characters drawn from [./0-9A-Za-z], providing a 48-bit salt.\n- checksum is 22 characters drawn from the same set, encoding the 128-bit checksum with MD5.\n\n**scrypt_firebase:** The Firebase-specific variant of scrypt.\nThe value is expected to have 6 segments separated by the $ character and include the following information:\n\n_hash:_ The actual Base64 hash. This can be retrieved when exporting the user from Firebase.\n_salt:_ The salt used to generate the above hash. Again, this is given when exporting the user.\n_signer key:_ The base64 encoded signer key.\n_salt separator:_ The base64 encoded salt separator.\n_rounds:_ The number of rounds the algorithm needs to run.\n_memory cost:_ The cost of the algorithm run\n\nThe first 2 (hash and salt) are per user and can be retrieved when exporting the user from Firebase.\nThe other 4 values (signer key, salt separator, rounds and memory cost) are project-wide settings and can be retrieved from the project's password hash parameters.\n\nOnce you have all these, you can combine it in the following format and send this as the digest in order for Clerk to accept it:\n\n`<hash>$<salt>$<signer key>$<salt separator>$<rounds>$<memory cost>`\n\n**scrypt_werkzeug:** The Werkzeug-specific variant of scrypt.\n\nThe value is expected to have 3 segments separated by the $ character and include the following information:\n\n_algorithm args:_ The algorithm used to generate the hash.\n_salt:_ The salt used to generate the above hash.\n_hash:_ The actual Base64 hash.\n\nThe algorithm args are the parameters used to generate the hash and are included in the digest.\n\n**argon2i:** Algorithms in the argon2 family generate digests that encode the following information:\n\n_version (v):_ The argon version, version 19 is assumed\n_memory (m):_ The memory used by the algorithm (in kibibytes)\n_iterations (t):_ The number of iterations to perform\n_parallelism (p):_ The number of threads to use\n\nParts are demarcated by the `$` character, with the first part identifying the algorithm variant.\nThe middle part is a comma-separated list of the encoding options (memory, iterations, parallelism).\nThe final part is the actual digest.\n\n`$argon2i$v=19$m=4096,t=3,p=1$4t6CL3P7YiHBtwESXawI8Hm20zJj4cs7/4/G3c187e0$m7RQFczcKr5bIR0IIxbpO2P0tyrLjf3eUW3M3QSwnLc`\n\n**argon2id:** See the previous algorithm for an explanation of the formatting.\n\nFor the argon2id case, the value of the algorithm in the first part of the digest is `argon2id`:\n\n`$argon2id$v=19$m=64,t=4,p=8$Z2liZXJyaXNo$iGXEpMBTDYQ8G/71tF0qGjxRHEmR3gpGULcE93zUJVU`\n\n**sha256** (insecure): The digest should be a 64-length hex string, e.g.:\n\n`9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08`",
-                    "enum": [
-                      "argon2i",
-                      "argon2id",
-                      "bcrypt",
-                      "bcrypt_sha256_django",
-                      "md5",
-                      "pbkdf2_sha256",
-                      "pbkdf2_sha512",
-                      "pbkdf2_sha256_django",
-                      "pbkdf2_sha1",
-                      "phpass",
-                      "scrypt_firebase",
-                      "scrypt_werkzeug",
-                      "sha256"
-                    ]
+                    "$ref": "#/components/schemas/PasswordHasher"
                   },
                   "skip_password_checks": {
                     "type": "boolean",
@@ -1941,6 +1995,21 @@
                     "description": "If true, the user can create organizations with the Frontend API.",
                     "nullable": true
                   },
+                  "legal_accepted_at": {
+                    "type": "string",
+                    "description": "A custom timestamps denoting _when_ the user accepted legal requirements, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`).",
+                    "nullable": true
+                  },
+                  "skip_legal_checks": {
+                    "type": "boolean",
+                    "description": "When set to `true` all legal checks are skipped.\nIt is not recommended to skip legal checks unless you are migrating a user to Clerk.",
+                    "nullable": true
+                  },
+                  "create_organizations_limit": {
+                    "type": "integer",
+                    "description": "The maximum number of organizations the user can create. 0 means unlimited.",
+                    "nullable": true
+                  },
                   "created_at": {
                     "type": "string",
                     "description": "A custom date/time denoting _when_ the user signed up to the application, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."
@@ -1970,6 +2039,8 @@
       },
       "delete": {
         "operationId": "DeleteUser",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "delete",
         "summary": "Delete a user",
         "description": "Delete the specified user",
         "tags": [
@@ -2005,6 +2076,8 @@
     "/users/{user_id}/ban": {
       "post": {
         "operationId": "BanUser",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "ban",
         "summary": "Ban a user",
         "description": "Marks the given user as banned, which means that all their sessions are revoked and they are not allowed to sign in again.",
         "tags": [
@@ -2034,6 +2107,8 @@
     "/users/{user_id}/unban": {
       "post": {
         "operationId": "UnbanUser",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "unban",
         "summary": "Unban a user",
         "description": "Removes the ban mark from the given user.",
         "tags": [
@@ -2063,6 +2138,8 @@
     "/users/{user_id}/lock": {
       "post": {
         "operationId": "LockUser",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "lock",
         "summary": "Lock a user",
         "description": "Marks the given user as locked, which means they are not allowed to sign in again until the lock expires.\nLock duration can be configured in the instance's restrictions settings.",
         "tags": [
@@ -2092,6 +2169,8 @@
     "/users/{user_id}/unlock": {
       "post": {
         "operationId": "UnlockUser",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "unlock",
         "summary": "Unlock a user",
         "description": "Removes the lock from the given user.",
         "tags": [
@@ -2121,6 +2200,8 @@
     "/users/{user_id}/profile_image": {
       "post": {
         "operationId": "SetUserProfileImage",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "update_profile_image",
         "summary": "Set user profile image",
         "description": "Update a user's profile image",
         "tags": [
@@ -2170,6 +2251,8 @@
       },
       "delete": {
         "operationId": "DeleteUserProfileImage",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "delete_profile_image",
         "summary": "Delete user profile image",
         "description": "Delete a user's profile image",
         "tags": [
@@ -2199,6 +2282,8 @@
     "/users/{user_id}/metadata": {
       "patch": {
         "operationId": "UpdateUserMetadata",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "update_metadata",
         "summary": "Merge and update a user's metadata",
         "description": "Update a user's metadata attributes by merging existing values with the provided parameters.\n\nThis endpoint behaves differently than the *Update a user* endpoint.\nMetadata values will not be replaced entirely.\nInstead, a deep merge will be performed.\nDeep means that any nested JSON objects will be merged as well.\n\nYou can remove metadata keys at any level by setting their value to `null`.",
         "tags": [
@@ -2216,6 +2301,7 @@
           }
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -2264,6 +2350,8 @@
     "/users/{user_id}/oauth_access_tokens/{provider}": {
       "get": {
         "operationId": "GetOAuthAccessToken",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "oauth_access_token",
         "summary": "Retrieve the OAuth access token of a user",
         "description": "Fetch the corresponding OAuth access token for a user that has previously authenticated with a particular OAuth provider.\nFor OAuth 2.0, if the access token has expired and we have a corresponding refresh token, the access token will be refreshed transparently the new one will be returned.",
         "tags": [
@@ -2355,6 +2443,8 @@
     "/users/{user_id}/organization_memberships": {
       "get": {
         "operationId": "UsersGetOrganizationMemberships",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "organization_memberships",
         "summary": "Retrieve all memberships for a user",
         "description": "Retrieve a paginated list of the user's organization memberships",
         "tags": [
@@ -2387,9 +2477,68 @@
         }
       }
     },
+    "/users/{user_id}/organization_invitations": {
+      "get": {
+        "operationId": "UsersGetOrganizationInvitations",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "organization_invitations",
+        "summary": "Retrieve all invitations for a user",
+        "description": "Retrieve a paginated list of the user's organization invitations",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "The ID of the user whose organization invitations we want to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "#/components/parameters/LimitParameter"
+          },
+          {
+            "$ref": "#/components/parameters/OffsetParameter"
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "description": "Filter organization invitations based on their status",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "accepted",
+                "revoked"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrganizationInvitationsWithPublicOrganizationData"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClerkErrors"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClerkErrors"
+          },
+          "404": {
+            "$ref": "#/components/responses/ResourceNotFound"
+          }
+        }
+      }
+    },
     "/users/{user_id}/verify_password": {
       "post": {
         "operationId": "VerifyPassword",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "verify_password",
         "summary": "Verify the password of a user",
         "description": "Check that the user's password matches the supplied input.\nUseful for custom auth flows and re-verification.",
         "tags": [
@@ -2407,6 +2556,7 @@
           }
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -2461,6 +2611,8 @@
     "/users/{user_id}/verify_totp": {
       "post": {
         "operationId": "VerifyTOTP",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "verify_totp",
         "summary": "Verify a TOTP or backup code for a user",
         "description": "Verify that the provided TOTP or backup code is valid for the user.\nVerifying a backup code will result it in being consumed (i.e. it will\nbecome invalid).\nUseful for custom auth flows and re-verification.",
         "tags": [
@@ -2478,6 +2630,7 @@
           }
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -2540,6 +2693,8 @@
     "/users/{user_id}/mfa": {
       "delete": {
         "operationId": "DisableMFA",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "disable_mfa",
         "summary": "Disable a user's MFA methods",
         "description": "Disable all of a user's MFA methods (e.g. OTP sent via SMS, TOTP on their authenticator app) at once.",
         "tags": [
@@ -2583,15 +2738,293 @@
         }
       }
     },
+    "/users/{user_id}/backup_code": {
+      "delete": {
+        "operationId": "DeleteBackupCode",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "delete_backup_code",
+        "summary": "Disable all user's Backup codes",
+        "description": "Disable all of a user's backup codes.",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "The ID of the user whose backup codes are to be deleted.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "user_id": {
+                      "type": "string",
+                      "nullable": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/ResourceNotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ClerkErrors"
+          }
+        }
+      }
+    },
+    "/users/{user_id}/passkeys/{passkey_identification_id}": {
+      "delete": {
+        "operationId": "UserPasskeyDelete",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "delete_passkey",
+        "summary": "Delete a user passkey",
+        "description": "Delete the passkey identification for a given user and notify them through email.",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "The ID of the user that owns the passkey identity",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "passkey_identification_id",
+            "in": "path",
+            "description": "The ID of the passkey identity to be deleted",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/DeletedObject"
+          },
+          "403": {
+            "$ref": "#/components/responses/AuthorizationInvalid"
+          },
+          "404": {
+            "$ref": "#/components/responses/ResourceNotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ClerkErrors"
+          }
+        }
+      }
+    },
+    "/users/{user_id}/web3_wallets/{web3_wallet_identification_id}": {
+      "delete": {
+        "operationId": "UserWeb3WalletDelete",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "delete_web3_wallet",
+        "summary": "Delete a user web3 wallet",
+        "description": "Delete the web3 wallet identification for a given user.",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "The ID of the user that owns the web3 wallet",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "web3_wallet_identification_id",
+            "in": "path",
+            "description": "The ID of the web3 wallet identity to be deleted",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/DeletedObject"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClerkErrors"
+          },
+          "403": {
+            "$ref": "#/components/responses/AuthorizationInvalid"
+          },
+          "404": {
+            "$ref": "#/components/responses/ResourceNotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ClerkErrors"
+          }
+        }
+      }
+    },
+    "/users/{user_id}/totp": {
+      "post": {
+        "operationId": "CreateUserTOTP",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "create_totp",
+        "summary": "Create a TOTP for a user",
+        "description": "Creates a TOTP (Time-based One-Time Password) for a given user, returning both the TOTP secret and the URI.\n",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "The ID of the user for whom the TOTP is being created.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/TOTP"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClerkErrors"
+          },
+          "404": {
+            "$ref": "#/components/responses/ResourceNotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ClerkErrors"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "DeleteTOTP",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "delete_totp",
+        "summary": "Delete all the user's TOTPs",
+        "description": "Deletes all of the user's TOTPs.",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "The ID of the user whose TOTPs are to be deleted",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "properties": {
+                    "user_id": {
+                      "type": "string",
+                      "nullable": false
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/components/responses/ResourceNotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ClerkErrors"
+          }
+        }
+      }
+    },
+    "/users/{user_id}/external_accounts/{external_account_id}": {
+      "delete": {
+        "operationId": "DeleteExternalAccount",
+        "x-sdk-ruby-operationGroup": "users",
+        "x-sdk-ruby-operationId": "delete_external_account",
+        "summary": "Delete External Account",
+        "description": "Delete an external account by ID.",
+        "tags": [
+          "Users"
+        ],
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "The ID of the user's external account",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "external_account_id",
+            "in": "path",
+            "description": "The ID of the external account to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/DeletedObject"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClerkErrors"
+          },
+          "403": {
+            "$ref": "#/components/responses/ClerkErrors"
+          },
+          "404": {
+            "$ref": "#/components/responses/ResourceNotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/ClerkErrors"
+          }
+        }
+      }
+    },
     "/invitations": {
       "post": {
         "operationId": "CreateInvitation",
+        "x-sdk-ruby-operationGroup": "invitations",
+        "x-sdk-ruby-operationId": "create",
         "summary": "Create an invitation",
         "description": "Creates a new invitation for the given email address and sends the invitation email.\nKeep in mind that you cannot create an invitation if there is already one for the given email address.\nAlso, trying to create an invitation for an email address that already exists in your application will result to an error.",
         "tags": [
           "Invitations"
         ],
         "requestBody": {
+          "required": true,
           "description": "Required parameters",
           "content": {
             "application/json": {
@@ -2622,6 +3055,13 @@
                     "description": "Whether an invitation should be created if there is already an existing invitation for this email address, or it's claimed by another user.",
                     "nullable": true,
                     "default": false
+                  },
+                  "expires_in_days": {
+                    "type": "integer",
+                    "description": "The number of days the invitation will be valid for. By default, the invitation does not expire.",
+                    "nullable": true,
+                    "minimum": 1,
+                    "maximum": 365
                   }
                 },
                 "required": [
@@ -2647,6 +3087,8 @@
         "summary": "List all invitations",
         "description": "Returns all non-revoked invitations for your application, sorted by creation date",
         "operationId": "ListInvitations",
+        "x-sdk-ruby-operationGroup": "invitations",
+        "x-sdk-ruby-operationId": "all",
         "parameters": [
           {
             "$ref": "#/components/parameters/LimitParameter"
@@ -2664,7 +3106,8 @@
               "enum": [
                 "pending",
                 "accepted",
-                "revoked"
+                "revoked",
+                "expired"
               ]
             }
           }
@@ -2682,6 +3125,8 @@
     "/invitations/{invitation_id}/revoke": {
       "post": {
         "operationId": "RevokeInvitation",
+        "x-sdk-ruby-operationGroup": "invitations",
+        "x-sdk-ruby-operationId": "revoke",
         "summary": "Revokes an invitation",
         "description": "Revokes the given invitation.\nRevoking an invitation will prevent the user from using the invitation link that was sent to them.\nHowever, it doesn't prevent the user from signing up if they follow the sign up flow.\nOnly active (i.e. non-revoked) invitations can be revoked.",
         "tags": [
@@ -2711,9 +3156,81 @@
         }
       }
     },
+    "/organization_invitations": {
+      "get": {
+        "operationId": "ListInstanceOrganizationInvitations",
+        "x-sdk-ruby-operationGroup": "organization_invitations",
+        "x-sdk-ruby-operationId": "all",
+        "summary": "Get a list of organization invitations for the current instance",
+        "description": "This request returns the list of organization invitations for the instance.\nResults can be paginated using the optional `limit` and `offset` query parameters.\nYou can filter them by providing the 'status' query parameter, that accepts multiple values.\nYou can change the order by providing the 'order' query parameter, that accepts multiple values.\nYou can filter by the invited user email address providing the `query` query parameter.\nThe organization invitations are ordered by descending creation date by default.",
+        "tags": [
+          "Organization Invitations"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/LimitParameter"
+          },
+          {
+            "$ref": "#/components/parameters/OffsetParameter"
+          },
+          {
+            "in": "query",
+            "name": "order_by",
+            "required": false,
+            "description": "Allows to return organization invitations in a particular order.\nAt the moment, you can order the returned organization invitations either by their `created_at` or `email_address`.\nIn order to specify the direction, you can use the `+/-` symbols prepended in the property to order by.\nFor example, if you want organization invitations to be returned in descending order according to their `created_at` property, you can use `-created_at`.\nIf you don't use `+` or `-`, then `+` is implied.\nDefaults to `-created_at`.",
+            "schema": {
+              "type": "string",
+              "default": "-created_at"
+            }
+          },
+          {
+            "in": "query",
+            "name": "status",
+            "description": "Filter organization invitations based on their status",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "pending",
+                "accepted",
+                "revoked"
+              ]
+            }
+          },
+          {
+            "in": "query",
+            "required": false,
+            "name": "query",
+            "description": "Filter organization invitations based on their `email_address`",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrganizationInvitationsWithPublicOrganizationData"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClerkErrors"
+          },
+          "404": {
+            "$ref": "#/components/responses/ResourceNotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/ClerkErrors"
+          },
+          "500": {
+            "$ref": "#/components/responses/ClerkErrors"
+          }
+        }
+      }
+    },
     "/allowlist_identifiers": {
       "get": {
         "operationId": "ListAllowlistIdentifiers",
+        "x-sdk-ruby-operationGroup": "allowlist_identifiers",
+        "x-sdk-ruby-operationId": "all",
         "summary": "List all identifiers on the allow-list",
         "description": "Get a list of all identifiers allowed to sign up to an instance",
         "tags": [
@@ -2733,12 +3250,15 @@
       },
       "post": {
         "operationId": "CreateAllowlistIdentifier",
+        "x-sdk-ruby-operationGroup": "allowlist_identifiers",
+        "x-sdk-ruby-operationId": "create",
         "summary": "Add identifier to the allow-list",
         "description": "Create an identifier allowed to sign up to an instance",
         "tags": [
           "Allow-list / Block-list"
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -2781,6 +3301,8 @@
     "/allowlist_identifiers/{identifier_id}": {
       "delete": {
         "operationId": "DeleteAllowlistIdentifier",
+        "x-sdk-ruby-operationGroup": "allowlist_identifiers",
+        "x-sdk-ruby-operationId": "delete",
         "summary": "Delete identifier from allow-list",
         "description": "Delete an identifier from the instance allow-list",
         "tags": [
@@ -2813,6 +3335,8 @@
     "/blocklist_identifiers": {
       "get": {
         "operationId": "ListBlocklistIdentifiers",
+        "x-sdk-ruby-operationGroup": "blocklist_identifiers",
+        "x-sdk-ruby-operationId": "all",
         "summary": "List all identifiers on the block-list",
         "description": "Get a list of all identifiers which are not allowed to access an instance",
         "tags": [
@@ -2832,12 +3356,15 @@
       },
       "post": {
         "operationId": "CreateBlocklistIdentifier",
+        "x-sdk-ruby-operationGroup": "blocklist_identifiers",
+        "x-sdk-ruby-operationId": "create",
         "summary": "Add identifier to the block-list",
         "description": "Create an identifier that is blocked from accessing an instance",
         "tags": [
           "Allow-list / Block-list"
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -2875,6 +3402,8 @@
     "/blocklist_identifiers/{identifier_id}": {
       "delete": {
         "operationId": "DeleteBlocklistIdentifier",
+        "x-sdk-ruby-operationGroup": "blocklist_identifiers",
+        "x-sdk-ruby-operationId": "delete",
         "summary": "Delete identifier from block-list",
         "description": "Delete an identifier from the instance block-list",
         "tags": [
@@ -2907,12 +3436,15 @@
     "/beta_features/instance_settings": {
       "patch": {
         "operationId": "UpdateInstanceAuthConfig",
+        "x-sdk-ruby-operationGroup": "beta_features",
+        "x-sdk-ruby-operationId": "update_instance_settings",
         "summary": "Update instance settings",
         "description": "Updates the settings of an instance",
         "tags": [
           "Beta Features"
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -2972,6 +3504,8 @@
       "put": {
         "deprecated": true,
         "operationId": "UpdateProductionInstanceDomain",
+        "x-sdk-ruby-operationGroup": "beta_features",
+        "x-sdk-ruby-operationId": "update_production_instance_domain",
         "summary": "Update production instance domain",
         "description": "Change the domain of a production instance.\n\nChanging the domain requires updating the [DNS records](https://clerk.com/docs/deployments/overview#dns-records) accordingly, deploying new [SSL certificates](https://clerk.com/docs/deployments/overview#deploy), updating your Social Connection's redirect URLs and setting the new keys in your code.\n\nWARNING: Changing your domain will invalidate all current user sessions (i.e. users will be logged out). Also, while your application is being deployed, a small downtime is expected to occur.",
         "tags": [
@@ -3011,10 +3545,13 @@
         "summary": "Create actor token",
         "description": "Create an actor token that can be used to impersonate the given user.\nThe `actor` parameter needs to include at least a \"sub\" key whose value is the ID of the actor (impersonating) user.",
         "operationId": "CreateActorToken",
+        "x-sdk-ruby-operationGroup": "actor_tokens",
+        "x-sdk-ruby-operationId": "create",
         "tags": [
           "Actor Tokens"
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -3023,7 +3560,7 @@
                 "properties": {
                   "user_id": {
                     "type": "string",
-                    "description": "The ID of the user that can use the newly created sign in token."
+                    "description": "The ID of the user being impersonated."
                   },
                   "actor": {
                     "type": "object",
@@ -3072,6 +3609,8 @@
         "summary": "Revoke actor token",
         "description": "Revokes a pending actor token.",
         "operationId": "RevokeActorToken",
+        "x-sdk-ruby-operationGroup": "actor_tokens",
+        "x-sdk-ruby-operationId": "revoke",
         "tags": [
           "Actor Tokens"
         ],
@@ -3104,6 +3643,8 @@
         "summary": "List all instance domains",
         "description": "Use this endpoint to get a list of all domains for an instance.\nThe response will contain the primary domain for the instance and any satellite domains. Each domain in the response contains information about the URLs where Clerk operates and the required CNAME targets.",
         "operationId": "ListDomains",
+        "x-sdk-ruby-operationGroup": "domains",
+        "x-sdk-ruby-operationId": "all",
         "tags": [
           "Domains"
         ],
@@ -3117,10 +3658,13 @@
         "summary": "Add a domain",
         "description": "Add a new domain for your instance.\nUseful in the case of multi-domain instances, allows adding satellite domains to an instance.\nThe new domain must have a `name`. The domain name can contain the port for development instances, like `localhost:3000`.\nAt the moment, instances can have only one primary domain, so the `is_satellite` parameter must be set to `true`.\nIf you're planning to configure the new satellite domain to run behind a proxy, pass the `proxy_url` parameter accordingly.",
         "operationId": "AddDomain",
+        "x-sdk-ruby-operationGroup": "domains",
+        "x-sdk-ruby-operationId": "create",
         "tags": [
           "Domains"
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -3169,6 +3713,8 @@
     "/domains/{domain_id}": {
       "delete": {
         "operationId": "DeleteDomain",
+        "x-sdk-ruby-operationGroup": "domains",
+        "x-sdk-ruby-operationId": "delete",
         "summary": "Delete a satellite domain",
         "description": "Deletes a satellite domain for the instance.\nIt is currently not possible to delete the instance's primary domain.",
         "tags": [
@@ -3199,6 +3745,8 @@
       },
       "patch": {
         "operationId": "UpdateDomain",
+        "x-sdk-ruby-operationGroup": "domains",
+        "x-sdk-ruby-operationId": "update",
         "summary": "Update a domain",
         "description": "The `proxy_url` can be updated only for production instances.\nUpdate one of the instance's domains. Both primary and satellite domains can be updated.\nIf you choose to use Clerk via proxy, use this endpoint to specify the `proxy_url`.\nWhenever you decide you'd rather switch to DNS setup for Clerk, simply set `proxy_url`\nto `null` for the domain. When you update a production instance's primary domain name,\nyou have to make sure that you've completed all the necessary setup steps for DNS and\nemails to work. Expect downtime otherwise. Updating a primary domain's name will also\nupdate the instance's home origin, affecting the default application paths.",
         "tags": [
@@ -3232,6 +3780,11 @@
                     "type": "string",
                     "description": "The full URL of the proxy that will forward requests to Clerk's Frontend API.\nCan only be updated for production instances.",
                     "nullable": true
+                  },
+                  "is_secondary": {
+                    "type": "boolean",
+                    "description": "Whether this is a domain for a secondary app, meaning that any subdomain provided is significant and\nwill be stored as part of the domain. This is useful for supporting multiple apps (one primary and\nmultiple secondaries) on the same root domain (eTLD+1).",
+                    "nullable": true
                   }
                 }
               }
@@ -3257,12 +3810,15 @@
     "/instance": {
       "patch": {
         "operationId": "UpdateInstance",
+        "x-sdk-ruby-operationGroup": "instance",
+        "x-sdk-ruby-operationId": "update",
         "summary": "Update instance settings",
         "description": "Updates the settings of an instance",
         "tags": [
           "Instance Settings"
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -3330,12 +3886,15 @@
     "/instance/restrictions": {
       "patch": {
         "operationId": "UpdateInstanceRestrictions",
+        "x-sdk-ruby-operationGroup": "instance",
+        "x-sdk-ruby-operationId": "update_restrictions",
         "summary": "Update instance restrictions",
         "description": "Updates the restriction settings of an instance",
         "tags": [
           "Instance Settings"
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -3383,12 +3942,15 @@
     "/instance/change_domain": {
       "post": {
         "operationId": "ChangeProductionInstanceDomain",
+        "x-sdk-ruby-operationGroup": "instance",
+        "x-sdk-ruby-operationId": "update_production_domain",
         "summary": "Update production instance domain",
         "description": "Change the domain of a production instance.\n\nChanging the domain requires updating the [DNS records](https://clerk.com/docs/deployments/overview#dns-records) accordingly, deploying new [SSL certificates](https://clerk.com/docs/deployments/overview#deploy), updating your Social Connection's redirect URLs and setting the new keys in your code.\n\nWARNING: Changing your domain will invalidate all current user sessions (i.e. users will be logged out). Also, while your application is being deployed, a small downtime is expected to occur.",
         "tags": [
           "Beta Features"
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -3398,6 +3960,10 @@
                   "home_url": {
                     "type": "string",
                     "description": "The new home URL of the production instance e.g. https://www.example.com"
+                  },
+                  "is_secondary": {
+                    "type": "boolean",
+                    "description": "Whether this is a domain for a secondary app, meaning that any subdomain provided is significant and\nwill be stored as part of the domain. This is useful for supporting multiple apps (one primary and\nmultiple secondaries) on the same root domain (eTLD+1)."
                   }
                 }
               }
@@ -3420,12 +3986,15 @@
     "/instance/organization_settings": {
       "patch": {
         "operationId": "UpdateInstanceOrganizationSettings",
+        "x-sdk-ruby-operationGroup": "instance",
+        "x-sdk-ruby-operationId": "update_organization_settings",
         "summary": "Update instance organization settings",
         "description": "Updates the organization settings of the instance",
         "tags": [
           "Instance Settings"
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -3487,6 +4056,8 @@
     "/webhooks/svix": {
       "post": {
         "operationId": "CreateSvixApp",
+        "x-sdk-ruby-operationGroup": "webhooks",
+        "x-sdk-ruby-operationId": "create",
         "summary": "Create a Svix app",
         "description": "Create a Svix app and associate it with the current instance",
         "tags": [
@@ -3503,6 +4074,8 @@
       },
       "delete": {
         "operationId": "DeleteSvixApp",
+        "x-sdk-ruby-operationGroup": "webhooks",
+        "x-sdk-ruby-operationId": "delete",
         "summary": "Delete a Svix app",
         "description": "Delete a Svix app and disassociate it from the current instance",
         "tags": [
@@ -3521,6 +4094,8 @@
     "/webhooks/svix_url": {
       "post": {
         "operationId": "GenerateSvixAuthURL",
+        "x-sdk-ruby-operationGroup": "webhooks",
+        "x-sdk-ruby-operationId": "generate_auth_url",
         "summary": "Create a Svix Dashboard URL",
         "description": "Generate a new url for accessing the Svix's management dashboard for that particular instance",
         "tags": [
@@ -3540,6 +4115,8 @@
       "get": {
         "summary": "List all templates",
         "operationId": "ListJWTTemplates",
+        "x-sdk-ruby-operationGroup": "jwt_templates",
+        "x-sdk-ruby-operationId": "all",
         "tags": [
           "JWT Templates"
         ],
@@ -3551,12 +4128,15 @@
       },
       "post": {
         "operationId": "CreateJWTTemplate",
+        "x-sdk-ruby-operationGroup": "jwt_templates",
+        "x-sdk-ruby-operationId": "create",
         "summary": "Create a JWT template",
         "description": "Create a new JWT template",
         "tags": [
           "JWT Templates"
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -3625,6 +4205,8 @@
     "/jwt_templates/{template_id}": {
       "get": {
         "operationId": "GetJWTTemplate",
+        "x-sdk-ruby-operationGroup": "jwt_templates",
+        "x-sdk-ruby-operationId": "find",
         "summary": "Retrieve a template",
         "description": "Retrieve the details of a given JWT template",
         "tags": [
@@ -3652,6 +4234,8 @@
       },
       "patch": {
         "operationId": "UpdateJWTTemplate",
+        "x-sdk-ruby-operationGroup": "jwt_templates",
+        "x-sdk-ruby-operationId": "update",
         "summary": "Update a JWT template",
         "description": "Updates an existing JWT template",
         "tags": [
@@ -3669,6 +4253,7 @@
           }
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -3735,6 +4320,8 @@
       },
       "delete": {
         "operationId": "DeleteJWTTemplate",
+        "x-sdk-ruby-operationGroup": "jwt_templates",
+        "x-sdk-ruby-operationId": "delete",
         "summary": "Delete a Template",
         "description": "",
         "tags": [
@@ -3767,6 +4354,8 @@
     "/organizations": {
       "get": {
         "operationId": "ListOrganizations",
+        "x-sdk-ruby-operationGroup": "organizations",
+        "x-sdk-ruby-operationId": "all",
         "summary": "Get a list of organizations for an instance",
         "description": "This request returns the list of organizations for an instance.\nResults can be paginated using the optional `limit` and `offset` query parameters.\nThe organizations are ordered by descending creation date.\nMost recent organizations will be returned first.",
         "tags": [
@@ -3825,12 +4414,15 @@
       },
       "post": {
         "operationId": "CreateOrganization",
+        "x-sdk-ruby-operationGroup": "organizations",
+        "x-sdk-ruby-operationId": "create",
         "summary": "Create an organization",
-        "description": "Creates a new organization with the given name for an instance.\nIn order to successfully create an organization you need to provide the ID of the User who will become the organization administrator.\nYou can specify an optional slug for the new organization.\nIf provided, the organization slug can contain only lowercase alphanumeric characters (letters and digits) and the dash \"-\".\nOrganization slugs must be unique for the instance.\nYou can provide additional metadata for the organization and set any custom attribute you want.\nOrganizations support private and public metadata.\nPrivate metadata can only be accessed from the Backend API.\nPublic metadata can be accessed from the Backend API, and are read-only from the Frontend API.",
+        "description": "Creates a new organization with the given name for an instance.\nIn order to successfully create an organization you need to provide the ID of the User who will become the organization administrator.\nYou can specify an optional slug for the new organization.\nIf provided, the organization slug can contain only lowercase alphanumeric characters (letters and digits) and the dash \"-\".\nOrganization slugs must be unique for the instance.\nYou can provide additional metadata for the organization and set any custom attribute you want.\nOrganizations support private and public metadata.\nPrivate metadata can only be accessed from the Backend API.\nPublic metadata can be accessed from the Backend API, and are read-only from the Frontend API.\nThe `created_by` user will see this as their [active organization] (https://clerk.com/docs/organizations/overview#active-organization)\nthe next time they create a session, presuming they don't explicitly set a different organization as active before then.",
         "tags": [
           "Organizations"
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -3838,7 +4430,7 @@
                 "properties": {
                   "name": {
                     "type": "string",
-                    "description": "The name of the new organization"
+                    "description": "The name of the new organization.\nMay not contain URLs or HTML."
                   },
                   "created_by": {
                     "type": "string",
@@ -3859,6 +4451,10 @@
                   "max_allowed_memberships": {
                     "type": "integer",
                     "description": "The maximum number of memberships allowed for this organization"
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "description": "A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."
                   }
                 },
                 "required": [
@@ -3888,6 +4484,8 @@
     "/organizations/{organization_id}": {
       "get": {
         "operationId": "GetOrganization",
+        "x-sdk-ruby-operationGroup": "organizations",
+        "x-sdk-ruby-operationId": "find",
         "summary": "Retrieve an organization by ID or slug",
         "description": "Fetches the organization whose ID or slug matches the provided `id_or_slug` URL query parameter.",
         "tags": [
@@ -3902,6 +4500,15 @@
               "type": "string"
             },
             "description": "The ID or slug of the organization"
+          },
+          {
+            "in": "query",
+            "required": false,
+            "name": "include_members_count",
+            "description": "Flag to denote whether or not the organization's members count should be included in the response.",
+            "schema": {
+              "type": "boolean"
+            }
           }
         ],
         "responses": {
@@ -3918,6 +4525,8 @@
       },
       "patch": {
         "operationId": "UpdateOrganization",
+        "x-sdk-ruby-operationGroup": "organizations",
+        "x-sdk-ruby-operationId": "update",
         "summary": "Update an organization",
         "description": "Updates an existing organization",
         "tags": [
@@ -3952,7 +4561,7 @@
                   },
                   "name": {
                     "type": "string",
-                    "description": "The new name of the organization",
+                    "description": "The new name of the organization.\nMay not contain URLs or HTML.",
                     "nullable": true
                   },
                   "slug": {
@@ -3969,6 +4578,10 @@
                     "type": "boolean",
                     "description": "If true, an admin can delete this organization with the Frontend API.",
                     "nullable": true
+                  },
+                  "created_at": {
+                    "type": "string",
+                    "description": "A custom date/time denoting _when_ the organization was created, specified in RFC3339 format (e.g. `2012-10-20T07:15:20.902Z`)."
                   }
                 }
               }
@@ -3992,6 +4605,8 @@
       },
       "delete": {
         "operationId": "DeleteOrganization",
+        "x-sdk-ruby-operationGroup": "organizations",
+        "x-sdk-ruby-operationId": "delete",
         "summary": "Delete an organization",
         "description": "Deletes the given organization.\nPlease note that deleting an organization will also delete all memberships and invitations.\nThis is not reversible.",
         "tags": [
@@ -4021,6 +4636,8 @@
     "/organizations/{organization_id}/metadata": {
       "patch": {
         "operationId": "MergeOrganizationMetadata",
+        "x-sdk-ruby-operationGroup": "organizations",
+        "x-sdk-ruby-operationId": "merge_metadata",
         "summary": "Merge and update metadata for an organization",
         "description": "Update organization metadata attributes by merging existing values with the provided parameters.\nMetadata values will be updated via a deep merge.\nDeep meaning that any nested JSON objects will be merged as well.\nYou can remove metadata keys at any level by setting their value to `null`.",
         "tags": [
@@ -4080,6 +4697,8 @@
     "/organizations/{organization_id}/logo": {
       "put": {
         "operationId": "UploadOrganizationLogo",
+        "x-sdk-ruby-operationGroup": "organizations",
+        "x-sdk-ruby-operationId": "upload_logo",
         "summary": "Upload a logo for the organization",
         "description": "Set or replace an organization's logo, by uploading an image file.\nThis endpoint uses the `multipart/form-data` request content type and accepts a file of image type.\nThe file size cannot exceed 10MB.\nOnly the following file content types are supported: `image/jpeg`, `image/png`, `image/gif`, `image/webp`, `image/x-icon`, `image/vnd.microsoft.icon`.",
         "tags": [
@@ -4097,6 +4716,7 @@
           }
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "multipart/form-data": {
               "schema": {
@@ -4112,7 +4732,6 @@
                   }
                 },
                 "required": [
-                  "uploader_user_id",
                   "file"
                 ]
               }
@@ -4139,6 +4758,8 @@
       },
       "delete": {
         "operationId": "DeleteOrganizationLogo",
+        "x-sdk-ruby-operationGroup": "organizations",
+        "x-sdk-ruby-operationId": "delete_logo",
         "description": "Delete the organization's logo.",
         "tags": [
           "Organizations"
@@ -4167,8 +4788,10 @@
     "/organizations/{organization_id}/invitations": {
       "post": {
         "operationId": "CreateOrganizationInvitation",
+        "x-sdk-ruby-operationGroup": "organization_invitations",
+        "x-sdk-ruby-operationId": "create",
         "summary": "Create and send an organization invitation",
-        "description": "Creates a new organization invitation and sends an email to the provided `email_address` with a link to accept the invitation and join the organization.\nYou can specify the `role` for the invited organization member.\n\nNew organization invitations get a \"pending\" status until they are revoked by an organization administrator or accepted by the invitee.\n\nThe request body supports passing an optional `redirect_url` parameter.\nWhen the invited user clicks the link to accept the invitation, they will be redirected to the URL provided.\nUse this parameter to implement a custom invitation acceptance flow.\n\nYou must specify the ID of the user that will send the invitation with the `inviter_user_id` parameter.\nThat user must be a member with administrator privileges in the organization.\nOnly \"admin\" members can create organization invitations.\n\nYou can optionally provide public and private metadata for the organization invitation.\nThe public metadata are visible by both the Frontend and the Backend whereas the private ones only by the Backend.\nWhen the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.",
+        "description": "Creates a new organization invitation and sends an email to the provided `email_address` with a link to accept the invitation and join the organization.\nYou can specify the `role` for the invited organization member.\n\nNew organization invitations get a \"pending\" status until they are revoked by an organization administrator or accepted by the invitee.\n\nThe request body supports passing an optional `redirect_url` parameter.\nWhen the invited user clicks the link to accept the invitation, they will be redirected to the URL provided.\nUse this parameter to implement a custom invitation acceptance flow.\n\nYou can specify the ID of the user that will send the invitation with the `inviter_user_id` parameter.\nThat user must be a member with administrator privileges in the organization.\nOnly \"admin\" members can create organization invitations.\n\nYou can optionally provide public and private metadata for the organization invitation.\nThe public metadata are visible by both the Frontend and the Backend whereas the private ones only by the Backend.\nWhen the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.",
         "tags": [
           "Organization Invitations"
         ],
@@ -4196,6 +4819,7 @@
                   },
                   "inviter_user_id": {
                     "type": "string",
+                    "nullable": true,
                     "description": "The ID of the user that invites the new member to the organization.\nMust be an administrator in the organization."
                   },
                   "role": {
@@ -4217,7 +4841,6 @@
                 },
                 "required": [
                   "email_address",
-                  "inviter_user_id",
                   "role"
                 ]
               }
@@ -4244,6 +4867,8 @@
       },
       "get": {
         "operationId": "ListOrganizationInvitations",
+        "x-sdk-ruby-operationGroup": "organization_invitations",
+        "x-sdk-ruby-operationId": "all",
         "summary": "Get a list of organization invitations",
         "description": "This request returns the list of organization invitations.\nResults can be paginated using the optional `limit` and `offset` query parameters.\nYou can filter them by providing the 'status' query parameter, that accepts multiple values.\nThe organization invitations are ordered by descending creation date.\nMost recent invitations will be returned first.\nAny invitations created as a result of an Organization Domain are not included in the results.",
         "tags": [
@@ -4296,8 +4921,10 @@
     "/organizations/{organization_id}/invitations/bulk": {
       "post": {
         "operationId": "CreateOrganizationInvitationBulk",
+        "x-sdk-ruby-operationGroup": "organization_invitations",
+        "x-sdk-ruby-operationId": "create_bulk",
         "summary": "Bulk create and send organization invitations",
-        "description": "Creates new organization invitations in bulk and sends out emails to the provided email addresses with a link to accept the invitation and join the organization.\nYou can specify a different `role` for each invited organization member.\nNew organization invitations get a \"pending\" status until they are revoked by an organization administrator or accepted by the invitee.\nThe request body supports passing an optional `redirect_url` parameter for each invitation.\nWhen the invited user clicks the link to accept the invitation, they will be redirected to the provided URL.\nUse this parameter to implement a custom invitation acceptance flow.\nYou must specify the ID of the user that will send the invitation with the `inviter_user_id` parameter. Each invitation\ncan have a different inviter user.\nInviter users must be members with administrator privileges in the organization.\nOnly \"admin\" members can create organization invitations.\nYou can optionally provide public and private metadata for each organization invitation. The public metadata are visible\nby both the Frontend and the Backend, whereas the private metadata are only visible by the Backend.\nWhen the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.",
+        "description": "Creates new organization invitations in bulk and sends out emails to the provided email addresses with a link to accept the invitation and join the organization.\nYou can specify a different `role` for each invited organization member.\nNew organization invitations get a \"pending\" status until they are revoked by an organization administrator or accepted by the invitee.\nThe request body supports passing an optional `redirect_url` parameter for each invitation.\nWhen the invited user clicks the link to accept the invitation, they will be redirected to the provided URL.\nUse this parameter to implement a custom invitation acceptance flow.\nYou can specify the ID of the user that will send the invitation with the `inviter_user_id` parameter. Each invitation\ncan have a different inviter user.\nInviter users must be members with administrator privileges in the organization.\nOnly \"admin\" members can create organization invitations.\nYou can optionally provide public and private metadata for each organization invitation. The public metadata are visible\nby both the Frontend and the Backend, whereas the private metadata are only visible by the Backend.\nWhen the organization invitation is accepted, the metadata will be transferred to the newly created organization membership.",
         "tags": [
           "Organization Invitations"
         ],
@@ -4327,6 +4954,7 @@
                     },
                     "inviter_user_id": {
                       "type": "string",
+                      "nullable": true,
                       "description": "The ID of the user that invites the new member to the organization.\nMust be an administrator in the organization."
                     },
                     "role": {
@@ -4348,7 +4976,6 @@
                   },
                   "required": [
                     "email_address",
-                    "inviter_user_id",
                     "role"
                   ]
                 }
@@ -4379,6 +5006,8 @@
       "get": {
         "deprecated": true,
         "operationId": "ListPendingOrganizationInvitations",
+        "x-sdk-ruby-operationGroup": "organization_invitations",
+        "x-sdk-ruby-operationId": "pending",
         "summary": "Get a list of pending organization invitations",
         "description": "This request returns the list of organization invitations with \"pending\" status.\nThese are the organization invitations that can still be used to join the organization, but have not been accepted by the invited user yet.\nResults can be paginated using the optional `limit` and `offset` query parameters.\nThe organization invitations are ordered by descending creation date.\nMost recent invitations will be returned first.\nAny invitations created as a result of an Organization Domain are not included in the results.",
         "tags": [
@@ -4417,6 +5046,8 @@
     "/organizations/{organization_id}/invitations/{invitation_id}": {
       "get": {
         "operationId": "GetOrganizationInvitation",
+        "x-sdk-ruby-operationGroup": "organization_invitations",
+        "x-sdk-ruby-operationId": "find",
         "summary": "Retrieve an organization invitation by ID",
         "description": "Use this request to get an existing organization invitation by ID.",
         "tags": [
@@ -4461,8 +5092,10 @@
     "/organizations/{organization_id}/invitations/{invitation_id}/revoke": {
       "post": {
         "operationId": "RevokeOrganizationInvitation",
+        "x-sdk-ruby-operationGroup": "organization_invitations",
+        "x-sdk-ruby-operationId": "revoke",
         "summary": "Revoke a pending organization invitation",
-        "description": "Use this request to revoke a previously issued organization invitation.\nRevoking an organization invitation makes it invalid; the invited user will no longer be able to join the organization with the revoked invitation.\nOnly organization invitations with \"pending\" status can be revoked.\nThe request needs the `requesting_user_id` parameter to specify the user which revokes the invitation.\nOnly users with \"admin\" role can revoke invitations.",
+        "description": "Use this request to revoke a previously issued organization invitation.\nRevoking an organization invitation makes it invalid; the invited user will no longer be able to join the organization with the revoked invitation.\nOnly organization invitations with \"pending\" status can be revoked.\nThe request accepts the `requesting_user_id` parameter to specify the user which revokes the invitation.\nOnly users with \"admin\" role can revoke invitations.",
         "tags": [
           "Organization Invitations"
         ],
@@ -4487,7 +5120,7 @@
           }
         ],
         "requestBody": {
-          "required": true,
+          "required": false,
           "content": {
             "application/json": {
               "schema": {
@@ -4495,12 +5128,10 @@
                 "properties": {
                   "requesting_user_id": {
                     "type": "string",
+                    "nullable": true,
                     "description": "The ID of the user that revokes the invitation.\nMust be an administrator in the organization."
                   }
-                },
-                "required": [
-                  "requesting_user_id"
-                ]
+                }
               }
             }
           }
@@ -4524,8 +5155,10 @@
     "/organizations/{organization_id}/memberships": {
       "post": {
         "operationId": "CreateOrganizationMembership",
+        "x-sdk-ruby-operationGroup": "organization_memberships",
+        "x-sdk-ruby-operationId": "create",
         "summary": "Create a new organization membership",
-        "description": "Adds a user as a member to the given organization.\nOnly users in the same instance as the organization can be added as members.",
+        "description": "Adds a user as a member to the given organization.\nOnly users in the same instance as the organization can be added as members.\n\nThis organization will be the user's [active organization] (https://clerk.com/docs/organizations/overview#active-organization)\nthe next time they create a session, presuming they don't explicitly set a\ndifferent organization as active before then.",
         "tags": [
           "Organization Memberships"
         ],
@@ -4584,6 +5217,8 @@
       },
       "get": {
         "operationId": "ListOrganizationMemberships",
+        "x-sdk-ruby-operationGroup": "organization_memberships",
+        "x-sdk-ruby-operationId": "all_by_organization",
         "summary": "Get a list of all members of an organization",
         "description": "Retrieves all user memberships for the given organization",
         "tags": [
@@ -4631,6 +5266,8 @@
     "/organizations/{organization_id}/memberships/{user_id}": {
       "patch": {
         "operationId": "UpdateOrganizationMembership",
+        "x-sdk-ruby-operationGroup": "organization_memberships",
+        "x-sdk-ruby-operationId": "update",
         "summary": "Update an organization membership",
         "description": "Updates the properties of an existing organization membership",
         "tags": [
@@ -4692,6 +5329,8 @@
       },
       "delete": {
         "operationId": "DeleteOrganizationMembership",
+        "x-sdk-ruby-operationGroup": "organization_memberships",
+        "x-sdk-ruby-operationId": "delete",
         "summary": "Remove a member from an organization",
         "description": "Removes the given membership from the organization",
         "tags": [
@@ -4736,6 +5375,8 @@
     "/organizations/{organization_id}/memberships/{user_id}/metadata": {
       "patch": {
         "operationId": "UpdateOrganizationMembershipMetadata",
+        "x-sdk-ruby-operationGroup": "organization_memberships",
+        "x-sdk-ruby-operationId": "update_metadata",
         "summary": "Merge and update organization membership metadata",
         "description": "Update an organization membership's metadata attributes by merging existing values with the provided parameters.\nMetadata values will be updated via a deep merge. Deep means that any nested JSON objects will be merged as well.\nYou can remove metadata keys at any level by setting their value to `null`.",
         "tags": [
@@ -4798,15 +5439,254 @@
         }
       }
     },
+    "/organizations/{organization_id}/domains": {
+      "post": {
+        "operationId": "CreateOrganizationDomain",
+        "x-sdk-ruby-operationGroup": "organization_domains",
+        "x-sdk-ruby-operationId": "create",
+        "summary": "Create a new organization domain.",
+        "description": "Creates a new organization domain. By default the domain is verified, but can be optionally set to unverified.",
+        "tags": [
+          "Organization Domains"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "name": "organization_id",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the organization where the new domain will be created."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "The name of the new domain",
+                    "nullable": false
+                  },
+                  "enrollment_mode": {
+                    "type": "string",
+                    "description": "The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion` or `manual_invitation`",
+                    "nullable": false
+                  },
+                  "verified": {
+                    "type": "boolean",
+                    "description": "The status of domain's verification. Defaults to true",
+                    "nullable": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrganizationDomain"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClerkErrors"
+          },
+          "403": {
+            "$ref": "#/components/responses/AuthorizationInvalid"
+          },
+          "404": {
+            "$ref": "#/components/responses/ResourceNotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      },
+      "get": {
+        "operationId": "ListOrganizationDomains",
+        "x-sdk-ruby-operationGroup": "organization_domains",
+        "x-sdk-ruby-operationId": "all",
+        "summary": "Get a list of all domains of an organization.",
+        "description": "Get a list of all domains of an organization.",
+        "tags": [
+          "Organization Domains"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "name": "organization_id",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The organization ID."
+          },
+          {
+            "$ref": "#/components/parameters/LimitParameter"
+          },
+          {
+            "$ref": "#/components/parameters/OffsetParameter"
+          },
+          {
+            "in": "query",
+            "required": false,
+            "name": "verified",
+            "description": "Filter domains by their verification status. `true` or `false`",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "required": false,
+            "name": "enrollment_mode",
+            "description": "Filter domains by their enrollment mode",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrganizationDomains"
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthenticationInvalid"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      }
+    },
+    "/organizations/{organization_id}/domains/{domain_id}": {
+      "patch": {
+        "operationId": "UpdateOrganizationDomain",
+        "x-sdk-ruby-operationGroup": "organization_domains",
+        "x-sdk-ruby-operationId": "update",
+        "summary": "Update an organization domain.",
+        "description": "Updates the properties of an existing organization domain.",
+        "tags": [
+          "Organization Domain"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "name": "organization_id",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the organization the domain belongs to"
+          },
+          {
+            "in": "path",
+            "required": true,
+            "name": "domain_id",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the domain"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "enrollment_mode": {
+                    "type": "string",
+                    "description": "The enrollment_mode for the new domain. This can be `automatic_invitation`, `automatic_suggestion` or `manual_invitation`",
+                    "nullable": true
+                  },
+                  "verified": {
+                    "type": "boolean",
+                    "description": "The status of the domain's verification",
+                    "nullable": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrganizationDomain"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClerkErrors"
+          },
+          "404": {
+            "$ref": "#/components/responses/ResourceNotFound"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          }
+        }
+      },
+      "delete": {
+        "operationId": "DeleteOrganizationDomain",
+        "x-sdk-ruby-operationGroup": "organization_domains",
+        "x-sdk-ruby-operationId": "delete",
+        "summary": "Remove a domain from an organization.",
+        "description": "Removes the given domain from the organization.",
+        "tags": [
+          "Organization Domains"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "required": true,
+            "name": "organization_id",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the organization the domain belongs to"
+          },
+          {
+            "in": "path",
+            "required": true,
+            "name": "domain_id",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The ID of the domain"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/DeletedObject"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClerkErrors"
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthenticationInvalid"
+          },
+          "404": {
+            "$ref": "#/components/responses/ResourceNotFound"
+          }
+        }
+      }
+    },
     "/proxy_checks": {
       "post": {
         "summary": "Verify the proxy configuration for your domain",
         "description": "This endpoint can be used to validate that a proxy-enabled domain is operational.\nIt tries to verify that the proxy URL provided in the parameters maps to a functional proxy that can reach the Clerk Frontend API.\n\nYou can use this endpoint before you set a proxy URL for a domain. This way you can ensure that switching to proxy-based\nconfiguration will not lead to downtime for your instance.\n\nThe `proxy_url` parameter allows for testing proxy configurations for domains that don't have a proxy URL yet, or operate on\na different proxy URL than the one provided. It can also be used to re-validate a domain that is already configured to work with a proxy.",
         "operationId": "VerifyDomainProxy",
+        "x-sdk-ruby-operationGroup": "proxy_checks",
+        "x-sdk-ruby-operationId": "verify",
         "tags": [
           "Proxy checks"
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -4843,6 +5723,8 @@
         "summary": "List all redirect URLs",
         "description": "Lists all whitelisted redirect_urls for the instance",
         "operationId": "ListRedirectURLs",
+        "x-sdk-ruby-operationGroup": "redirect_urls",
+        "x-sdk-ruby-operationId": "all",
         "tags": [
           "Redirect URLs"
         ],
@@ -4856,10 +5738,13 @@
         "summary": "Create a redirect URL",
         "description": "Create a redirect URL",
         "operationId": "CreateRedirectURL",
+        "x-sdk-ruby-operationGroup": "redirect_urls",
+        "x-sdk-ruby-operationId": "create",
         "tags": [
           "Redirect URLs"
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -4893,6 +5778,8 @@
         "summary": "Retrieve a redirect URL",
         "description": "Retrieve the details of the redirect URL with the given ID",
         "operationId": "GetRedirectURL",
+        "x-sdk-ruby-operationGroup": "redirect_urls",
+        "x-sdk-ruby-operationId": "find",
         "tags": [
           "Redirect URLs"
         ],
@@ -4920,6 +5807,8 @@
         "summary": "Delete a redirect URL",
         "description": "Remove the selected redirect URL from the whitelist of the instance",
         "operationId": "DeleteRedirectURL",
+        "x-sdk-ruby-operationGroup": "redirect_urls",
+        "x-sdk-ruby-operationId": "delete",
         "tags": [
           "Redirect URLs"
         ],
@@ -4949,10 +5838,13 @@
         "summary": "Create sign-in token",
         "description": "Creates a new sign-in token and associates it with the given user.\nBy default, sign-in tokens expire in 30 days.\nYou can optionally supply a different duration in seconds using the `expires_in_seconds` property.",
         "operationId": "CreateSignInToken",
+        "x-sdk-ruby-operationGroup": "sign_in_tokens",
+        "x-sdk-ruby-operationId": "create",
         "tags": [
           "Sign-in Tokens"
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -4990,6 +5882,8 @@
         "summary": "Revoke the given sign-in token",
         "description": "Revokes a pending sign-in token",
         "operationId": "RevokeSignInToken",
+        "x-sdk-ruby-operationGroup": "sign_in_tokens",
+        "x-sdk-ruby-operationId": "revoke",
         "tags": [
           "Sign-in Tokens"
         ],
@@ -5020,6 +5914,8 @@
     "/sign_ups/{id}": {
       "patch": {
         "operationId": "UpdateSignUp",
+        "x-sdk-ruby-operationGroup": "sign_ups",
+        "x-sdk-ruby-operationId": "update",
         "summary": "Update a sign-up",
         "description": "Update the sign-up with the given ID",
         "tags": [
@@ -5037,15 +5933,12 @@
           }
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
                 "properties": {
-                  "custom_action": {
-                    "type": "boolean",
-                    "description": "Specifies whether a custom action has run for this sign-up attempt.\nThis is important when your instance has been configured to require a custom action to run before converting a sign-up into a user.\nAfter executing any external business logic you deem necessary, you can mark the sign-up as ready-to-convert by setting `custom_action` to `true`."
-                  },
                   "external_id": {
                     "type": "string",
                     "description": "The ID of the guest attempting to sign up as used in your external systems or your previous authentication solution.\nThis will be copied to the resulting user when the sign-up is completed.",
@@ -5069,6 +5962,8 @@
     "/oauth_applications": {
       "get": {
         "operationId": "ListOAuthApplications",
+        "x-sdk-ruby-operationGroup": "oauth_applications",
+        "x-sdk-ruby-operationId": "all",
         "summary": "Get a list of OAuth applications for an instance",
         "description": "This request returns the list of OAuth applications for an instance.\nResults can be paginated using the optional `limit` and `offset` query parameters.\nThe OAuth applications are ordered by descending creation date.\nMost recent OAuth applications will be returned first.",
         "tags": [
@@ -5099,12 +5994,15 @@
       },
       "post": {
         "operationId": "CreateOAuthApplication",
+        "x-sdk-ruby-operationGroup": "oauth_applications",
+        "x-sdk-ruby-operationId": "create",
         "summary": "Create an OAuth application",
         "description": "Creates a new OAuth application with the given name and callback URL for an instance.\nThe callback URL must be a valid url.\nAll URL schemes are allowed such as `http://`, `https://`, `myapp://`, etc...",
         "tags": [
           "OAuth Applications"
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -5156,6 +6054,8 @@
     "/oauth_applications/{oauth_application_id}": {
       "get": {
         "operationId": "GetOAuthApplication",
+        "x-sdk-ruby-operationGroup": "oauth_applications",
+        "x-sdk-ruby-operationId": "find",
         "summary": "Retrieve an OAuth application by ID",
         "description": "Fetches the OAuth application whose ID matches the provided `id` in the path.",
         "tags": [
@@ -5186,6 +6086,8 @@
       },
       "patch": {
         "operationId": "UpdateOAuthApplication",
+        "x-sdk-ruby-operationGroup": "oauth_applications",
+        "x-sdk-ruby-operationId": "update",
         "summary": "Update an OAuth application",
         "description": "Updates an existing OAuth application",
         "tags": [
@@ -5246,6 +6148,8 @@
       },
       "delete": {
         "operationId": "DeleteOAuthApplication",
+        "x-sdk-ruby-operationGroup": "oauth_applications",
+        "x-sdk-ruby-operationId": "delete",
         "summary": "Delete an OAuth application",
         "description": "Deletes the given OAuth application.\nThis is not reversible.",
         "tags": [
@@ -5278,6 +6182,8 @@
     "/oauth_applications/{oauth_application_id}/rotate_secret": {
       "post": {
         "operationId": "RotateOAuthApplicationSecret",
+        "x-sdk-ruby-operationGroup": "oauth_applications",
+        "x-sdk-ruby-operationId": "rotate_secret",
         "summary": "Rotate the client secret of the given OAuth application",
         "description": "Rotates the OAuth application's client secret.\nWhen the client secret is rotated, make sure to update it in authorized OAuth clients.",
         "tags": [
@@ -5310,6 +6216,8 @@
     "/saml_connections": {
       "get": {
         "operationId": "ListSAMLConnections",
+        "x-sdk-ruby-operationGroup": "saml_connections",
+        "x-sdk-ruby-operationId": "all",
         "summary": "Get a list of SAML Connections for an instance",
         "description": "Returns the list of SAML Connections for an instance.\nResults can be paginated using the optional `limit` and `offset` query parameters.\nThe SAML Connections are ordered by descending creation date and the most recent will be returned first.",
         "tags": [
@@ -5340,12 +6248,15 @@
       },
       "post": {
         "operationId": "CreateSAMLConnection",
+        "x-sdk-ruby-operationGroup": "saml_connections",
+        "x-sdk-ruby-operationId": "create",
         "summary": "Create a SAML Connection",
         "description": "Create a new SAML Connection.",
         "tags": [
           "SAML Connections"
         ],
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
@@ -5444,6 +6355,8 @@
     "/saml_connections/{saml_connection_id}": {
       "get": {
         "operationId": "GetSAMLConnection",
+        "x-sdk-ruby-operationGroup": "saml_connections",
+        "x-sdk-ruby-operationId": "find",
         "summary": "Retrieve a SAML Connection by ID",
         "description": "Fetches the SAML Connection whose ID matches the provided `saml_connection_id` in the path.",
         "tags": [
@@ -5477,6 +6390,8 @@
       },
       "patch": {
         "operationId": "UpdateSAMLConnection",
+        "x-sdk-ruby-operationGroup": "saml_connections",
+        "x-sdk-ruby-operationId": "update",
         "summary": "Update a SAML Connection",
         "description": "Updates the SAML Connection whose ID matches the provided `id` in the path.",
         "tags": [
@@ -5575,6 +6490,11 @@
                     "type": "boolean",
                     "description": "Enable or deactivate IdP-initiated flows",
                     "nullable": true
+                  },
+                  "disable_additional_identifications": {
+                    "type": "boolean",
+                    "description": "Enable or deactivate additional identifications",
+                    "nullable": true
                   }
                 }
               }
@@ -5601,6 +6521,8 @@
       },
       "delete": {
         "operationId": "DeleteSAMLConnection",
+        "x-sdk-ruby-operationGroup": "saml_connections",
+        "x-sdk-ruby-operationId": "delete",
         "summary": "Delete a SAML Connection",
         "description": "Deletes the SAML Connection whose ID matches the provided `id` in the path.",
         "tags": [
@@ -5636,6 +6558,8 @@
     "/testing_tokens": {
       "post": {
         "operationId": "CreateTestingToken",
+        "x-sdk-ruby-operationGroup": "testing_tokens",
+        "x-sdk-ruby-operationId": "create",
         "summary": "Retrieve a new testing token",
         "description": "Retrieve a new testing token. Only available for development instances.",
         "tags": [
@@ -5650,6 +6574,52 @@
           }
         }
       }
+    },
+    "/organization_memberships": {
+      "get": {
+        "operationId": "InstanceGetOrganizationMemberships",
+        "x-sdk-ruby-operationGroup": "organization_memberships",
+        "x-sdk-ruby-operationId": "all",
+        "summary": "Get a list of all organization memberships within an instance.",
+        "description": "Retrieves all organization user memberships for the given instance.",
+        "tags": [
+          "Organization Memberships"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/LimitParameter"
+          },
+          {
+            "$ref": "#/components/parameters/OffsetParameter"
+          },
+          {
+            "in": "query",
+            "required": false,
+            "name": "order_by",
+            "description": "Sorts organizations memberships by phone_number, email_address, created_at, first_name, last_name or username.\nBy prepending one of those values with + or -,\nwe can choose to sort in ascending (ASC) or descending (DESC) order.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/OrganizationMemberships"
+          },
+          "400": {
+            "$ref": "#/components/responses/ClerkErrors"
+          },
+          "401": {
+            "$ref": "#/components/responses/AuthenticationInvalid"
+          },
+          "422": {
+            "$ref": "#/components/responses/UnprocessableEntity"
+          },
+          "500": {
+            "$ref": "#/components/responses/ClerkErrors"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -5661,32 +6631,40 @@
         "bearerFormat": "sk_<environment>_<secret value>"
       }
     },
-    "parameters": {
-      "LimitParameter": {
-        "name": "limit",
-        "in": "query",
-        "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
-        "required": false,
-        "schema": {
-          "type": "number",
-          "default": 10,
-          "minimum": 1,
-          "maximum": 500
+    "schemas": {
+      "WellKnown.JWKS": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "keys": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "use": {
+                  "type": "string"
+                },
+                "kty": {
+                  "type": "string"
+                },
+                "kid": {
+                  "type": "string"
+                },
+                "alg": {
+                  "type": "string"
+                },
+                "n": {
+                  "type": "string"
+                },
+                "e": {
+                  "type": "string"
+                }
+              }
+            }
+          }
         }
       },
-      "OffsetParameter": {
-        "name": "offset",
-        "in": "query",
-        "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
-        "required": false,
-        "schema": {
-          "type": "number",
-          "default": 0,
-          "minimum": 0
-        }
-      }
-    },
-    "schemas": {
       "Session": {
         "type": "object",
         "additionalProperties": false,
@@ -5729,6 +6707,43 @@
           },
           "last_active_at": {
             "type": "integer"
+          },
+          "latest_activity": {
+            "type": "object",
+            "nullable": true,
+            "required": [
+              "id",
+              "object"
+            ],
+            "properties": {
+              "object": {
+                "type": "string"
+              },
+              "id": {
+                "type": "string"
+              },
+              "device_type": {
+                "type": "string"
+              },
+              "is_mobile": {
+                "type": "boolean"
+              },
+              "browser_name": {
+                "type": "string"
+              },
+              "browser_version": {
+                "type": "string"
+              },
+              "ip_address": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              }
+            }
           },
           "expire_at": {
             "type": "integer"
@@ -5949,7 +6964,9 @@
             "enum": [
               "oauth_google",
               "oauth_mock",
-              "oauth_custom_mock"
+              "oauth_custom_mock",
+              "oauth_microsoft",
+              "email_link"
             ]
           },
           "external_verification_redirect_url": {
@@ -5987,7 +7004,9 @@
             "enum": [
               "oauth_google",
               "oauth_mock",
-              "saml"
+              "saml",
+              "oauth_microsoft",
+              "email_link"
             ]
           },
           "id": {
@@ -6264,20 +7283,26 @@
           "status": {
             "type": "string",
             "enum": [
-              "verified"
+              "unverified",
+              "verified",
+              "failed",
+              "expired"
             ]
           },
           "strategy": {
             "type": "string",
             "enum": [
-              "web3_metamask_signature"
+              "web3_metamask_signature",
+              "web3_coinbase_wallet_signature"
             ]
           },
           "nonce": {
             "type": "string",
-            "enum": [
-              "nonce"
-            ]
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
           },
           "attempts": {
             "type": "integer",
@@ -6290,8 +7315,7 @@
         },
         "required": [
           "status",
-          "strategy",
-          "nonce"
+          "strategy"
         ]
       },
       "Web3Wallet": {
@@ -6497,6 +7521,59 @@
           "strategy"
         ]
       },
+      "SAMLConnection": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "domain": {
+            "type": "string"
+          },
+          "active": {
+            "type": "boolean"
+          },
+          "provider": {
+            "type": "string"
+          },
+          "sync_user_attributes": {
+            "type": "boolean"
+          },
+          "allow_subdomains": {
+            "type": "boolean"
+          },
+          "allow_idp_initiated": {
+            "type": "boolean"
+          },
+          "disable_additional_identifications": {
+            "type": "boolean"
+          },
+          "created_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp of creation.\n"
+          },
+          "updated_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp of last update.\n"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "domain",
+          "active",
+          "provider",
+          "sync_user_attributes",
+          "created_at",
+          "updated_at"
+        ]
+      },
       "SAMLAccount": {
         "type": "object",
         "additionalProperties": false,
@@ -6544,6 +7621,15 @@
               },
               {
                 "$ref": "#/components/schemas/Ticket"
+              }
+            ]
+          },
+          "saml_connection": {
+            "type": "object",
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/SAMLConnection"
               }
             ]
           }
@@ -6723,14 +7809,30 @@
             "type": "boolean",
             "description": "If enabled, user can create organizations via FAPI.\n"
           },
+          "create_organizations_limit": {
+            "type": "integer",
+            "description": "The maximum number of organizations the user can create. 0 means unlimited.\n",
+            "nullable": true
+          },
           "last_active_at": {
             "type": "integer",
             "format": "int64",
             "nullable": true,
             "description": "Unix timestamp of the latest session activity, with day precision.\n",
             "example": 1700690400000
+          },
+          "legal_accepted_at": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true,
+            "description": "Unix timestamp of when the user accepted the legal requirements.\n",
+            "example": 1700690400000
           }
         }
+      },
+      "PasswordHasher": {
+        "type": "string",
+        "description": "The hashing algorithm that was used to generate the password digest.\n\nThe algorithms we support at the moment are [`bcrypt`](https://en.wikipedia.org/wiki/Bcrypt), [`bcrypt_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/), [`md5`](https://en.wikipedia.org/wiki/MD5), `pbkdf2_sha1`, `pbkdf2_sha256`, [`pbkdf2_sha256_django`](https://docs.djangoproject.com/en/4.0/topics/auth/passwords/),\n[`phpass`](https://www.openwall.com/phpass/), [`scrypt_firebase`](https://firebaseopensource.com/projects/firebase/scrypt/),\n[`scrypt_werkzeug`](https://werkzeug.palletsprojects.com/en/3.0.x/utils/#werkzeug.security.generate_password_hash), [`sha256`](https://en.wikipedia.org/wiki/SHA-2),\nand the [`argon2`](https://argon2.online/) variants: `argon2i` and `argon2id`.\n\nEach of the supported hashers expects the incoming digest to be in a particular format. See the [Clerk docs](https://clerk.com/docs/references/backend/user/create-user) for more information."
       },
       "TotalCount": {
         "type": "object",
@@ -6830,6 +7932,9 @@
           "role": {
             "type": "string"
           },
+          "role_name": {
+            "type": "string"
+          },
           "permissions": {
             "type": "array",
             "items": {
@@ -6919,6 +8024,132 @@
           "total_count"
         ]
       },
+      "OrganizationInvitationWithPublicOrganizationData": {
+        "description": "An organization invitation with public organization data populated",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "object": {
+            "type": "string",
+            "description": "String representing the object's type. Objects of the same type share the same value.\n",
+            "enum": [
+              "organization_invitation"
+            ]
+          },
+          "email_address": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "role_name": {
+            "type": "string"
+          },
+          "organization_id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "public_metadata": {
+            "type": "object"
+          },
+          "private_metadata": {
+            "type": "object"
+          },
+          "public_organization_data": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "slug": {
+                "type": "string"
+              },
+              "image_url": {
+                "type": "string"
+              },
+              "has_image": {
+                "type": "boolean"
+              }
+            }
+          },
+          "created_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp of creation."
+          },
+          "updated_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp of last update."
+          }
+        }
+      },
+      "OrganizationInvitationsWithPublicOrganizationData": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrganizationInvitationWithPublicOrganizationData"
+            }
+          },
+          "total_count": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Total number of organization invitations\n"
+          }
+        },
+        "required": [
+          "data",
+          "total_count"
+        ]
+      },
+      "TOTP": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "object": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "secret": {
+            "type": "string",
+            "nullable": true
+          },
+          "uri": {
+            "type": "string",
+            "nullable": true
+          },
+          "verified": {
+            "type": "boolean"
+          },
+          "backup_codes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "nullable": true
+          }
+        },
+        "required": [
+          "object",
+          "id",
+          "secret",
+          "uri",
+          "verified"
+        ]
+      },
       "Invitation": {
         "type": "object",
         "additionalProperties": false,
@@ -6948,13 +8179,20 @@
             "enum": [
               "pending",
               "accepted",
-              "revoked"
+              "revoked",
+              "expired"
             ],
             "example": "pending"
           },
           "url": {
             "type": "string",
             "nullable": true
+          },
+          "expires_at": {
+            "type": "integer",
+            "format": "int64",
+            "nullable": true,
+            "description": "Unix timestamp of expiration.\n"
           },
           "created_at": {
             "type": "integer",
@@ -7447,6 +8685,9 @@
           "role": {
             "type": "string"
           },
+          "role_name": {
+            "type": "string"
+          },
           "organization_id": {
             "type": "string"
           },
@@ -7485,6 +8726,124 @@
             "type": "integer",
             "format": "int64",
             "description": "Total number of organization invitations\n"
+          }
+        },
+        "required": [
+          "data",
+          "total_count"
+        ]
+      },
+      "OrganizationDomainVerification": {
+        "description": "The verification object from an organization domain",
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Status of the verification. It can be `unverified` or `verified`",
+            "enum": [
+              "unverified",
+              "verified"
+            ]
+          },
+          "strategy": {
+            "type": "string",
+            "description": "Name of the strategy used to verify the domain"
+          },
+          "attempts": {
+            "type": "integer",
+            "description": "How many attempts have been made to verify the domain"
+          },
+          "expire_at": {
+            "type": "integer",
+            "nullable": true,
+            "format": "int64",
+            "description": "Unix timestamp of when the verification will expire"
+          }
+        }
+      },
+      "OrganizationDomain": {
+        "description": "An organization domain",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for the organization domain"
+          },
+          "object": {
+            "type": "string",
+            "description": "String representing the object's type. Objects of the same type share the same value. Always `organization_domain`\n",
+            "enum": [
+              "organization_domain"
+            ]
+          },
+          "organization_id": {
+            "type": "string",
+            "description": "Unique identifier for the organization"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the organization domain"
+          },
+          "enrollment_mode": {
+            "type": "string",
+            "description": "Mode of enrollment for the domain",
+            "enum": [
+              "manual_invitation",
+              "automatic_invitation",
+              "automatic_suggestion"
+            ]
+          },
+          "affiliation_email_address": {
+            "type": "string",
+            "nullable": true,
+            "description": "Affiliation email address for the domain, if available."
+          },
+          "verification": {
+            "type": "object",
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/OrganizationDomainVerification"
+              }
+            ],
+            "description": "Verification details for the domain"
+          },
+          "total_pending_invitations": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Total number of pending invitations associated with this domain"
+          },
+          "total_pending_suggestions": {
+            "type": "integer",
+            "format": "int32",
+            "description": "Total number of pending suggestions associated with this domain"
+          },
+          "created_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp when the domain was created"
+          },
+          "updated_at": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Unix timestamp of the last update to the domain"
+          }
+        }
+      },
+      "OrganizationDomains": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrganizationDomain"
+            }
+          },
+          "total_count": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Total number of organization domains\n"
           }
         },
         "required": [
@@ -7836,7 +9195,7 @@
           }
         ]
       },
-      "SAMLConnection": {
+      "schemas-SAMLConnection": {
         "type": "object",
         "properties": {
           "object": {
@@ -7919,6 +9278,9 @@
           "allow_idp_initiated": {
             "type": "boolean"
           },
+          "disable_additional_identifications": {
+            "type": "boolean"
+          },
           "created_at": {
             "type": "integer",
             "format": "int64",
@@ -7956,7 +9318,7 @@
           "data": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/SAMLConnection"
+              "$ref": "#/components/schemas/schemas-SAMLConnection"
             }
           },
           "total_count": {
@@ -7999,6 +9361,16 @@
       }
     },
     "responses": {
+      "WellKnown.JWKS": {
+        "description": "Get the JSON Web Key Set",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WellKnown.JWKS"
+            }
+          }
+        }
+      },
       "Client.List": {
         "description": "Success",
         "content": {
@@ -8207,6 +9579,26 @@
           "application/json": {
             "schema": {
               "$ref": "#/components/schemas/OrganizationMemberships"
+            }
+          }
+        }
+      },
+      "OrganizationInvitationsWithPublicOrganizationData": {
+        "description": "A list of organization invitations with public organization data",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OrganizationInvitationsWithPublicOrganizationData"
+            }
+          }
+        }
+      },
+      "TOTP": {
+        "description": "A TOTP (Time-based One-Time Password)",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/TOTP"
             }
           }
         }
@@ -8487,6 +9879,26 @@
           }
         }
       },
+      "OrganizationDomains": {
+        "description": "A list of organization domains",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OrganizationDomains"
+            }
+          }
+        }
+      },
+      "OrganizationDomain": {
+        "description": "An organization domain",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/OrganizationDomain"
+            }
+          }
+        }
+      },
       "ProxyCheck": {
         "description": "Health check information about a domain's proxy configuration validation attempt.",
         "content": {
@@ -8585,7 +9997,7 @@
         "content": {
           "application/json": {
             "schema": {
-              "$ref": "#/components/schemas/SAMLConnection"
+              "$ref": "#/components/schemas/schemas-SAMLConnection"
             }
           }
         }
@@ -8598,6 +10010,31 @@
               "$ref": "#/components/schemas/TestingToken"
             }
           }
+        }
+      }
+    },
+    "parameters": {
+      "LimitParameter": {
+        "name": "limit",
+        "in": "query",
+        "description": "Applies a limit to the number of results returned.\nCan be used for paginating the results together with `offset`.",
+        "required": false,
+        "schema": {
+          "type": "number",
+          "default": 10,
+          "minimum": 1,
+          "maximum": 500
+        }
+      },
+      "OffsetParameter": {
+        "name": "offset",
+        "in": "query",
+        "description": "Skip the first `offset` results when paginating.\nNeeds to be an integer greater or equal to zero.\nTo be used in conjunction with `limit`.",
+        "required": false,
+        "schema": {
+          "type": "number",
+          "default": 0,
+          "minimum": 0
         }
       }
     }

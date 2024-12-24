@@ -3,16 +3,42 @@
  * For bugs & feature requests, please open an issue on the [GitHub](https://github.com/tonyxiao/openSDKs)
  */
 
-import type {ClientOptions, SdkDefinition, SDKTypes} from '@opensdks/runtime'
+import type {
+  ClientOptions,
+  OpenAPITypes,
+  SdkDefinition,
+  SDKTypes,
+} from '@opensdks/runtime'
 import {initSDK} from '@opensdks/runtime'
-import type {oasTypes} from '../clerk.oas.types.js'
-import {oasMeta} from './clerk.oas.meta.js'
+import type Oas_backend from '../clerk_backend.oas.types.js'
+import type Oas_frontend from '../clerk_frontend.oas.types.js'
+import {default as oas_backend} from './clerk_backend.oas.meta.js'
+import {default as oas_frontend} from './clerk_frontend.oas.meta.js'
 
-export type ClerkSDKTypes = SDKTypes<oasTypes, ClientOptions>
+export type {Oas_backend, Oas_frontend}
+
+export {oas_backend, oas_frontend}
+
+export type ClerkSDKTypes = SDKTypes<OpenAPITypes, ClientOptions>
 
 export const clerkSdkDef = {
   types: {} as ClerkSDKTypes,
-  oasMeta,
+  defaultOptions: {},
+  createClient(ctx, options) {
+    const backend = ctx.createClient<Oas_backend['paths']>({
+      ...options,
+      baseUrl: options.baseUrl ?? oas_backend.servers[0]?.url,
+    })
+    const frontend = ctx.createClient<Oas_frontend['paths']>({
+      ...options,
+      baseUrl: options.baseUrl ?? oas_frontend.servers[0]?.url,
+    })
+
+    return {
+      backend,
+      frontend,
+    }
+  },
 } satisfies SdkDefinition<ClerkSDKTypes>
 
 export function initClerkSDK(opts: ClerkSDKTypes['options']) {
