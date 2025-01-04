@@ -1,6 +1,6 @@
 {
   "name": "@opensdks/sdk-plaid",
-  "version": "0.0.17",
+  "version": "0.0.19",
   "type": "module",
   "exports": {
     ".": {
@@ -43,7 +43,9 @@
     "generate:types": "node ../../packages/cli/generateFromOas.js ./plaid.oas.json",
     "version": "pnpm version"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@opensdks/runtime": "workspace:*"
+  },
   "devDependencies": {
     "@opensdks/runtime": "workspace:*",
     "concurrently": "^8.2.2",
