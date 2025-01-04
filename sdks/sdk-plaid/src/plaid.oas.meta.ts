@@ -2,7 +2,7 @@
 export const oasMeta = {
   info: {
     title: 'The Plaid API',
-    version: '2020-09-14_1.482.3',
+    version: '2020-09-14_1.586.4',
     description:
       'The Plaid REST API. Please see https://plaid.com/docs/api for more details.',
     contact: {name: 'Plaid Developer Team', url: 'https://plaid.com'},
@@ -10,7 +10,6 @@ export const oasMeta = {
   },
   servers: [
     {description: 'Production', url: 'https://production.plaid.com'},
-    {description: 'Development', url: 'https://development.plaid.com'},
     {description: 'Sandbox', url: 'https://sandbox.plaid.com'},
   ],
 } as const
