@@ -56,6 +56,61 @@
         }
       }
     },
+    "/clerk-testing-token": {
+      "get": {
+        "operationId": "createClerkTestingToken",
+        "summary": "Create clerk testing token",
+        "tags": ["Internal"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "secret",
+            "schema": {"type": "string"},
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {"testing_token": {"type": "string"}},
+                  "required": ["testing_token"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/error.BAD_REQUEST"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/error.NOT_FOUND"}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/connect/token": {
       "post": {
         "operationId": "createConnectToken",
@@ -579,7 +634,11 @@
         "responses": {
           "200": {
             "description": "Successful response",
-            "content": {"application/json": {"schema": {}}}
+            "content": {
+              "application/json": {
+                "schema": {"type": "object", "properties": {}}
+              }
+            }
           },
           "400": {
             "description": "Invalid input data",
@@ -823,7 +882,27 @@
         "responses": {
           "200": {
             "description": "Successful response",
-            "content": {"application/json": {"schema": {}}}
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "connection_requested_event_id": {"type": "string"},
+                    "pipeline_syncs": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "pipeline_id": {"type": "string"},
+                          "sync_completed_event_id": {"type": "string"}
+                        },
+                        "required": ["pipeline_id", "sync_completed_event_id"]
+                      }
+                    }
+                  }
+                }
+              }
+            }
           },
           "400": {
             "description": "Invalid input data",
@@ -1937,7 +2016,11 @@
         "responses": {
           "200": {
             "description": "Successful response",
-            "content": {"application/json": {"schema": {}}}
+            "content": {
+              "application/json": {
+                "schema": {"type": "object", "properties": {}}
+              }
+            }
           },
           "400": {
             "description": "Invalid input data",
@@ -1960,20 +2043,58 @@
         }
       }
     },
-    "/core/sync_run": {
+    "/core/events": {
       "get": {
-        "operationId": "listSyncRuns",
-        "summary": "List sync runs",
-        "tags": ["Core"],
+        "operationId": "listEvents",
+        "summary": "List events",
+        "tags": ["Connect"],
         "parameters": [
-          {"in": "query", "name": "limit", "schema": {"type": "number"}},
-          {"in": "query", "name": "offset", "schema": {"type": "number"}}
+          {
+            "in": "query",
+            "name": "sync_mode",
+            "schema": {"type": "string", "enum": ["full", "incremental"]}
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "schema": {"type": ["string", "null"]}
+          },
+          {"in": "query", "name": "page_size", "schema": {"type": "number"}},
+          {
+            "in": "query",
+            "name": "since",
+            "schema": {"type": "integer"},
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "customerId",
+            "schema": {"type": ["string", "null"], "minLength": 1}
+          },
+          {
+            "in": "query",
+            "name": "name",
+            "schema": {"type": ["string", "null"]}
+          }
         ],
         "responses": {
           "200": {
             "description": "Successful response",
             "content": {
-              "application/json": {"schema": {"type": "array", "items": {}}}
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "next_cursor": {"type": ["string", "null"]},
+                    "has_next_page": {"type": "boolean"},
+                    "items": {
+                      "type": "array",
+                      "items": {"$ref": "#/components/schemas/Event"}
+                    }
+                  },
+                  "required": ["has_next_page", "items"]
+                }
+              }
             }
           },
           "400": {
@@ -2080,6 +2201,124 @@
                   },
                   "required": ["id", "publicMetadata"]
                 }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "operationId": "updateCurrentOrganization",
+        "summary": "Update current organization",
+        "tags": ["Internal"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "publicMetadata": {
+                    "type": "object",
+                    "properties": {
+                      "database_url": {
+                        "type": "string",
+                        "title": "PostgreSQL Database URL",
+                        "description": "This is where data from connections are synced to by default",
+                        "example": "postgres://username:password@host:port/database"
+                      },
+                      "synced_data_schema": {
+                        "type": "string",
+                        "title": "Synced Data Schema",
+                        "description": "Postgres schema to pipe data synced from customer connections into. Defaults to \"synced\" if missing."
+                      },
+                      "webhook_url": {
+                        "type": "string",
+                        "title": "Webhook URL",
+                        "description": "Events like sync.completed and connection.created can be sent to url of your choosing"
+                      },
+                      "migrate_tables": {
+                        "type": "boolean",
+                        "title": "Migrate Tables",
+                        "description": "If enabled, table migrations will be run if needed when entities are persisted",
+                        "default": true
+                      }
+                    }
+                  }
+                },
+                "required": ["publicMetadata"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Must start with 'org_'"
+                    },
+                    "slug": {"type": ["string", "null"]},
+                    "publicMetadata": {
+                      "type": "object",
+                      "properties": {
+                        "database_url": {
+                          "type": "string",
+                          "title": "PostgreSQL Database URL",
+                          "description": "This is where data from connections are synced to by default",
+                          "example": "postgres://username:password@host:port/database"
+                        },
+                        "synced_data_schema": {
+                          "type": "string",
+                          "title": "Synced Data Schema",
+                          "description": "Postgres schema to pipe data synced from customer connections into. Defaults to \"synced\" if missing."
+                        },
+                        "webhook_url": {
+                          "type": "string",
+                          "title": "Webhook URL",
+                          "description": "Events like sync.completed and connection.created can be sent to url of your choosing"
+                        },
+                        "migrate_tables": {
+                          "type": "boolean",
+                          "title": "Migrate Tables",
+                          "description": "If enabled, table migrations will be run if needed when entities are persisted",
+                          "default": true
+                        }
+                      }
+                    }
+                  },
+                  "required": ["id", "publicMetadata"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/error.BAD_REQUEST"}
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/error.NOT_FOUND"}
               }
             }
           },
@@ -5194,7 +5433,8 @@
           {"in": "query", "name": "sort_order", "schema": {"type": "string"}},
           {"in": "query", "name": "customer", "schema": {"type": "string"}},
           {"in": "query", "name": "department", "schema": {"type": "string"}},
-          {"in": "query", "name": "date_macro", "schema": {"type": "string"}}
+          {"in": "query", "name": "date_macro", "schema": {"type": "string"}},
+          {"in": "query", "name": "summarize_by", "schema": {"type": "string"}}
         ],
         "responses": {
           "200": {
@@ -5353,7 +5593,19 @@
           {"in": "query", "name": "sort_order", "schema": {"type": "string"}},
           {"in": "query", "name": "customer", "schema": {"type": "string"}},
           {"in": "query", "name": "department", "schema": {"type": "string"}},
-          {"in": "query", "name": "date_macro", "schema": {"type": "string"}}
+          {"in": "query", "name": "date_macro", "schema": {"type": "string"}},
+          {
+            "in": "query",
+            "name": "payment_method",
+            "schema": {"type": "string"}
+          },
+          {"in": "query", "name": "arpaid", "schema": {"type": "string"}},
+          {
+            "in": "query",
+            "name": "transaction_type",
+            "schema": {"type": "string"}
+          },
+          {"in": "query", "name": "sort_by", "schema": {"type": "string"}}
         ],
         "responses": {
           "200": {
@@ -7298,15 +7550,14 @@
           "standard": {
             "type": ["object", "null"],
             "properties": {
-              "displayName": {"type": "string"},
+              "displayName": {"type": ["string", "null"]},
               "status": {
                 "type": ["string", "null"],
                 "enum": ["healthy", "disconnected", "error", "manual"]
               },
               "statusMessage": {"type": ["string", "null"]},
               "labels": {"type": "array", "items": {"type": "string"}}
-            },
-            "required": ["displayName"]
+            }
           },
           "disabled": {"type": "boolean"},
           "metadata": {
@@ -7480,6 +7731,26 @@
           }
         },
         "required": ["createdAt", "updatedAt", "id"]
+      },
+      "Event": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string", "description": "Must start with 'evt_'"},
+          "name": {"type": "string"},
+          "data": {"type": ["object", "null"], "additionalProperties": {}},
+          "timestamp": {"type": "string"},
+          "user": {"type": ["object", "null"], "additionalProperties": {}},
+          "org_id": {
+            "type": ["string", "null"],
+            "description": "Must start with 'org_'"
+          },
+          "customer_id": {"type": ["string", "null"], "minLength": 1},
+          "user_id": {
+            "type": ["string", "null"],
+            "description": "Must start with 'user_'"
+          }
+        },
+        "required": ["id", "name", "timestamp"]
       },
       "Viewer": {
         "oneOf": [
