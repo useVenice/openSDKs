@@ -16,6 +16,23 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/clerk-testing-token': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** Create clerk testing token */
+    get: operations['createClerkTestingToken']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/connect/token': {
     parameters: {
       query?: never
@@ -373,15 +390,15 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/core/sync_run': {
+  '/core/events': {
     parameters: {
       query?: never
       header?: never
       path?: never
       cookie?: never
     }
-    /** List sync runs */
-    get: operations['listSyncRuns']
+    /** List events */
+    get: operations['listEvents']
     put?: never
     post?: never
     delete?: never
@@ -421,7 +438,8 @@ export interface paths {
     delete?: never
     options?: never
     head?: never
-    patch?: never
+    /** Update current organization */
+    patch: operations['updateCurrentOrganization']
     trace?: never
   }
   '/openapi.json': {
@@ -1655,7 +1673,7 @@ export interface components {
         [key: string]: unknown
       } | null
       standard?: {
-        displayName: string
+        displayName?: string | null
         /** @enum {string|null} */
         status?: 'healthy' | 'disconnected' | 'error' | 'manual' | null
         statusMessage?: string | null
@@ -1791,6 +1809,23 @@ export interface components {
        *       During updates this object will be shallowly merged
        *      */
       metadata?: unknown
+    }
+    Event: {
+      /** @description Must start with 'evt_' */
+      id: string
+      name: string
+      data?: {
+        [key: string]: unknown
+      } | null
+      timestamp: string
+      user?: {
+        [key: string]: unknown
+      } | null
+      /** @description Must start with 'org_' */
+      org_id?: string | null
+      customer_id?: string | null
+      /** @description Must start with 'user_' */
+      user_id?: string | null
     }
     Viewer:
       | {
@@ -2444,6 +2479,57 @@ export interface operations {
       }
     }
   }
+  createClerkTestingToken: {
+    parameters: {
+      query: {
+        secret: string
+      }
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            testing_token: string
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
   createConnectToken: {
     parameters: {
       query?: never
@@ -2890,7 +2976,7 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          'application/json': unknown
+          'application/json': Record<string, never>
         }
       }
       /** @description Invalid input data */
@@ -3079,7 +3165,13 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          'application/json': unknown
+          'application/json': {
+            connection_requested_event_id?: string
+            pipeline_syncs?: {
+              pipeline_id: string
+              sync_completed_event_id: string
+            }[]
+          }
         }
       }
       /** @description Invalid input data */
@@ -4036,7 +4128,7 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          'application/json': unknown
+          'application/json': Record<string, never>
         }
       }
       /** @description Invalid input data */
@@ -4059,11 +4151,15 @@ export interface operations {
       }
     }
   }
-  listSyncRuns: {
+  listEvents: {
     parameters: {
-      query?: {
-        limit?: number
-        offset?: number
+      query: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+        since: number
+        customerId?: string | null
+        name?: string | null
       }
       header?: never
       path?: never
@@ -4077,7 +4173,11 @@ export interface operations {
           [name: string]: unknown
         }
         content: {
-          'application/json': unknown[]
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: components['schemas']['Event'][]
+          }
         }
       }
       /** @description Invalid input data */
@@ -4182,6 +4282,110 @@ export interface operations {
               migrate_tables: boolean
             }
           }
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  updateCurrentOrganization: {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          publicMetadata: {
+            /**
+             * PostgreSQL Database URL
+             * @description This is where data from connections are synced to by default
+             * @example postgres://username:password@host:port/database
+             */
+            database_url?: string
+            /**
+             * Synced Data Schema
+             * @description Postgres schema to pipe data synced from customer connections into. Defaults to "synced" if missing.
+             */
+            synced_data_schema?: string
+            /**
+             * Webhook URL
+             * @description Events like sync.completed and connection.created can be sent to url of your choosing
+             */
+            webhook_url?: string
+            /**
+             * Migrate Tables
+             * @description If enabled, table migrations will be run if needed when entities are persisted
+             * @default true
+             */
+            migrate_tables?: boolean
+          }
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            /** @description Must start with 'org_' */
+            id: string
+            slug?: string | null
+            publicMetadata: {
+              /**
+               * PostgreSQL Database URL
+               * @description This is where data from connections are synced to by default
+               * @example postgres://username:password@host:port/database
+               */
+              database_url?: string
+              /**
+               * Synced Data Schema
+               * @description Postgres schema to pipe data synced from customer connections into. Defaults to "synced" if missing.
+               */
+              synced_data_schema?: string
+              /**
+               * Webhook URL
+               * @description Events like sync.completed and connection.created can be sent to url of your choosing
+               */
+              webhook_url?: string
+              /**
+               * Migrate Tables
+               * @description If enabled, table migrations will be run if needed when entities are persisted
+               * @default true
+               */
+              migrate_tables: boolean
+            }
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
         }
       }
       /** @description Internal server error */
@@ -6728,6 +6932,7 @@ export interface operations {
         customer?: string
         department?: string
         date_macro?: string
+        summarize_by?: string
       }
       header?: never
       path?: never
@@ -6863,6 +7068,10 @@ export interface operations {
         customer?: string
         department?: string
         date_macro?: string
+        payment_method?: string
+        arpaid?: string
+        transaction_type?: string
+        sort_by?: string
       }
       header?: never
       path?: never
