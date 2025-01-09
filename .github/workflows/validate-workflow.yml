@@ -77,9 +77,10 @@ jobs:
       - name: Publish package
         # NPM_TOKEN is not picked up by npm automatically unfortunately so we need to set it up manually
         # Wish there is a better api for this though.
+        if: ${{ github.ref_name == 'main' }}
         run: |
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-          pnpm publish
+          pnpm -r publish
 
       # TODO: Add step to publish package here would be nice
 

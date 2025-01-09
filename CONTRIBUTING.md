@@ -45,6 +45,9 @@ Creating a new SDK adapter in `opensdks` follows a standardized process, leverag
 6. **Testing Your SDK**:
    Test your new SDK by writing a simple script that uses its functions, ensuring everything works as expected.
 
+7. **Publishing**:
+   Increment version # of the SDK to be published and commit & push, once merged to mail CI will automatically publish the all packages with incremented versions on `main` branch
+
 ### Additional Notes
 
 - **OpenAPI Specifications**: Ensure your SDK's OpenAPI spec is accurate and up-to-date.
