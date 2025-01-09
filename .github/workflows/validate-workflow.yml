@@ -71,8 +71,15 @@ jobs:
       - name: Run integration tests
         run: cd examples && node test.cjs && node test.mjs
 
+      # - name: Setup upterm session
+      #   uses: lhotari/action-upterm@v1
+      
       - name: Publish package
-        run: pnpm publish # Should use the NPM_TOKEN env variable automatically
+        # NPM_TOKEN is not picked up by npm automatically unfortunately so we need to set it up manually
+        # Wish there is a better api for this though.
+        run: |
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+          pnpm publish
 
       # TODO: Add step to publish package here would be nice
 

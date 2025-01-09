@@ -6,7 +6,7 @@ const maybeTest = accessToken ? test : test.skip
 const connectionId = process.env['OPENINT_GOOGLE_CONNECTION_ID']!
 const apiKey = process.env['OPENINT_API_KEY_FOR_GOOGLE']!
 
-maybeTest.only('get user info', async () => {
+maybeTest('get user info', async () => {
   const google = initGoogleSDK({auth: {bearer: accessToken}})
   await google.drive_v2.GET('/about').then((r) => {
     console.log(r.data)
