@@ -133,5 +133,5 @@ export const tsConfigTemplate: TsConfigJson = {
   },
   include: ['*.ts'],
   // I think this is only for emitting, not for type checking
-  exclude: ['**/*.spec.ts'],
+  exclude: ['**/*.spec.ts', '**/*.play.ts'],
 }

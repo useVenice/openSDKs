@@ -3,10 +3,7 @@
   "compilerOptions": {
     "checkJs": true,
     "paths": {
-      "@opensdks/*": [
-        "./packages/*/index.ts",
-        "./sdks/*/src/index.ts"
-      ]
+      "@opensdks/*": ["./packages/*/index.ts", "./sdks/*/src/index.ts"]
     }
   },
   "include": [
@@ -15,13 +12,8 @@
     "**/*.js",
     "bin/syncPackages.ts",
     "example-cjs/index.mts",
-    "example-cjs/index.jjs"
-, "packages/cli/syncManifests.ts"  ],
-  "exclude": [
-    "**/types",
-    "**/esm",
-    "**/cjs",
-    "website",
-    "examples"
-  ]
+    "example-cjs/index.jjs",
+    "packages/cli/syncManifests.ts"
+  ],
+  "exclude": ["**/types", "**/esm", "**/cjs", "website", "examples"]
 }
