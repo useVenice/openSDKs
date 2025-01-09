@@ -67,6 +67,23 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/core/customer': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    /** Upsert a customer */
+    put: operations['createCustomer']
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/passthrough': {
     parameters: {
       query?: never
@@ -1556,6 +1573,35 @@ export interface webhooks {
     patch?: never
     trace?: never
   }
+  pageview: {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    post: {
+      parameters: {
+        query?: never
+        header?: never
+        path?: never
+        cookie?: never
+      }
+      requestBody?: {
+        content: {
+          'application/json': components['schemas']['webhooks.pageview']
+        }
+      }
+      responses: never
+    }
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
 }
 export interface components {
   schemas: {
@@ -1570,6 +1616,15 @@ export interface components {
       }
       /** @enum {string} */
       name: 'sync.completed'
+      id?: string
+    }
+    'webhooks.pageview': {
+      data: {
+        current_url: string
+        path: string
+      }
+      /** @enum {string} */
+      name: 'pageview'
       id?: string
     }
     /**
@@ -2447,6 +2502,11 @@ export interface operations {
           'application/json': {
             healthy: boolean
             error?: string
+            deps?: {
+              nango: boolean
+              inngest: boolean
+              clerk: boolean
+            }
           }
         }
       }
@@ -2633,6 +2693,64 @@ export interface operations {
         }
         content: {
           'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  createCustomer: {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          customerId: string
+          metadata?: unknown
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            customerId: string
+            orgId: string
+            metadata?: unknown
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
         }
       }
       /** @description Internal server error */
