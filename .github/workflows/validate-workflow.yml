@@ -2,7 +2,7 @@ name: Validate
 
 # Ideally there should be a way to run this workflow on every push to any branch
 # but not on branch associated with a pull request to avoid doubling the work unnecessarily.
-# But we don't know how to do that in github actions so falling back to only running on 
+# But we don't know how to do that in github actions so falling back to only running on
 # main and production branches and explicit pull requests for now.
 on:
   push: {branches: [main, production]}
@@ -13,6 +13,8 @@ jobs:
     name: Run type checks, lint, and tests
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -68,6 +70,9 @@ jobs:
 
       - name: Run integration tests
         run: cd examples && node test.cjs && node test.mjs
+
+      - name: Publish package
+        run: pnpm publish # Should use the NPM_TOKEN env variable automatically
 
       # TODO: Add step to publish package here would be nice
 
