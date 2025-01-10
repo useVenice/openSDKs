@@ -42,7 +42,7 @@ export interface paths {
     }
     get?: never
     put?: never
-    /** Create a connect token */
+    /** Create connect token */
     post: operations['createConnectToken']
     delete?: never
     options?: never
@@ -59,7 +59,7 @@ export interface paths {
     }
     get?: never
     put?: never
-    /** Create a magic link */
+    /** Create magic link */
     post: operations['createMagicLink']
     delete?: never
     options?: never
@@ -67,7 +67,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/core/customer': {
+  '/core/customer/{id}': {
     parameters: {
       query?: never
       header?: never
@@ -75,8 +75,8 @@ export interface paths {
       cookie?: never
     }
     get?: never
-    /** Upsert a customer */
-    put: operations['createCustomer']
+    /** Upsert customer */
+    put: operations['upsertCustomer']
     post?: never
     delete?: never
     options?: never
@@ -2706,17 +2706,18 @@ export interface operations {
       }
     }
   }
-  createCustomer: {
+  upsertCustomer: {
     parameters: {
       query?: never
       header?: never
-      path?: never
+      path: {
+        id: string
+      }
       cookie?: never
     }
     requestBody: {
       content: {
         'application/json': {
-          customerId: string
           metadata?: unknown
         }
       }
@@ -2729,7 +2730,7 @@ export interface operations {
         }
         content: {
           'application/json': {
-            customerId: string
+            id: string
             orgId: string
             metadata?: unknown
           }

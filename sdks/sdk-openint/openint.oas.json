@@ -123,7 +123,7 @@
     "/connect/token": {
       "post": {
         "operationId": "createConnectToken",
-        "summary": "Create a connect token",
+        "summary": "Create connect token",
         "tags": ["Connect"],
         "requestBody": {
           "required": true,
@@ -184,7 +184,7 @@
     "/connect/magic-link": {
       "post": {
         "operationId": "createMagicLink",
-        "summary": "Create a magic link",
+        "summary": "Create magic link",
         "tags": ["Connect"],
         "requestBody": {
           "required": true,
@@ -263,23 +263,24 @@
         }
       }
     },
-    "/core/customer": {
+    "/core/customer/{id}": {
       "put": {
-        "operationId": "createCustomer",
-        "summary": "Upsert a customer",
+        "operationId": "upsertCustomer",
+        "summary": "Upsert customer",
         "tags": ["core"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "schema": {"type": "string"},
+            "required": true
+          }
+        ],
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "customerId": {"type": "string"},
-                  "metadata": {}
-                },
-                "required": ["customerId"]
-              }
+              "schema": {"type": "object", "properties": {"metadata": {}}}
             }
           }
         },
@@ -291,11 +292,11 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "customerId": {"type": "string"},
+                    "id": {"type": "string"},
                     "orgId": {"type": "string"},
                     "metadata": {}
                   },
-                  "required": ["customerId", "orgId"]
+                  "required": ["id", "orgId"]
                 }
               }
             }
