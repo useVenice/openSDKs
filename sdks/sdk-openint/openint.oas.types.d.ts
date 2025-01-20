@@ -1372,7 +1372,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/unified/etl/read/{stream}': {
+  '/unified/sync/read/{stream}': {
     parameters: {
       query?: never
       header?: never
@@ -1380,7 +1380,7 @@ export interface paths {
       cookie?: never
     }
     /** Read Stream */
-    get: operations['etl-readStream']
+    get: operations['sync-readStream']
     put?: never
     post?: never
     delete?: never
@@ -1389,7 +1389,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/unified/etl/discover': {
+  '/unified/sync/discover': {
     parameters: {
       query?: never
       header?: never
@@ -1397,7 +1397,7 @@ export interface paths {
       cookie?: never
     }
     /** Discover */
-    get: operations['etl-discover']
+    get: operations['sync-discover']
     put?: never
     post?: never
     delete?: never
@@ -1406,7 +1406,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/unified/etl/read': {
+  '/unified/sync/read': {
     parameters: {
       query?: never
       header?: never
@@ -1416,14 +1416,14 @@ export interface paths {
     get?: never
     put?: never
     /** Read Data */
-    post: operations['etl-read']
+    post: operations['sync-read']
     delete?: never
     options?: never
     head?: never
     patch?: never
     trace?: never
   }
-  '/unified/etl/write': {
+  '/unified/sync/write': {
     parameters: {
       query?: never
       header?: never
@@ -1433,14 +1433,31 @@ export interface paths {
     get?: never
     put?: never
     /** Write Data */
-    post: operations['etl-write']
+    post: operations['sync-write']
     delete?: never
     options?: never
     head?: never
     patch?: never
     trace?: never
   }
-  '/unified/file-storage/drive': {
+  '/unified/file-storage/drive-groups': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** List drive groups */
+    get: operations['fileStorage-listDriveGroups']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/unified/file-storage/drives': {
     parameters: {
       query?: never
       header?: never
@@ -1457,58 +1474,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/unified/file-storage/drive/{driveId}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get drive */
-    get: operations['fileStorage-getDrive']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/unified/file-storage/drive/{driveId}/folder': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** List folders */
-    get: operations['fileStorage-listFolders']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/unified/file-storage/drive/{driveId}/folder/{folderId}': {
-    parameters: {
-      query?: never
-      header?: never
-      path?: never
-      cookie?: never
-    }
-    /** Get folder */
-    get: operations['fileStorage-getFolder']
-    put?: never
-    post?: never
-    delete?: never
-    options?: never
-    head?: never
-    patch?: never
-    trace?: never
-  }
-  '/unified/file-storage/drive/{driveId}/file': {
+  '/unified/file-storage/files': {
     parameters: {
       query?: never
       header?: never
@@ -1525,7 +1491,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/unified/file-storage/drive/{driveId}/file/{fileId}': {
+  '/unified/file-storage/files/{id}': {
     parameters: {
       query?: never
       header?: never
@@ -1534,6 +1500,57 @@ export interface paths {
     }
     /** Get file */
     get: operations['fileStorage-getFile']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/unified/file-storage/files/{id}/export': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** Export file */
+    get: operations['fileStorage-exportFile']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/unified/file-storage/files/{id}/download': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** Download file */
+    get: operations['fileStorage-downloadFile']
+    put?: never
+    post?: never
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
+  '/unified/file-storage/folders': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    /** List folders */
+    get: operations['fileStorage-listFolders']
     put?: never
     post?: never
     delete?: never
@@ -2436,42 +2453,49 @@ export interface components {
         [key: string]: unknown
       }
     }
+    /** @description A unified representation of a drive group */
+    'unified.drivegroup': {
+      id: string
+      name: string
+      description?: string | null
+      updated_at?: string | null
+      created_at?: string | null
+    }
     /** @description A unified representation of a storage drive */
     'unified.drive': {
       id: string
       name: string
+      description?: string | null
+      updated_at?: string | null
       created_at?: string | null
-      modified_at?: string | null
-      raw_data?: {
-        [key: string]: unknown
-      }
     }
-    /** @description A unified representation of a folder within a drive */
+    /** @description A unified representation of a file */
+    'unified.file': {
+      id: string
+      name?: string | null
+      description?: string | null
+      /** @enum {string} */
+      type: 'file' | 'folder' | 'url'
+      path?: string | null
+      mime_type?: string | null
+      downloadable: boolean
+      size?: number | null
+      permissions: {
+        download: boolean
+      }
+      exportable: boolean
+      export_formats?: string[] | null
+      updated_at?: string | null
+      created_at?: string | null
+    }
+    /** @description A unified representation of a folder */
     'unified.folder': {
       id: string
       name: string
-      parent_id?: string | null
-      drive_id: string
+      description?: string | null
+      path: string
+      updated_at?: string | null
       created_at?: string | null
-      modified_at?: string | null
-      raw_data?: {
-        [key: string]: unknown
-      }
-    }
-    /** @description A unified representation of a file within a drive */
-    'unified.file': {
-      id: string
-      name: string
-      file_url?: string | null
-      download_url?: string | null
-      mime_type?: string | null
-      size?: number | null
-      drive_id: string
-      created_at?: string | null
-      modified_at?: string | null
-      raw_data?: {
-        [key: string]: unknown
-      }
     }
   }
   responses: never
@@ -3930,6 +3954,7 @@ export interface operations {
         page_size?: number
         search_text?: string
         connector_config_ids?: string[]
+        customer_integration_filters?: string[]
       }
       header?: never
       path?: never
@@ -7999,7 +8024,7 @@ export interface operations {
       }
     }
   }
-  'etl-readStream': {
+  'sync-readStream': {
     parameters: {
       query?: {
         sync_mode?: 'full' | 'incremental'
@@ -8057,7 +8082,7 @@ export interface operations {
       }
     }
   }
-  'etl-discover': {
+  'sync-discover': {
     parameters: {
       query?: never
       header?: never
@@ -8096,7 +8121,7 @@ export interface operations {
       }
     }
   }
-  'etl-read': {
+  'sync-read': {
     parameters: {
       query?: never
       header?: never
@@ -8174,7 +8199,7 @@ export interface operations {
       }
     }
   }
-  'etl-write': {
+  'sync-write': {
     parameters: {
       query?: never
       header?: never
@@ -8250,12 +8275,68 @@ export interface operations {
       }
     }
   }
+  'fileStorage-listDriveGroups': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+      }
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: components['schemas']['unified.drivegroup'][]
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
   'fileStorage-listDrives': {
     parameters: {
       query?: {
         sync_mode?: 'full' | 'incremental'
         cursor?: string | null
         page_size?: number
+        driveGroupId?: string
       }
       header?: never
       path?: never
@@ -8305,174 +8386,17 @@ export interface operations {
       }
     }
   }
-  'fileStorage-getDrive': {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        driveId: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['unified.drive']
-        }
-      }
-      /** @description Invalid input data */
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['error.BAD_REQUEST']
-        }
-      }
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['error.NOT_FOUND']
-        }
-      }
-      /** @description Internal server error */
-      500: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
-        }
-      }
-    }
-  }
-  'fileStorage-listFolders': {
-    parameters: {
-      query?: {
-        sync_mode?: 'full' | 'incremental'
-        cursor?: string | null
-        page_size?: number
-      }
-      header?: never
-      path: {
-        driveId: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': {
-            next_cursor?: string | null
-            has_next_page: boolean
-            items: components['schemas']['unified.folder'][]
-          }
-        }
-      }
-      /** @description Invalid input data */
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['error.BAD_REQUEST']
-        }
-      }
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['error.NOT_FOUND']
-        }
-      }
-      /** @description Internal server error */
-      500: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
-        }
-      }
-    }
-  }
-  'fileStorage-getFolder': {
-    parameters: {
-      query?: never
-      header?: never
-      path: {
-        driveId: string
-        folderId: string
-      }
-      cookie?: never
-    }
-    requestBody?: never
-    responses: {
-      /** @description Successful response */
-      200: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['unified.folder']
-        }
-      }
-      /** @description Invalid input data */
-      400: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['error.BAD_REQUEST']
-        }
-      }
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['error.NOT_FOUND']
-        }
-      }
-      /** @description Internal server error */
-      500: {
-        headers: {
-          [name: string]: unknown
-        }
-        content: {
-          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
-        }
-      }
-    }
-  }
   'fileStorage-listFiles': {
     parameters: {
       query?: {
         sync_mode?: 'full' | 'incremental'
         cursor?: string | null
         page_size?: number
-        folderId?: string | null
+        driveId?: string
+        folderId?: string
       }
       header?: never
-      path: {
-        driveId: string
-      }
+      path?: never
       cookie?: never
     }
     requestBody?: never
@@ -8524,8 +8448,7 @@ export interface operations {
       query?: never
       header?: never
       path: {
-        driveId: string
-        fileId: string
+        id: string
       }
       cookie?: never
     }
@@ -8538,6 +8461,162 @@ export interface operations {
         }
         content: {
           'application/json': components['schemas']['unified.file']
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'fileStorage-exportFile': {
+    parameters: {
+      query: {
+        format: string
+      }
+      header?: never
+      path: {
+        id: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': unknown
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'fileStorage-downloadFile': {
+    parameters: {
+      query?: never
+      header?: never
+      path: {
+        id: string
+      }
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': unknown
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Not found */
+      404: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.NOT_FOUND']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  'fileStorage-listFolders': {
+    parameters: {
+      query?: {
+        sync_mode?: 'full' | 'incremental'
+        cursor?: string | null
+        page_size?: number
+        driveId?: string
+      }
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody?: never
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            next_cursor?: string | null
+            has_next_page: boolean
+            items: components['schemas']['unified.folder'][]
+          }
         }
       }
       /** @description Invalid input data */
