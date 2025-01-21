@@ -1,9 +1,6 @@
 name: Release Openint SDK
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions:
@@ -11,7 +8,7 @@ permissions:
 
 jobs:
   main:
-    name: Run type checks, lint, and tests
+    name: Build and release Openint SDK
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
@@ -57,15 +54,14 @@ jobs:
       # - name: Setup upterm session
       #   uses: lhotari/action-upterm@v1
 
-      # TODO: Reenable these
-      # - name: Run type checks
-      #   run: pnpm run typecheck
+      - name: Run type checks
+        run: pnpm run typecheck
 
-      # - name: Run lint
-      #   run: pnpm run lint
+      - name: Run lint
+        run: pnpm run lint
 
-      # - name: Run tests
-      #   run: pnpm run test::ci
+      - name: Run tests
+        run: pnpm run test::ci
 
       - name: Run build for all packages except website
         run: pnpm turbo run build --filter 'cli'
@@ -85,9 +81,8 @@ jobs:
           cd sdks/sdk-openint
           pnpm turbo run build
 
-      # TODO: Reenable this test
-      # - name: Run integration tests
-      #   run: cd examples && node test.cjs && node test.mjs
+      - name: Run integration tests
+        run: cd examples && node test.cjs && node test.mjs
 
       # - name: Setup upterm session
       #   uses: lhotari/action-upterm@v1
