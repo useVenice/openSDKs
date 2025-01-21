@@ -2,9 +2,9 @@ name: Release Openint SDK
 
 on:
   push:
-    branches:
-      - main
-  # workflow_dispatch:
+    # branches:
+    #   - main
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -57,6 +57,7 @@ jobs:
       # - name: Setup upterm session
       #   uses: lhotari/action-upterm@v1
 
+      # TODO: Reenable these
       # - name: Run type checks
       #   run: pnpm run typecheck
 
@@ -81,6 +82,7 @@ jobs:
           cd sdks/sdk-openint
           pnpm turbo run build
 
+      # TODO: Reenable this test
       # - name: Run integration tests
       #   run: cd examples && node test.cjs && node test.mjs
 
