@@ -103,7 +103,7 @@ jobs:
           cd sdks/sdk-openint
           # Store new version for commit message
           NEW_VERSION=$(npm version patch)
-          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "new_version=${NEW_VERSION}" >> "$GITHUB_OUTPUT"
           cd ../..
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
           pnpm -r publish --no-git-checks
@@ -115,7 +115,7 @@ jobs:
           git config --global user.name "opensdk-bot"
           git config --global user.email "opensdk-bot@users.noreply.github.com"
           git add sdks/sdk-openint/
-          git commit -m "chore(sdk-openint): release version ${{ steps.publish.outputs.new_version }}"
+          git commit -m "chore(sdk-openint): ${{ steps.publish.outputs.new_version }} release"
           git push origin main
 
       - name: Send Slack notification for job status
