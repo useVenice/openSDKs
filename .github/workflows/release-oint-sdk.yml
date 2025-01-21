@@ -106,7 +106,7 @@ jobs:
           echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
           cd ../..
           echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-          pnpm -r publish
+          pnpm -r publish --no-git-checks
         id: publish
 
       - name: Commit and push changes in sdks/sdk-openint
