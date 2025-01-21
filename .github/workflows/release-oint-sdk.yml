@@ -1,9 +1,9 @@
 name: Release Openint SDK
 
 on:
-  # push:
-  # branches:
-  #   - main
+  push:
+  branches:
+    - main
   workflow_dispatch:
 
 permissions:
@@ -66,6 +66,9 @@ jobs:
 
       # - name: Run tests
       #   run: pnpm run test::ci
+
+      - name: Run build for all packages except website
+        run: pnpm turbo run build --filter '!website'
 
       - name: Run download latest openint openapi spec
         run: |
