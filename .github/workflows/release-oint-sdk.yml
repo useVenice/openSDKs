@@ -1,0 +1,114 @@
+name: Validate
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  main:
+    name: Run type checks, lint, and tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20 # TODO: Can we get this from "engine" field in package.json?
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        id: pnpm-install
+        with:
+          version: 9.9.0 # Ideally we should get this from engine field too...
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        run: |
+          echo "pnpm_cache_dir=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.pnpm-cache.outputs.pnpm_cache_dir }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install example dependencies
+        run: cd examples && npm i
+
+      # - name: Set up tmate session
+      #   uses: mxschmitt/action-tmate@v2
+
+      # - name: Setup upterm session
+      #   uses: lhotari/action-upterm@v1
+
+      - name: Run type checks
+        run: pnpm run typecheck
+
+      - name: Run lint
+        run: pnpm run lint
+
+      - name: Run tests
+        run: pnpm run test::ci
+
+      - name: Run download latest openint openapi spec
+        run: turbo run download --filter sdk-openint
+
+      - name: Run generate
+        run: turbo run generate --filter sdk-openint
+
+      - name: Run builds
+        run: turbo run build --filter sdk-openint
+
+      - name: Run integration tests
+        run: cd examples && node test.cjs && node test.mjs
+
+      # - name: Setup upterm session
+      #   uses: lhotari/action-upterm@v1
+
+      - name: Check for changes in sdks/sdk-openint
+        id: check-for-changes
+        run: |
+          git diff --exit-code sdks/sdk-openint || echo "changes_detected=true" >> $GITHUB_OUTPUT
+
+      - name: Increment openint sdk version and publish
+        if: ${{ steps.check-for-changes.outputs.changes_detected == 'true' }}
+        run: |
+          cd sdks/sdk-openint
+          # Store new version for commit message
+          NEW_VERSION=$(npm version patch)
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          cd ../..
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+          pnpm -r publish
+        id: publish
+
+      - name: Commit and push changes in sdks/sdk-openint
+        if: ${{ steps.publish.outcome == 'success' && steps.check-for-changes.outputs.changes_detected == 'true' }}
+        run: |
+          git config --global user.name "opensdk-bot"
+          git config --global user.email "opensdk-bot@users.noreply.github.com"
+          git add sdks/sdk-openint/
+          git commit -m "chore(sdk-openint): release version ${{ steps.publish.outputs.new_version }}"
+          git push origin main
+
+      - name: Send Slack notification for job status
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,message,commit,author,action,eventName,ref,workflow,job,took,pullRequest # selectable (default: repo,message)
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLATIFY_SLACK_WEBHOOK_URL }} # required
+        if: ${{ env.SLACK_WEBHOOK_URL != '' && always() }} # Pick up events even if the job fails or is canceled.
