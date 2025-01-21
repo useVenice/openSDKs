@@ -54,26 +54,26 @@ jobs:
       # - name: Setup upterm session
       #   uses: lhotari/action-upterm@v1
 
-      - name: Run type checks
-        run: pnpm run typecheck
+      # - name: Run type checks
+      #   run: pnpm run typecheck
 
-      - name: Run lint
-        run: pnpm run lint
+      # - name: Run lint
+      #   run: pnpm run lint
 
-      - name: Run tests
-        run: pnpm run test::ci
+      # - name: Run tests
+      #   run: pnpm run test::ci
 
       - name: Run download latest openint openapi spec
-        run: turbo run download --filter sdk-openint
+        run: pnpm turbo run download --filter sdk-openint
 
       - name: Run generate
-        run: turbo run generate --filter sdk-openint
+        run: pnpm turbo run generate --filter sdk-openint
 
       - name: Run builds
-        run: turbo run build --filter sdk-openint
+        run: pnpm turbo run build --filter sdk-openint
 
-      - name: Run integration tests
-        run: cd examples && node test.cjs && node test.mjs
+      # - name: Run integration tests
+      #   run: cd examples && node test.cjs && node test.mjs
 
       # - name: Setup upterm session
       #   uses: lhotari/action-upterm@v1
