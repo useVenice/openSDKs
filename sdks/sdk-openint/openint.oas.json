@@ -211,9 +211,28 @@
                     "type": ["string", "null"],
                     "description": "Where to send user to after connect / if they press back button"
                   },
-                  "connectorName": {
+                  "connectorNames": {
                     "type": ["string", "null"],
-                    "description": "Filter connector config by connector name"
+                    "description": "Filter integrations by comma separated connector names"
+                  },
+                  "integrationIds": {
+                    "type": ["string", "null"],
+                    "description": "Filter integrations by comma separated integration ids"
+                  },
+                  "theme": {
+                    "type": ["string", "null"],
+                    "enum": ["light", "dark"],
+                    "description": "Magic Link display theme"
+                  },
+                  "view": {
+                    "type": ["string", "null"],
+                    "enum": [
+                      "manage",
+                      "manage-deeplink",
+                      "add",
+                      "add-deeplink"
+                    ],
+                    "description": "Magic Link tab view"
                   },
                   "connectorConfigDisplayName": {
                     "type": ["string", "null"],
@@ -1726,7 +1745,12 @@
           },
           {
             "in": "query",
-            "name": "customer_integration_filters",
+            "name": "connectorNames",
+            "schema": {"type": "array", "items": {"type": "string"}}
+          },
+          {
+            "in": "query",
+            "name": "integrationIds",
             "schema": {"type": "array", "items": {"type": "string"}}
           }
         ],
@@ -5705,6 +5729,7 @@
                       "items": {
                         "type": "object",
                         "properties": {
+                          "id": {"type": "string"},
                           "date": {"type": "string"},
                           "transactionType": {"type": "string"},
                           "documentNumber": {"type": "string"},
@@ -5714,9 +5739,10 @@
                           "memo": {"type": "string"},
                           "account": {"type": "string"},
                           "split": {"type": "string"},
-                          "amount": {"type": "number"}
+                          "amount": {"type": "number"},
+                          "raw_data": {}
                         },
-                        "required": ["date", "transactionType", "amount"]
+                        "required": ["id", "date", "transactionType", "amount"]
                       }
                     }
                   },
@@ -7163,7 +7189,11 @@
             "schema": {"type": ["string", "null"]}
           },
           {"in": "query", "name": "page_size", "schema": {"type": "number"}},
-          {"in": "query", "name": "driveGroupId", "schema": {"type": "string"}}
+          {
+            "in": "query",
+            "name": "drive_group_id",
+            "schema": {"type": "string"}
+          }
         ],
         "responses": {
           "200": {
@@ -7231,8 +7261,8 @@
             "schema": {"type": ["string", "null"]}
           },
           {"in": "query", "name": "page_size", "schema": {"type": "number"}},
-          {"in": "query", "name": "driveId", "schema": {"type": "string"}},
-          {"in": "query", "name": "folderId", "schema": {"type": "string"}}
+          {"in": "query", "name": "drive_id", "schema": {"type": "string"}},
+          {"in": "query", "name": "folder_id", "schema": {"type": "string"}}
         ],
         "responses": {
           "200": {
@@ -7451,7 +7481,7 @@
             "schema": {"type": ["string", "null"]}
           },
           {"in": "query", "name": "page_size", "schema": {"type": "number"}},
-          {"in": "query", "name": "driveId", "schema": {"type": "string"}}
+          {"in": "query", "name": "drive_id", "schema": {"type": "string"}}
         ],
         "responses": {
           "200": {
@@ -8817,7 +8847,8 @@
           "name": {"type": "string"},
           "description": {"type": ["string", "null"]},
           "updated_at": {"type": ["string", "null"]},
-          "created_at": {"type": ["string", "null"]}
+          "created_at": {"type": ["string", "null"]},
+          "raw_data": {}
         },
         "required": ["id", "name"],
         "description": "A unified representation of a drive group"
@@ -8829,7 +8860,8 @@
           "name": {"type": "string"},
           "description": {"type": ["string", "null"]},
           "updated_at": {"type": ["string", "null"]},
-          "created_at": {"type": ["string", "null"]}
+          "created_at": {"type": ["string", "null"]},
+          "raw_data": {}
         },
         "required": ["id", "name"],
         "description": "A unified representation of a storage drive"
@@ -8856,7 +8888,8 @@
             "items": {"type": "string"}
           },
           "updated_at": {"type": ["string", "null"]},
-          "created_at": {"type": ["string", "null"]}
+          "created_at": {"type": ["string", "null"]},
+          "raw_data": {}
         },
         "required": ["id", "type", "downloadable", "permissions", "exportable"],
         "description": "A unified representation of a file"
@@ -8869,7 +8902,8 @@
           "description": {"type": ["string", "null"]},
           "path": {"type": "string"},
           "updated_at": {"type": ["string", "null"]},
-          "created_at": {"type": ["string", "null"]}
+          "created_at": {"type": ["string", "null"]},
+          "raw_data": {}
         },
         "required": ["id", "name", "path"],
         "description": "A unified representation of a folder"

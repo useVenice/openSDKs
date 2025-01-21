@@ -1,7 +1,10 @@
 name: Release Openint SDK
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
+  # workflow_dispatch:
 
 permissions:
   contents: write
@@ -64,13 +67,19 @@ jobs:
       #   run: pnpm run test::ci
 
       - name: Run download latest openint openapi spec
-        run: pnpm turbo run download --filter sdk-openint
+        run: |
+          cd sdks/sdk-openint
+          pnpm turbo run download
 
       - name: Run generate
-        run: pnpm turbo run generate --filter sdk-openint
+        run: |
+          cd sdks/sdk-openint
+          pnpm turbo run generate
 
       - name: Run builds
-        run: pnpm turbo run build --filter sdk-openint
+        run: |
+          cd sdks/sdk-openint
+          pnpm turbo run build
 
       # - name: Run integration tests
       #   run: cd examples && node test.cjs && node test.mjs
