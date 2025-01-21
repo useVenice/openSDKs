@@ -16,7 +16,6 @@
   </a>
 </p>
 
-
 OpenSDKs is maintained by the [OpenInt](https://openint.dev) team. We just participated [Mega Launch Week Dec 2–6](https://launchweek.dev/lw/MEGA). Check out our [announcement blogpost](https://openint.dev/launch-week/introducing-opensdks/) for OpenSDKs.
 
 OpenSDKs is a repository of type-safe and standardized SDKs for all your APIs - powered by a single lightweight and extensible `runtime` that embraces Web Standards and HTTP, and a `cli` that can generate a custom SDKs from any OpenAPI spec.
@@ -464,7 +463,8 @@ On the other hand OpenSDKs is most valuable when you are working with multiple 3
 Or use this single command
 
 ```
-SDK=sdk-qbo && \
+SDK=sdk-openint && \
+turbo run build --filter 'cli' && \
 turbo run download --filter $SDK && \
 turbo run generate --filter $SDK && \
 turbo run build --filter $SDK

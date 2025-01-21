@@ -2460,6 +2460,7 @@ export interface components {
       description?: string | null
       updated_at?: string | null
       created_at?: string | null
+      raw_data?: unknown
     }
     /** @description A unified representation of a storage drive */
     'unified.drive': {
@@ -2468,6 +2469,7 @@ export interface components {
       description?: string | null
       updated_at?: string | null
       created_at?: string | null
+      raw_data?: unknown
     }
     /** @description A unified representation of a file */
     'unified.file': {
@@ -2487,6 +2489,7 @@ export interface components {
       export_formats?: string[] | null
       updated_at?: string | null
       created_at?: string | null
+      raw_data?: unknown
     }
     /** @description A unified representation of a folder */
     'unified.folder': {
@@ -2496,6 +2499,7 @@ export interface components {
       path: string
       updated_at?: string | null
       created_at?: string | null
+      raw_data?: unknown
     }
   }
   responses: never
@@ -2687,8 +2691,20 @@ export interface operations {
           displayName?: string | null
           /** @description Where to send user to after connect / if they press back button */
           redirectUrl?: string | null
-          /** @description Filter connector config by connector name */
-          connectorName?: string | null
+          /** @description Filter integrations by comma separated connector names */
+          connectorNames?: string | null
+          /** @description Filter integrations by comma separated integration ids */
+          integrationIds?: string | null
+          /**
+           * @description Magic Link display theme
+           * @enum {string|null}
+           */
+          theme?: 'light' | 'dark' | null
+          /**
+           * @description Magic Link tab view
+           * @enum {string|null}
+           */
+          view?: 'manage' | 'manage-deeplink' | 'add' | 'add-deeplink' | null
           /** @description Filter connector config by displayName  */
           connectorConfigDisplayName?: string | null
           /** @description Must start with 'ccfg_' */
@@ -3954,7 +3970,8 @@ export interface operations {
         page_size?: number
         search_text?: string
         connector_config_ids?: string[]
-        customer_integration_filters?: string[]
+        connectorNames?: string[]
+        integrationIds?: string[]
       }
       header?: never
       path?: never
@@ -7235,6 +7252,7 @@ export interface operations {
             endPeriod: string
             currency: string
             transactions: {
+              id: string
               date: string
               transactionType: string
               documentNumber?: string
@@ -7245,6 +7263,7 @@ export interface operations {
               account?: string
               split?: string
               amount: number
+              raw_data?: unknown
             }[]
           }
         }
@@ -8336,7 +8355,7 @@ export interface operations {
         sync_mode?: 'full' | 'incremental'
         cursor?: string | null
         page_size?: number
-        driveGroupId?: string
+        drive_group_id?: string
       }
       header?: never
       path?: never
@@ -8392,8 +8411,8 @@ export interface operations {
         sync_mode?: 'full' | 'incremental'
         cursor?: string | null
         page_size?: number
-        driveId?: string
-        folderId?: string
+        drive_id?: string
+        folder_id?: string
       }
       header?: never
       path?: never
@@ -8598,7 +8617,7 @@ export interface operations {
         sync_mode?: 'full' | 'incremental'
         cursor?: string | null
         page_size?: number
-        driveId?: string
+        drive_id?: string
       }
       header?: never
       path?: never
