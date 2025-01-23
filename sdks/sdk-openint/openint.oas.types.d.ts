@@ -2705,12 +2705,6 @@ export interface operations {
            * @enum {string|null}
            */
           view?: 'manage' | 'manage-deeplink' | 'add' | 'add-deeplink' | null
-          /** @description Filter connector config by displayName  */
-          connectorConfigDisplayName?: string | null
-          /** @description Must start with 'ccfg_' */
-          connectorConfigId?: string
-          /** @default true */
-          showExisting?: boolean
         }
       }
     }
