@@ -67,6 +67,23 @@ export interface paths {
     patch?: never
     trace?: never
   }
+  '/connect/file-picker': {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    get?: never
+    put?: never
+    /** Create file picker link */
+    post: operations['createFilePickerLink']
+    delete?: never
+    options?: never
+    head?: never
+    patch?: never
+    trace?: never
+  }
   '/core/customer/{id}': {
     parameters: {
       query?: never
@@ -2695,6 +2712,8 @@ export interface operations {
           connectorNames?: string | null
           /** @description Filter integrations by comma separated integration ids */
           integrationIds?: string | null
+          /** @description Filter managed connections by connection id */
+          connectionId?: string | null
           /**
            * @description Magic Link display theme
            * @enum {string|null}
@@ -2705,6 +2724,87 @@ export interface operations {
            * @enum {string|null}
            */
           view?: 'manage' | 'manage-deeplink' | 'add' | 'add-deeplink' | null
+        }
+      }
+    }
+    responses: {
+      /** @description Successful response */
+      200: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': {
+            url: string
+          }
+        }
+      }
+      /** @description Invalid input data */
+      400: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.BAD_REQUEST']
+        }
+      }
+      /** @description Internal server error */
+      500: {
+        headers: {
+          [name: string]: unknown
+        }
+        content: {
+          'application/json': components['schemas']['error.INTERNAL_SERVER_ERROR']
+        }
+      }
+    }
+  }
+  createFilePickerLink: {
+    parameters: {
+      query?: never
+      header?: never
+      path?: never
+      cookie?: never
+    }
+    requestBody: {
+      content: {
+        'application/json': {
+          /** @description Anything that uniquely identifies the customer that you will be sending the magic link to */
+          customerId?: string
+          /**
+           * @description How long the magic link will be valid for (in seconds) before it expires
+           * @default 2592000
+           */
+          validityInSeconds?: number
+          /** @enum {string|null} */
+          theme?: 'light' | 'dark' | null
+          multiSelect?: boolean | null
+          folderSelect?: boolean | null
+          themeColors?: {
+            accent?: string | null
+            background?: string | null
+            border?: string | null
+            button?: string | null
+            buttonLight?: string | null
+            buttonForeground?: string | null
+            buttonHover?: string | null
+            buttonStroke?: string | null
+            buttonSecondary?: string | null
+            buttonSecondaryForeground?: string | null
+            buttonSecondaryStroke?: string | null
+            buttonSecondaryHover?: string | null
+            card?: string | null
+            cardForeground?: string | null
+            foreground?: string | null
+            navbar?: string | null
+            primary?: string | null
+            primaryForeground?: string | null
+            secondary?: string | null
+            secondaryForeground?: string | null
+            sidebar?: string | null
+            tab?: string | null
+          } | null
+          connectionId: string
         }
       }
     }
