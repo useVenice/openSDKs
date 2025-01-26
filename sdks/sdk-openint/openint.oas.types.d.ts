@@ -1457,7 +1457,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/unified/file-storage/drive-groups': {
+  '/unified/file-storage/drive-group': {
     parameters: {
       query?: never
       header?: never
@@ -1474,7 +1474,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/unified/file-storage/drives': {
+  '/unified/file-storage/drive': {
     parameters: {
       query?: never
       header?: never
@@ -1491,7 +1491,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/unified/file-storage/files': {
+  '/unified/file-storage/file': {
     parameters: {
       query?: never
       header?: never
@@ -1508,7 +1508,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/unified/file-storage/files/{id}': {
+  '/unified/file-storage/file/{id}': {
     parameters: {
       query?: never
       header?: never
@@ -1525,7 +1525,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/unified/file-storage/files/{id}/export': {
+  '/unified/file-storage/file/{id}/export': {
     parameters: {
       query?: never
       header?: never
@@ -1542,7 +1542,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/unified/file-storage/files/{id}/download': {
+  '/unified/file-storage/file/{id}/download': {
     parameters: {
       query?: never
       header?: never
@@ -1559,7 +1559,7 @@ export interface paths {
     patch?: never
     trace?: never
   }
-  '/unified/file-storage/folders': {
+  '/unified/file-storage/folder': {
     parameters: {
       query?: never
       header?: never
@@ -2804,6 +2804,7 @@ export interface operations {
             sidebar?: string | null
             tab?: string | null
           } | null
+          /** @description Must start with 'conn_' */
           connectionId: string
         }
       }
