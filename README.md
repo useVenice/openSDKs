@@ -463,9 +463,9 @@ On the other hand OpenSDKs is most valuable when you are working with multiple 3
 Or use this single command
 
 ```
+cp -r ../repo/kits/sdk/openapi.json sdks/sdk-openint/openint.oas.json && \
 SDK=sdk-openint && \
 turbo run build --filter 'cli' && \
-turbo run download --filter $SDK && \
 turbo run generate --filter $SDK && \
 turbo run build --filter $SDK
 ```

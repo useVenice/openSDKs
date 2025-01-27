@@ -3,13 +3,13 @@ import {openIntProxyLink, OpenIntProxyLinkOptions} from './openIntProxyLink.js'
 import {mergeHeaders, modifyRequest} from '../modifyRequestResponse.js'
 import type {Link} from '../link.js'
 
-export type ClientAuthOptions =
+export type ClientAuthOptions = Partial<NonDiscriminatedUnion<
   | {openInt: OpenIntProxyLinkOptions}
   /** to be passed as Authorization header as a bearer token, Should handle automatic refreshing */
   | {oauth: {accessToken: string; refreshToken?: string; expiresAt?: number}}
   | {basic: {username: string; password: string}}
   /** non oauth / directly specifying bearer token */
-  | {bearer: string}
+  | {bearer: string}>>
   
 type Indexify<T> = T & Record<string, undefined>
 type AllUnionKeys<T> = keyof UnionToIntersection<{[K in keyof T]: undefined}>
@@ -17,12 +17,11 @@ type NonDiscriminatedUnion<T> = {
   [K in AllUnionKeys<T> & string]: Indexify<T>[K]
 }
 
-export function authLink(_auth: ClientAuthOptions, baseUrl: string): Link {
-  if (!_auth) {
+export function authLink(auth: ClientAuthOptions, baseUrl: string): Link {
+  if (!auth) {
     // No Op
     return (req, next) => next(req)
   }
-  const auth = _auth as NonDiscriminatedUnion<ClientAuthOptions>
 
   if (auth.openInt) {
     return openIntProxyLink(auth.openInt, baseUrl)

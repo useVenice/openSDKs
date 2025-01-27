@@ -219,6 +219,10 @@
                     "type": ["string", "null"],
                     "description": "Filter integrations by comma separated integration ids"
                   },
+                  "connectionId": {
+                    "type": ["string", "null"],
+                    "description": "Filter managed connections by connection id"
+                  },
                   "theme": {
                     "type": ["string", "null"],
                     "enum": ["light", "dark"],
@@ -233,17 +237,107 @@
                       "add-deeplink"
                     ],
                     "description": "Magic Link tab view"
-                  },
-                  "connectorConfigDisplayName": {
-                    "type": ["string", "null"],
-                    "description": "Filter connector config by displayName "
-                  },
-                  "connectorConfigId": {
-                    "type": "string",
-                    "description": "Must start with 'ccfg_'"
-                  },
-                  "showExisting": {"type": "boolean", "default": true}
+                  }
                 }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {"url": {"type": "string"}},
+                  "required": ["url"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {"$ref": "#/components/schemas/error.BAD_REQUEST"}
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error.INTERNAL_SERVER_ERROR"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/connect/file-picker": {
+      "post": {
+        "operationId": "createFilePickerLink",
+        "summary": "Create file picker link",
+        "tags": ["Connect"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "customerId": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Anything that uniquely identifies the customer that you will be sending the magic link to"
+                  },
+                  "validityInSeconds": {
+                    "type": "number",
+                    "default": 2592000,
+                    "description": "How long the magic link will be valid for (in seconds) before it expires"
+                  },
+                  "theme": {
+                    "type": ["string", "null"],
+                    "enum": ["light", "dark"]
+                  },
+                  "multiSelect": {"type": ["boolean", "null"]},
+                  "folderSelect": {"type": ["boolean", "null"]},
+                  "themeColors": {
+                    "type": ["object", "null"],
+                    "properties": {
+                      "accent": {"type": ["string", "null"]},
+                      "background": {"type": ["string", "null"]},
+                      "border": {"type": ["string", "null"]},
+                      "button": {"type": ["string", "null"]},
+                      "buttonLight": {"type": ["string", "null"]},
+                      "buttonForeground": {"type": ["string", "null"]},
+                      "buttonHover": {"type": ["string", "null"]},
+                      "buttonStroke": {"type": ["string", "null"]},
+                      "buttonSecondary": {"type": ["string", "null"]},
+                      "buttonSecondaryForeground": {"type": ["string", "null"]},
+                      "buttonSecondaryStroke": {"type": ["string", "null"]},
+                      "buttonSecondaryHover": {"type": ["string", "null"]},
+                      "card": {"type": ["string", "null"]},
+                      "cardForeground": {"type": ["string", "null"]},
+                      "foreground": {"type": ["string", "null"]},
+                      "navbar": {"type": ["string", "null"]},
+                      "primary": {"type": ["string", "null"]},
+                      "primaryForeground": {"type": ["string", "null"]},
+                      "secondary": {"type": ["string", "null"]},
+                      "secondaryForeground": {"type": ["string", "null"]},
+                      "sidebar": {"type": ["string", "null"]},
+                      "tab": {"type": ["string", "null"]}
+                    }
+                  },
+                  "connectionId": {
+                    "type": "string",
+                    "description": "Must start with 'conn_'"
+                  }
+                },
+                "required": ["connectionId"]
               }
             }
           }
@@ -7103,7 +7197,7 @@
         }
       }
     },
-    "/unified/file-storage/drive-groups": {
+    "/unified/file-storage/drive-group": {
       "get": {
         "operationId": "fileStorage-listDriveGroups",
         "summary": "List drive groups",
@@ -7172,7 +7266,7 @@
         }
       }
     },
-    "/unified/file-storage/drives": {
+    "/unified/file-storage/drive": {
       "get": {
         "operationId": "fileStorage-listDrives",
         "summary": "List drives",
@@ -7244,7 +7338,7 @@
         }
       }
     },
-    "/unified/file-storage/files": {
+    "/unified/file-storage/file": {
       "get": {
         "operationId": "fileStorage-listFiles",
         "summary": "List files",
@@ -7313,7 +7407,7 @@
         }
       }
     },
-    "/unified/file-storage/files/{id}": {
+    "/unified/file-storage/file/{id}": {
       "get": {
         "operationId": "fileStorage-getFile",
         "summary": "Get file",
@@ -7364,7 +7458,7 @@
         }
       }
     },
-    "/unified/file-storage/files/{id}/export": {
+    "/unified/file-storage/file/{id}/export": {
       "get": {
         "operationId": "fileStorage-exportFile",
         "summary": "Export file",
@@ -7417,7 +7511,7 @@
         }
       }
     },
-    "/unified/file-storage/files/{id}/download": {
+    "/unified/file-storage/file/{id}/download": {
       "get": {
         "operationId": "fileStorage-downloadFile",
         "summary": "Download file",
@@ -7464,7 +7558,7 @@
         }
       }
     },
-    "/unified/file-storage/folders": {
+    "/unified/file-storage/folder": {
       "get": {
         "operationId": "fileStorage-listFolders",
         "summary": "List folders",

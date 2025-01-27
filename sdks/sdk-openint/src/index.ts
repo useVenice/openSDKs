@@ -54,10 +54,12 @@ function generateHeaders(opts: OpenIntSDKTypes['options']) {
 }
 
 export function initOpenIntSDK(opts: OpenIntSDKTypes['options']) {
-  // @ts-expect-error
-  const headers = {...opts.headers, ...generateHeaders({...opts, ...opts?.auth?.openInt})}  
-  // @ts-expect-error
-  delete opts?.auth?.openInt;
+  const headers = {...opts.headers, ...generateHeaders({...opts, ...opts.auth?.openInt})}  
+
+  if(opts.auth?.openInt) {
+    delete opts?.auth?.openInt;
+  }
+
   
   return initSDK(openintSdkDef, {
     ...opts,
