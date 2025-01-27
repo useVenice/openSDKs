@@ -1,21 +1,17 @@
-import type {UnionToIntersection} from 'type-fest'
-import {openIntProxyLink, OpenIntProxyLinkOptions} from './openIntProxyLink.js'
-import {mergeHeaders, modifyRequest} from '../modifyRequestResponse.js'
 import type {Link} from '../link.js'
+import {mergeHeaders, modifyRequest} from '../modifyRequestResponse.js'
+import type {OpenIntProxyLinkOptions} from './openIntProxyLink.js'
+import {openIntProxyLink} from './openIntProxyLink.js'
+import type {StrictUnion} from './type-utils.js'
 
-export type ClientAuthOptions = Partial<NonDiscriminatedUnion<
+export type ClientAuthOptions = StrictUnion<
   | {openInt: OpenIntProxyLinkOptions}
   /** to be passed as Authorization header as a bearer token, Should handle automatic refreshing */
   | {oauth: {accessToken: string; refreshToken?: string; expiresAt?: number}}
   | {basic: {username: string; password: string}}
   /** non oauth / directly specifying bearer token */
-  | {bearer: string}>>
-  
-type Indexify<T> = T & Record<string, undefined>
-type AllUnionKeys<T> = keyof UnionToIntersection<{[K in keyof T]: undefined}>
-type NonDiscriminatedUnion<T> = {
-  [K in AllUnionKeys<T> & string]: Indexify<T>[K]
-}
+  | {bearer: string}
+>
 
 export function authLink(auth: ClientAuthOptions, baseUrl: string): Link {
   if (!auth) {
@@ -28,13 +24,15 @@ export function authLink(auth: ClientAuthOptions, baseUrl: string): Link {
   }
 
   const headers = {
-    ['authorization']: auth.oauth?.accessToken
-      ? `Bearer ${auth.oauth.accessToken}`
-      : auth?.bearer
-        ? `Bearer ${auth.bearer}`
-        : auth?.basic
-          ? `Basic ${btoa(`${auth.basic?.username}:${auth.basic?.password}`)}`
-          : '',
+    ...(auth.basic && {
+      ['authorization']: `Basic ${btoa(
+        `${auth.basic.username}:${auth.basic.password}`,
+      )}`,
+    }),
+    ...(auth.oauth?.accessToken && {
+      ['authorization']: `Bearer ${auth.oauth.accessToken}`,
+    }),
+    ...(auth.bearer && {['authorization']: `Bearer ${auth.bearer}`}),
   } satisfies HeadersInit
 
   return async (req, next) => {
