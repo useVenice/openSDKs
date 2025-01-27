@@ -1,4 +1,9 @@
-import type {ClientOptions, OpenIntProxyLinkOptions, SdkDefinition, SDKTypes} from '@opensdks/runtime'
+import type {
+  ClientOptions,
+  OpenIntProxyLinkOptions,
+  SdkDefinition,
+  SDKTypes,
+} from '@opensdks/runtime'
 import {initSDK} from '@opensdks/runtime'
 import type openintTypes from '../openint.oas.types.js'
 import {default as openintOasMeta} from './openint.oas.meta.js'
@@ -32,38 +37,41 @@ export const openintSdkDef = {
 } satisfies SdkDefinition<OpenIntSDKTypes>
 
 function generateHeaders(opts: OpenIntSDKTypes['options']) {
-  const headers: Record<string, string> = {};
+  const headers: Record<string, string> = {}
 
   if (opts.apiKey) {
-    headers['x-apikey'] = opts.apiKey;
+    headers['x-apikey'] = opts.apiKey
   }
   if (opts.token) {
-    headers['authorization'] = `Bearer ${opts.token}`;
+    headers['authorization'] = `Bearer ${opts.token}`
   }
   if (opts.connectionId) {
-    headers['x-connection-id'] = opts.connectionId;
+    headers['x-connection-id'] = opts.connectionId
   }
   if (opts.customerId) {
-    headers['x-connection-customer-id'] = opts.customerId;
+    headers['x-connection-customer-id'] = opts.customerId
   }
   if (opts.connectorName) {
-    headers['x-connection-connector-name'] = opts.connectorName;
+    headers['x-connection-connector-name'] = opts.connectorName
   }
 
-  return headers;
+  return headers
 }
 
 export function initOpenIntSDK(opts: OpenIntSDKTypes['options']) {
-  const headers = {...opts.headers, ...generateHeaders({...opts, ...opts.auth?.openInt})}  
-
-  if(opts.auth?.openInt) {
-    delete opts?.auth?.openInt;
+  const headers = {
+    ...opts.headers,
+    ...generateHeaders({...opts, ...opts.auth?.openInt}),
   }
 
-  
+  // Remove openInt auth proxy from options when initializing openInt
+  if (opts.auth?.openInt) {
+    opts.auth = undefined
+  }
+
   return initSDK(openintSdkDef, {
     ...opts,
-    headers
+    headers,
   })
 }
 
