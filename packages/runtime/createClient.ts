@@ -2,6 +2,7 @@ import type {
   BodySerializer,
   FetchOptions,
   FetchResponse,
+  HeadersOptions,
   InitParam,
   MaybeOptionalInit,
 } from 'openapi-fetch'
@@ -24,7 +25,9 @@ import {HTTPError} from './HTTPError.js'
 import type {FlattenOptions} from './utils.js'
 import {flattenNestedObject} from './utils.js'
 
-type _ClientOptions = NonNullable<Parameters<typeof _createClient>[0]>
+type _ClientOptions = Omit<NonNullable<Parameters<typeof _createClient>[0]>, 'headers'> & {
+  headers?: HeadersOptions
+}
 
 export interface ClientOptions extends _ClientOptions {
   links?: Link[] | ((defaultLinks: Link[]) => Link[])
@@ -44,6 +47,7 @@ export function createClient<
   Paths extends {},
   Media extends MediaType = MediaType,
 >({links: _links, ...clientOptions}: ClientOptions = {}) {
+
   const defaultLinks = [
     ...(clientOptions.auth
       ? [authLink(clientOptions.auth, clientOptions.baseUrl ?? '')]
