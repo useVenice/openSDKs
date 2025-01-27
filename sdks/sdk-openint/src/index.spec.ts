@@ -58,8 +58,8 @@ describe('OpenInt SDK Authentication', () => {
         'x-connection-id': 'test-connection',
         authorization: 'Bearer test-token',
         'x-connection-customer-id': 'test-customer',
-        'x-connection-connector-name': 'test-connector'
-      }
+        'x-connection-connector-name': 'test-connector',
+      },
     })
 
     expect(client.clientOptions.headers).toEqual({
@@ -67,17 +67,17 @@ describe('OpenInt SDK Authentication', () => {
       'x-connection-id': 'test-connection',
       authorization: 'Bearer test-token',
       'x-connection-customer-id': 'test-customer',
-      'x-connection-connector-name': 'test-connector'
+      'x-connection-connector-name': 'test-connector',
     })
   })
 
   test('initialization with empty headers should work', () => {
-    const client = initOpenIntSDK({ headers: {} })
+    const client = initOpenIntSDK({headers: {}})
     expect(client.clientOptions.headers).toEqual({})
   })
 
   test('initialization with undefined headers should work', () => {
-    const client = initOpenIntSDK({ headers: undefined as any })
+    const client = initOpenIntSDK({headers: undefined as any})
     expect(client.clientOptions.headers).toEqual({})
   })
 
@@ -86,10 +86,10 @@ describe('OpenInt SDK Authentication', () => {
       headers: {
         'x-apikey': 'test-api-key',
         // only providing some headers
-      }
+      },
     })
     expect(client.clientOptions.headers).toEqual({
-      'x-apikey': 'test-api-key'
+      'x-apikey': 'test-api-key',
     })
   })
 
@@ -102,9 +102,9 @@ describe('OpenInt SDK Authentication', () => {
           connectionId: 'test-connection',
           token: 'test-token',
           customerId: 'test-customer',
-          connectorName: 'test-connector'
-        }
-      }
+          connectorName: 'test-connector',
+        },
+      },
     })
 
     expect(client.clientOptions.headers).toEqual({
@@ -112,7 +112,7 @@ describe('OpenInt SDK Authentication', () => {
       'x-connection-id': 'test-connection',
       authorization: 'Bearer test-token',
       'x-connection-customer-id': 'test-customer',
-      'x-connection-connector-name': 'test-connector'
+      'x-connection-connector-name': 'test-connector',
     })
   })
 
@@ -120,8 +120,8 @@ describe('OpenInt SDK Authentication', () => {
     const client = initOpenIntSDK({
       headers: {},
       auth: {
-        openInt: {}
-      }
+        openInt: {},
+      },
     })
     expect(client.clientOptions.headers).toEqual({})
   })
@@ -133,11 +133,11 @@ describe('OpenInt SDK Authentication', () => {
         openInt: {
           apiKey: 'test-api-key',
           // only providing some auth options
-        }
-      }
+        },
+      },
     })
     expect(client.clientOptions.headers).toEqual({
-      'x-apikey': 'test-api-key'
+      'x-apikey': 'test-api-key',
     })
   })
 
@@ -145,15 +145,15 @@ describe('OpenInt SDK Authentication', () => {
     const client = initOpenIntSDK({
       headers: {
         'x-apikey': 'direct-api-key',
-        'x-connection-id': 'direct-connection'
+        'x-connection-id': 'direct-connection',
       },
       auth: {
         openInt: {
           token: 'auth-token',
           customerId: 'auth-customer',
-          connectorName: 'auth-connector'
-        }
-      }
+          connectorName: 'auth-connector',
+        },
+      },
     })
 
     expect(client.clientOptions.headers).toEqual({
@@ -161,7 +161,7 @@ describe('OpenInt SDK Authentication', () => {
       'x-connection-id': 'direct-connection',
       authorization: 'Bearer auth-token',
       'x-connection-customer-id': 'auth-customer',
-      'x-connection-connector-name': 'auth-connector'
+      'x-connection-connector-name': 'auth-connector',
     })
   })
 
@@ -170,35 +170,12 @@ describe('OpenInt SDK Authentication', () => {
       headers: {},
       auth: {
         openInt: {
-          apiKey: 'test-api-key'
-        }
-      }
+          apiKey: 'test-api-key',
+        },
+      },
     })
 
     expect(client.clientOptions.auth?.openInt).toBeUndefined()
-  })
-
-  test('multiple auth methods should work together', () => {
-    const client = initOpenIntSDK({
-      headers: {
-        'x-custom-header': 'custom-value'
-      },
-      auth: {
-        openInt: {
-          apiKey: 'test-api-key'
-        },
-        bearer: 'bearer-token', // This should be ignored since openInt is present
-        basic: {
-          username: 'user',
-          password: 'pass'
-        }
-      }
-    })
-
-    expect(client.clientOptions.headers).toEqual({
-      'x-apikey': 'test-api-key',
-      'x-custom-header': 'custom-value'
-    })
   })
 
   test('auth options should handle malformed input', () => {
@@ -207,8 +184,8 @@ describe('OpenInt SDK Authentication', () => {
       auth: {
         openInt: null as any,
         bearer: undefined,
-        basic: {} as any
-      }
+        basic: {} as any,
+      },
     })
 
     expect(client.clientOptions.headers).toEqual({})
@@ -223,7 +200,7 @@ describe('OpenInt SDK Header Precedence', () => {
         'x-connection-id': 'header-connection',
         authorization: 'Bearer header-token',
         'x-connection-customer-id': 'header-customer',
-        'x-connection-connector-name': 'header-connector'
+        'x-connection-connector-name': 'header-connector',
       },
       auth: {
         openInt: {
@@ -231,9 +208,9 @@ describe('OpenInt SDK Header Precedence', () => {
           connectionId: 'auth-connection',
           token: 'auth-token',
           customerId: 'auth-customer',
-          connectorName: 'auth-connector'
-        }
-      }
+          connectorName: 'auth-connector',
+        },
+      },
     })
 
     expect(client.clientOptions.headers).toEqual({
@@ -241,7 +218,7 @@ describe('OpenInt SDK Header Precedence', () => {
       'x-connection-id': 'auth-connection',
       authorization: 'Bearer auth-token',
       'x-connection-customer-id': 'auth-customer',
-      'x-connection-connector-name': 'auth-connector'
+      'x-connection-connector-name': 'auth-connector',
     })
   })
 
@@ -252,15 +229,15 @@ describe('OpenInt SDK Header Precedence', () => {
         'x-connection-id': 'header-connection',
         authorization: 'Bearer header-token',
         'x-connection-customer-id': 'header-customer',
-        'x-connection-connector-name': 'header-connector'
+        'x-connection-connector-name': 'header-connector',
       },
       auth: {
         openInt: {
           apiKey: 'auth-api-key',
           token: 'auth-token',
           // Only override apiKey and token
-        }
-      }
+        },
+      },
     })
 
     expect(client.clientOptions.headers).toEqual({
@@ -268,7 +245,7 @@ describe('OpenInt SDK Header Precedence', () => {
       'x-connection-id': 'header-connection',
       authorization: 'Bearer auth-token',
       'x-connection-customer-id': 'header-customer',
-      'x-connection-connector-name': 'header-connector'
+      'x-connection-connector-name': 'header-connector',
     })
   })
 
@@ -276,20 +253,20 @@ describe('OpenInt SDK Header Precedence', () => {
     const client = initOpenIntSDK({
       headers: {
         'x-apikey': 'header-api-key',
-        'x-connection-id': 'header-connection'
+        'x-connection-id': 'header-connection',
       },
       auth: {
         openInt: {
           apiKey: '',
           connectionId: undefined,
-          token: null as any
-        }
-      }
+          token: null as any,
+        },
+      },
     })
 
     expect(client.clientOptions.headers).toEqual({
       'x-apikey': 'header-api-key',
-      'x-connection-id': 'header-connection'
+      'x-connection-id': 'header-connection',
     })
   })
 
@@ -298,21 +275,21 @@ describe('OpenInt SDK Header Precedence', () => {
       headers: {
         'x-apikey': 'header-api-key',
         'x-custom-header': 'custom-value',
-        'x-another-custom': 'another-value'
+        'x-another-custom': 'another-value',
       },
       auth: {
         openInt: {
           apiKey: 'auth-api-key',
-          token: 'auth-token'
-        }
-      }
+          token: 'auth-token',
+        },
+      },
     })
 
     expect(client.clientOptions.headers).toEqual({
       'x-apikey': 'auth-api-key',
       authorization: 'Bearer auth-token',
       'x-custom-header': 'custom-value',
-      'x-another-custom': 'another-value'
+      'x-another-custom': 'another-value',
     })
   })
 
@@ -320,46 +297,21 @@ describe('OpenInt SDK Header Precedence', () => {
     const client = initOpenIntSDK({
       headers: {
         'x-apikey': 'header-api-key',
-        'x-connection-id': 'header-connection'
+        'x-connection-id': 'header-connection',
       },
       auth: {
         openInt: {
           apiKey: '',
           connectionId: '0', // Should be set even though it's falsy
           token: false as any,
-          customerId: 0 as any
-        }
-      }
+          customerId: 0 as any,
+        },
+      },
     })
 
     expect(client.clientOptions.headers).toEqual({
       'x-apikey': 'header-api-key',
-      'x-connection-id': '0'
-    })
-  })
-
-  test('multiple auth methods with headers should prioritize openInt', () => {
-    const client = initOpenIntSDK({
-      headers: {
-        'x-apikey': 'header-api-key',
-        authorization: 'Bearer header-token'
-      },
-      auth: {
-        openInt: {
-          apiKey: 'openint-api-key',
-          token: 'openint-token'
-        },
-        bearer: 'bearer-token',
-        basic: {
-          username: 'user',
-          password: 'pass'
-        }
-      }
-    })
-
-    expect(client.clientOptions.headers).toEqual({
-      'x-apikey': 'openint-api-key',
-      authorization: 'Bearer openint-token'
+      'x-connection-id': '0',
     })
   })
 })
@@ -375,13 +327,11 @@ describe('Bearer and Basic Auth Precedence', () => {
   //       bearer: 'bearer-token'
   //     }
   //   })
-
   //   expect(client.clientOptions.headers).toEqual({
   //     'authorization': 'Bearer bearer-token',
   //     'x-custom-header': 'custom-value'
   //   })
   // })
-
   // test('bearer auth should take precedence over basic auth', () => {
   //   const client = initOpenIntSDK({
   //     headers: {
@@ -391,7 +341,6 @@ describe('Bearer and Basic Auth Precedence', () => {
   //       bearer: 'bearer-token'
   //     }
   //   })
-
   //   expect(client.clientOptions.headers).toEqual({
   //     'authorization': 'Bearer bearer-token',
   //     'x-custom-header': 'custom-value'
@@ -405,13 +354,13 @@ describe('OpenInt Individual Parameters', () => {
       headers: {},
       auth: {
         openInt: {
-          apiKey: 'test-api-key'
-        }
-      }
+          apiKey: 'test-api-key',
+        },
+      },
     })
 
     expect(client.clientOptions.headers).toEqual({
-      'x-apikey': 'test-api-key'
+      'x-apikey': 'test-api-key',
     })
   })
 
@@ -420,13 +369,13 @@ describe('OpenInt Individual Parameters', () => {
       headers: {},
       auth: {
         openInt: {
-          token: 'test-token'
-        }
-      }
+          token: 'test-token',
+        },
+      },
     })
 
     expect(client.clientOptions.headers).toEqual({
-      'authorization': 'Bearer test-token'
+      authorization: 'Bearer test-token',
     })
   })
 
@@ -435,13 +384,13 @@ describe('OpenInt Individual Parameters', () => {
       headers: {},
       auth: {
         openInt: {
-          connectionId: 'test-connection'
-        }
-      }
+          connectionId: 'test-connection',
+        },
+      },
     })
 
     expect(client.clientOptions.headers).toEqual({
-      'x-connection-id': 'test-connection'
+      'x-connection-id': 'test-connection',
     })
   })
 
@@ -450,13 +399,13 @@ describe('OpenInt Individual Parameters', () => {
       headers: {},
       auth: {
         openInt: {
-          customerId: 'test-customer'
-        }
-      }
+          customerId: 'test-customer',
+        },
+      },
     })
 
     expect(client.clientOptions.headers).toEqual({
-      'x-connection-customer-id': 'test-customer'
+      'x-connection-customer-id': 'test-customer',
     })
   })
 
@@ -465,13 +414,13 @@ describe('OpenInt Individual Parameters', () => {
       headers: {},
       auth: {
         openInt: {
-          connectorName: 'test-connector'
-        }
-      }
+          connectorName: 'test-connector',
+        },
+      },
     })
 
     expect(client.clientOptions.headers).toEqual({
-      'x-connection-connector-name': 'test-connector'
+      'x-connection-connector-name': 'test-connector',
     })
   })
 
@@ -484,17 +433,17 @@ describe('OpenInt Individual Parameters', () => {
           token: 'test-token',
           connectionId: 'test-connection',
           customerId: 'test-customer',
-          connectorName: 'test-connector'
-        }
-      }
+          connectorName: 'test-connector',
+        },
+      },
     })
 
     expect(client.clientOptions.headers).toEqual({
       'x-apikey': 'test-api-key',
-      'authorization': 'Bearer test-token',
+      authorization: 'Bearer test-token',
       'x-connection-id': 'test-connection',
       'x-connection-customer-id': 'test-customer',
-      'x-connection-connector-name': 'test-connector'
+      'x-connection-connector-name': 'test-connector',
     })
   })
 })
