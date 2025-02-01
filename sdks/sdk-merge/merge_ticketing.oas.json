@@ -138,7 +138,7 @@
                         "schema": {
                             "type": "boolean"
                         },
-                        "description": "Whether to include data that was marked as deleted by third party webhooks."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     {
                         "in": "query",
@@ -147,6 +147,14 @@
                             "type": "boolean"
                         },
                         "description": "Whether to include the original data Merge fetched from the third-party to produce these models."
+                    },
+                    {
+                        "in": "query",
+                        "name": "include_shell_data",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null)."
                     },
                     {
                         "in": "query",
@@ -437,7 +445,7 @@
                         "schema": {
                             "type": "boolean"
                         },
-                        "description": "Whether to include data that was marked as deleted by third party webhooks."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     {
                         "in": "query",
@@ -446,6 +454,14 @@
                             "type": "boolean"
                         },
                         "description": "Whether to include the original data Merge fetched from the third-party to produce these models."
+                    },
+                    {
+                        "in": "query",
+                        "name": "include_shell_data",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null)."
                     },
                     {
                         "in": "query",
@@ -802,7 +818,7 @@
                         "schema": {
                             "type": "string"
                         },
-                        "description": "If included, will only include events with the given event type. Possible values include: `CREATED_REMOTE_PRODUCTION_API_KEY`, `DELETED_REMOTE_PRODUCTION_API_KEY`, `CREATED_TEST_API_KEY`, `DELETED_TEST_API_KEY`, `REGENERATED_PRODUCTION_API_KEY`, `INVITED_USER`, `TWO_FACTOR_AUTH_ENABLED`, `TWO_FACTOR_AUTH_DISABLED`, `DELETED_LINKED_ACCOUNT`, `CREATED_DESTINATION`, `DELETED_DESTINATION`, `CHANGED_DESTINATION`, `CHANGED_SCOPES`, `CHANGED_PERSONAL_INFORMATION`, `CHANGED_ORGANIZATION_SETTINGS`, `ENABLED_INTEGRATION`, `DISABLED_INTEGRATION`, `ENABLED_CATEGORY`, `DISABLED_CATEGORY`, `CHANGED_PASSWORD`, `RESET_PASSWORD`, `ENABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION`, `ENABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT`, `DISABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION`, `DISABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT`, `CREATED_INTEGRATION_WIDE_FIELD_MAPPING`, `CREATED_LINKED_ACCOUNT_FIELD_MAPPING`, `CHANGED_INTEGRATION_WIDE_FIELD_MAPPING`, `CHANGED_LINKED_ACCOUNT_FIELD_MAPPING`, `DELETED_INTEGRATION_WIDE_FIELD_MAPPING`, `DELETED_LINKED_ACCOUNT_FIELD_MAPPING`, `FORCED_LINKED_ACCOUNT_RESYNC`, `MUTED_ISSUE`, `GENERATED_MAGIC_LINK`, `ENABLED_MERGE_WEBHOOK`, `DISABLED_MERGE_WEBHOOK`, `MERGE_WEBHOOK_TARGET_CHANGED`"
+                        "description": "If included, will only include events with the given event type. Possible values include: `CREATED_REMOTE_PRODUCTION_API_KEY`, `DELETED_REMOTE_PRODUCTION_API_KEY`, `CREATED_TEST_API_KEY`, `DELETED_TEST_API_KEY`, `REGENERATED_PRODUCTION_API_KEY`, `INVITED_USER`, `TWO_FACTOR_AUTH_ENABLED`, `TWO_FACTOR_AUTH_DISABLED`, `DELETED_LINKED_ACCOUNT`, `CREATED_DESTINATION`, `DELETED_DESTINATION`, `CHANGED_DESTINATION`, `CHANGED_SCOPES`, `CHANGED_PERSONAL_INFORMATION`, `CHANGED_ORGANIZATION_SETTINGS`, `ENABLED_INTEGRATION`, `DISABLED_INTEGRATION`, `ENABLED_CATEGORY`, `DISABLED_CATEGORY`, `CHANGED_PASSWORD`, `RESET_PASSWORD`, `ENABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION`, `ENABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT`, `DISABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION`, `DISABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT`, `CREATED_INTEGRATION_WIDE_FIELD_MAPPING`, `CREATED_LINKED_ACCOUNT_FIELD_MAPPING`, `CHANGED_INTEGRATION_WIDE_FIELD_MAPPING`, `CHANGED_LINKED_ACCOUNT_FIELD_MAPPING`, `DELETED_INTEGRATION_WIDE_FIELD_MAPPING`, `DELETED_LINKED_ACCOUNT_FIELD_MAPPING`, `CREATED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE`, `CHANGED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE`, `DELETED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE`, `FORCED_LINKED_ACCOUNT_RESYNC`, `MUTED_ISSUE`, `GENERATED_MAGIC_LINK`, `ENABLED_MERGE_WEBHOOK`, `DISABLED_MERGE_WEBHOOK`, `MERGE_WEBHOOK_TARGET_CHANGED`, `END_USER_CREDENTIALS_ACCESSED`"
                     },
                     {
                         "name": "page_size",
@@ -958,14 +974,16 @@
                         "schema": {
                             "type": "string",
                             "enum": [
-                                "parent_collection"
+                                "parent_collection",
+                                "teams",
+                                "teams,parent_collection"
                             ]
                         },
                         "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
                         "examples": {
-                            "ExpandParentCollection": {
-                                "value": "parent_collection",
-                                "summary": "Expand Parent_collection"
+                            "ExpandTeams,ParentCollection": {
+                                "value": "teams,parent_collection",
+                                "summary": "Expand Teams, Parent_collection"
                             }
                         }
                     },
@@ -975,7 +993,7 @@
                         "schema": {
                             "type": "boolean"
                         },
-                        "description": "Whether to include data that was marked as deleted by third party webhooks."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     {
                         "in": "query",
@@ -984,6 +1002,14 @@
                             "type": "boolean"
                         },
                         "description": "Whether to include the original data Merge fetched from the third-party to produce these models."
+                    },
+                    {
+                        "in": "query",
+                        "name": "include_shell_data",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null)."
                     },
                     {
                         "in": "query",
@@ -1112,14 +1138,16 @@
                         "schema": {
                             "type": "string",
                             "enum": [
-                                "parent_collection"
+                                "parent_collection",
+                                "teams",
+                                "teams,parent_collection"
                             ]
                         },
                         "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
                         "examples": {
-                            "ExpandParentCollection": {
-                                "value": "parent_collection",
-                                "summary": "Expand Parent_collection"
+                            "ExpandTeams,ParentCollection": {
+                                "value": "teams,parent_collection",
+                                "summary": "Expand Teams, Parent_collection"
                             }
                         }
                     },
@@ -1189,111 +1217,6 @@
                             "application/json": {
                                 "schema": {
                                     "$ref": "#/components/schemas/Collection"
-                                }
-                            }
-                        },
-                        "description": ""
-                    }
-                },
-                "x-endpoint-availability": "ENDPOINT_AVAILABILITY_PUBLIC"
-            }
-        },
-        "/collections/{parent_id}/users": {
-            "get": {
-                "operationId": "collections_users_list",
-                "description": "Returns a list of `User` objects.",
-                "parameters": [
-                    {
-                        "in": "header",
-                        "name": "X-Account-Token",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "Token identifying the end user.",
-                        "required": true
-                    },
-                    {
-                        "in": "query",
-                        "name": "cursor",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "description": "The pagination cursor value.",
-                        "examples": {
-                            "CursorExample": {
-                                "value": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                                "summary": "Cursor Example"
-                            }
-                        }
-                    },
-                    {
-                        "in": "query",
-                        "name": "expand",
-                        "schema": {
-                            "type": "string",
-                            "enum": [
-                                "roles",
-                                "teams",
-                                "teams,roles"
-                            ]
-                        },
-                        "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
-                        "examples": {
-                            "ExpandTeams,Roles": {
-                                "value": "teams,roles",
-                                "summary": "Expand Teams, Roles"
-                            }
-                        }
-                    },
-                    {
-                        "in": "query",
-                        "name": "include_deleted_data",
-                        "schema": {
-                            "type": "boolean"
-                        },
-                        "description": "Whether to include data that was marked as deleted by third party webhooks."
-                    },
-                    {
-                        "in": "query",
-                        "name": "include_remote_data",
-                        "schema": {
-                            "type": "boolean"
-                        },
-                        "description": "Whether to include the original data Merge fetched from the third-party to produce these models."
-                    },
-                    {
-                        "name": "page_size",
-                        "required": false,
-                        "in": "query",
-                        "description": "Number of results to return per page.",
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "in": "path",
-                        "name": "parent_id",
-                        "schema": {
-                            "type": "string",
-                            "format": "uuid"
-                        },
-                        "required": true
-                    }
-                ],
-                "tags": [
-                    "collections"
-                ],
-                "security": [
-                    {
-                        "tokenAuth": []
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/PaginatedUserList"
                                 }
                             }
                         },
@@ -1378,7 +1301,7 @@
                         "schema": {
                             "type": "boolean"
                         },
-                        "description": "Whether to include data that was marked as deleted by third party webhooks."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     {
                         "in": "query",
@@ -1387,6 +1310,14 @@
                             "type": "boolean"
                         },
                         "description": "Whether to include the original data Merge fetched from the third-party to produce these models."
+                    },
+                    {
+                        "in": "query",
+                        "name": "include_shell_data",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null)."
                     },
                     {
                         "in": "query",
@@ -1729,7 +1660,7 @@
                         "schema": {
                             "type": "boolean"
                         },
-                        "description": "Whether to include data that was marked as deleted by third party webhooks."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     {
                         "in": "query",
@@ -1738,6 +1669,14 @@
                             "type": "boolean"
                         },
                         "description": "Whether to include the original data Merge fetched from the third-party to produce these models."
+                    },
+                    {
+                        "in": "query",
+                        "name": "include_shell_data",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null)."
                     },
                     {
                         "in": "query",
@@ -1985,7 +1924,7 @@
         "/default-scopes": {
             "get": {
                 "operationId": "default_scopes_retrieve",
-                "description": "Get the default permissions for Merge Common Models and fields across all Linked Accounts of a given category. [Learn more](https://help.merge.dev/en/articles/8828211-common-model-and-field-scopes).",
+                "description": "Get the default permissions for Merge Common Models and fields across all Linked Accounts of a given category. [Learn more](https://help.merge.dev/en/articles/5950052-common-model-and-field-scopes).",
                 "tags": [
                     "scopes"
                 ],
@@ -2053,6 +1992,14 @@
                         },
                         "description": "Token identifying the end user.",
                         "required": true
+                    },
+                    {
+                        "in": "query",
+                        "name": "exclude_remote_field_metadata",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "If `true`, remote fields metadata is excluded from each field mapping instance (i.e. `remote_fields.remote_key_name` and `remote_fields.schema` will be null). This will increase the speed of the request since these fields require some calculations."
                     }
                 ],
                 "tags": [
@@ -2089,6 +2036,14 @@
                         },
                         "description": "Token identifying the end user.",
                         "required": true
+                    },
+                    {
+                        "in": "query",
+                        "name": "exclude_remote_field_metadata",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "If `true`, remote fields metadata is excluded from each field mapping instance (i.e. `remote_fields.remote_key_name` and `remote_fields.schema` will be null). This will increase the speed of the request since these fields require some calculations."
                     }
                 ],
                 "tags": [
@@ -2537,7 +2492,7 @@
         "/linked-account-scopes": {
             "get": {
                 "operationId": "linked_account_scopes_retrieve",
-                "description": "Get all available permissions for Merge Common Models and fields for a single Linked Account. [Learn more](https://help.merge.dev/en/articles/8828211-common-model-and-field-scopes).",
+                "description": "Get all available permissions for Merge Common Models and fields for a single Linked Account. [Learn more](https://help.merge.dev/en/articles/5950052-common-model-and-field-scopes).",
                 "parameters": [
                     {
                         "in": "header",
@@ -2573,7 +2528,7 @@
             },
             "post": {
                 "operationId": "linked_account_scopes_create",
-                "description": "Update permissions for any Common Model or field for a single Linked Account. Any Scopes not set in this POST request will inherit the default Scopes. [Learn more](https://help.merge.dev/en/articles/8828211-common-model-and-field-scopes)",
+                "description": "Update permissions for any Common Model or field for a single Linked Account. Any Scopes not set in this POST request will inherit the default Scopes. [Learn more](https://help.merge.dev/en/articles/5950052-common-model-and-field-scopes)",
                 "parameters": [
                     {
                         "in": "header",
@@ -2753,7 +2708,7 @@
                         "schema": {
                             "type": "string"
                         },
-                        "description": "Filter by status. Options: `COMPLETE`, `INCOMPLETE`, `RELINK_NEEDED`"
+                        "description": "Filter by status. Options: `COMPLETE`, `IDLE`, `INCOMPLETE`, `RELINK_NEEDED`"
                     }
                 ],
                 "tags": [
@@ -2889,7 +2844,7 @@
                         "schema": {
                             "type": "boolean"
                         },
-                        "description": "Whether to include data that was marked as deleted by third party webhooks."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     {
                         "in": "query",
@@ -2898,6 +2853,14 @@
                             "type": "boolean"
                         },
                         "description": "Whether to include the original data Merge fetched from the third-party to produce these models."
+                    },
+                    {
+                        "in": "query",
+                        "name": "include_shell_data",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null)."
                     },
                     {
                         "in": "query",
@@ -3067,7 +3030,7 @@
                         "schema": {
                             "type": "boolean"
                         },
-                        "description": "Whether to include data that was marked as deleted by third party webhooks."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     {
                         "in": "query",
@@ -3076,6 +3039,14 @@
                             "type": "boolean"
                         },
                         "description": "Whether to include the original data Merge fetched from the third-party to produce these models."
+                    },
+                    {
+                        "in": "query",
+                        "name": "include_shell_data",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null)."
                     },
                     {
                         "name": "page_size",
@@ -3272,7 +3243,7 @@
                         "schema": {
                             "type": "boolean"
                         },
-                        "description": "Whether to include data that was marked as deleted by third party webhooks."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     {
                         "in": "query",
@@ -3281,6 +3252,14 @@
                             "type": "boolean"
                         },
                         "description": "Whether to include the original data Merge fetched from the third-party to produce these models."
+                    },
+                    {
+                        "in": "query",
+                        "name": "include_shell_data",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null)."
                     },
                     {
                         "in": "query",
@@ -3339,7 +3318,7 @@
                         "description": ""
                     }
                 },
-                "x-endpoint-availability": "ENDPOINT_AVAILABILITY_PUBLIC_BETA"
+                "x-endpoint-availability": "ENDPOINT_AVAILABILITY_PUBLIC"
             }
         },
         "/roles/{id}": {
@@ -3394,7 +3373,7 @@
                         "description": ""
                     }
                 },
-                "x-endpoint-availability": "ENDPOINT_AVAILABILITY_PUBLIC_BETA"
+                "x-endpoint-availability": "ENDPOINT_AVAILABILITY_PUBLIC"
             }
         },
         "/sync-status": {
@@ -3461,7 +3440,7 @@
         "/sync-status/resync": {
             "post": {
                 "operationId": "sync_status_resync_create",
-                "description": "Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Launch, Professional, or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.",
+                "description": "Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Professional or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.",
                 "parameters": [
                     {
                         "in": "header",
@@ -3551,7 +3530,7 @@
                         "schema": {
                             "type": "boolean"
                         },
-                        "description": "Whether to include data that was marked as deleted by third party webhooks."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     {
                         "in": "query",
@@ -3560,6 +3539,14 @@
                             "type": "boolean"
                         },
                         "description": "Whether to include the original data Merge fetched from the third-party to produce these models."
+                    },
+                    {
+                        "in": "query",
+                        "name": "include_shell_data",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null)."
                     },
                     {
                         "in": "query",
@@ -3766,7 +3753,7 @@
                         "schema": {
                             "type": "boolean"
                         },
-                        "description": "Whether to include data that was marked as deleted by third party webhooks."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     {
                         "in": "query",
@@ -3775,6 +3762,14 @@
                             "type": "boolean"
                         },
                         "description": "Whether to include the original data Merge fetched from the third-party to produce these models."
+                    },
+                    {
+                        "in": "query",
+                        "name": "include_shell_data",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null)."
                     },
                     {
                         "in": "query",
@@ -4033,6 +4028,22 @@
                                 "account,creator",
                                 "account,creator,parent_ticket",
                                 "account,parent_ticket",
+                                "assigned_teams",
+                                "assigned_teams,account",
+                                "assigned_teams,account,contact",
+                                "assigned_teams,account,contact,creator",
+                                "assigned_teams,account,contact,creator,parent_ticket",
+                                "assigned_teams,account,contact,parent_ticket",
+                                "assigned_teams,account,creator",
+                                "assigned_teams,account,creator,parent_ticket",
+                                "assigned_teams,account,parent_ticket",
+                                "assigned_teams,contact",
+                                "assigned_teams,contact,creator",
+                                "assigned_teams,contact,creator,parent_ticket",
+                                "assigned_teams,contact,parent_ticket",
+                                "assigned_teams,creator",
+                                "assigned_teams,creator,parent_ticket",
+                                "assigned_teams,parent_ticket",
                                 "assignees",
                                 "assignees,account",
                                 "assignees,account,contact",
@@ -4042,6 +4053,22 @@
                                 "assignees,account,creator",
                                 "assignees,account,creator,parent_ticket",
                                 "assignees,account,parent_ticket",
+                                "assignees,assigned_teams",
+                                "assignees,assigned_teams,account",
+                                "assignees,assigned_teams,account,contact",
+                                "assignees,assigned_teams,account,contact,creator",
+                                "assignees,assigned_teams,account,contact,creator,parent_ticket",
+                                "assignees,assigned_teams,account,contact,parent_ticket",
+                                "assignees,assigned_teams,account,creator",
+                                "assignees,assigned_teams,account,creator,parent_ticket",
+                                "assignees,assigned_teams,account,parent_ticket",
+                                "assignees,assigned_teams,contact",
+                                "assignees,assigned_teams,contact,creator",
+                                "assignees,assigned_teams,contact,creator,parent_ticket",
+                                "assignees,assigned_teams,contact,parent_ticket",
+                                "assignees,assigned_teams,creator",
+                                "assignees,assigned_teams,creator,parent_ticket",
+                                "assignees,assigned_teams,parent_ticket",
                                 "assignees,collections",
                                 "assignees,collections,account",
                                 "assignees,collections,account,contact",
@@ -4051,6 +4078,22 @@
                                 "assignees,collections,account,creator",
                                 "assignees,collections,account,creator,parent_ticket",
                                 "assignees,collections,account,parent_ticket",
+                                "assignees,collections,assigned_teams",
+                                "assignees,collections,assigned_teams,account",
+                                "assignees,collections,assigned_teams,account,contact",
+                                "assignees,collections,assigned_teams,account,contact,creator",
+                                "assignees,collections,assigned_teams,account,contact,creator,parent_ticket",
+                                "assignees,collections,assigned_teams,account,contact,parent_ticket",
+                                "assignees,collections,assigned_teams,account,creator",
+                                "assignees,collections,assigned_teams,account,creator,parent_ticket",
+                                "assignees,collections,assigned_teams,account,parent_ticket",
+                                "assignees,collections,assigned_teams,contact",
+                                "assignees,collections,assigned_teams,contact,creator",
+                                "assignees,collections,assigned_teams,contact,creator,parent_ticket",
+                                "assignees,collections,assigned_teams,contact,parent_ticket",
+                                "assignees,collections,assigned_teams,creator",
+                                "assignees,collections,assigned_teams,creator,parent_ticket",
+                                "assignees,collections,assigned_teams,parent_ticket",
                                 "assignees,collections,contact",
                                 "assignees,collections,contact,creator",
                                 "assignees,collections,contact,creator,parent_ticket",
@@ -4074,6 +4117,22 @@
                                 "attachments,account,creator",
                                 "attachments,account,creator,parent_ticket",
                                 "attachments,account,parent_ticket",
+                                "attachments,assigned_teams",
+                                "attachments,assigned_teams,account",
+                                "attachments,assigned_teams,account,contact",
+                                "attachments,assigned_teams,account,contact,creator",
+                                "attachments,assigned_teams,account,contact,creator,parent_ticket",
+                                "attachments,assigned_teams,account,contact,parent_ticket",
+                                "attachments,assigned_teams,account,creator",
+                                "attachments,assigned_teams,account,creator,parent_ticket",
+                                "attachments,assigned_teams,account,parent_ticket",
+                                "attachments,assigned_teams,contact",
+                                "attachments,assigned_teams,contact,creator",
+                                "attachments,assigned_teams,contact,creator,parent_ticket",
+                                "attachments,assigned_teams,contact,parent_ticket",
+                                "attachments,assigned_teams,creator",
+                                "attachments,assigned_teams,creator,parent_ticket",
+                                "attachments,assigned_teams,parent_ticket",
                                 "attachments,assignees",
                                 "attachments,assignees,account",
                                 "attachments,assignees,account,contact",
@@ -4083,6 +4142,22 @@
                                 "attachments,assignees,account,creator",
                                 "attachments,assignees,account,creator,parent_ticket",
                                 "attachments,assignees,account,parent_ticket",
+                                "attachments,assignees,assigned_teams",
+                                "attachments,assignees,assigned_teams,account",
+                                "attachments,assignees,assigned_teams,account,contact",
+                                "attachments,assignees,assigned_teams,account,contact,creator",
+                                "attachments,assignees,assigned_teams,account,contact,creator,parent_ticket",
+                                "attachments,assignees,assigned_teams,account,contact,parent_ticket",
+                                "attachments,assignees,assigned_teams,account,creator",
+                                "attachments,assignees,assigned_teams,account,creator,parent_ticket",
+                                "attachments,assignees,assigned_teams,account,parent_ticket",
+                                "attachments,assignees,assigned_teams,contact",
+                                "attachments,assignees,assigned_teams,contact,creator",
+                                "attachments,assignees,assigned_teams,contact,creator,parent_ticket",
+                                "attachments,assignees,assigned_teams,contact,parent_ticket",
+                                "attachments,assignees,assigned_teams,creator",
+                                "attachments,assignees,assigned_teams,creator,parent_ticket",
+                                "attachments,assignees,assigned_teams,parent_ticket",
                                 "attachments,assignees,collections",
                                 "attachments,assignees,collections,account",
                                 "attachments,assignees,collections,account,contact",
@@ -4092,6 +4167,22 @@
                                 "attachments,assignees,collections,account,creator",
                                 "attachments,assignees,collections,account,creator,parent_ticket",
                                 "attachments,assignees,collections,account,parent_ticket",
+                                "attachments,assignees,collections,assigned_teams",
+                                "attachments,assignees,collections,assigned_teams,account",
+                                "attachments,assignees,collections,assigned_teams,account,contact",
+                                "attachments,assignees,collections,assigned_teams,account,contact,creator",
+                                "attachments,assignees,collections,assigned_teams,account,contact,creator,parent_ticket",
+                                "attachments,assignees,collections,assigned_teams,account,contact,parent_ticket",
+                                "attachments,assignees,collections,assigned_teams,account,creator",
+                                "attachments,assignees,collections,assigned_teams,account,creator,parent_ticket",
+                                "attachments,assignees,collections,assigned_teams,account,parent_ticket",
+                                "attachments,assignees,collections,assigned_teams,contact",
+                                "attachments,assignees,collections,assigned_teams,contact,creator",
+                                "attachments,assignees,collections,assigned_teams,contact,creator,parent_ticket",
+                                "attachments,assignees,collections,assigned_teams,contact,parent_ticket",
+                                "attachments,assignees,collections,assigned_teams,creator",
+                                "attachments,assignees,collections,assigned_teams,creator,parent_ticket",
+                                "attachments,assignees,collections,assigned_teams,parent_ticket",
                                 "attachments,assignees,collections,contact",
                                 "attachments,assignees,collections,contact,creator",
                                 "attachments,assignees,collections,contact,creator,parent_ticket",
@@ -4115,6 +4206,22 @@
                                 "attachments,collections,account,creator",
                                 "attachments,collections,account,creator,parent_ticket",
                                 "attachments,collections,account,parent_ticket",
+                                "attachments,collections,assigned_teams",
+                                "attachments,collections,assigned_teams,account",
+                                "attachments,collections,assigned_teams,account,contact",
+                                "attachments,collections,assigned_teams,account,contact,creator",
+                                "attachments,collections,assigned_teams,account,contact,creator,parent_ticket",
+                                "attachments,collections,assigned_teams,account,contact,parent_ticket",
+                                "attachments,collections,assigned_teams,account,creator",
+                                "attachments,collections,assigned_teams,account,creator,parent_ticket",
+                                "attachments,collections,assigned_teams,account,parent_ticket",
+                                "attachments,collections,assigned_teams,contact",
+                                "attachments,collections,assigned_teams,contact,creator",
+                                "attachments,collections,assigned_teams,contact,creator,parent_ticket",
+                                "attachments,collections,assigned_teams,contact,parent_ticket",
+                                "attachments,collections,assigned_teams,creator",
+                                "attachments,collections,assigned_teams,creator,parent_ticket",
+                                "attachments,collections,assigned_teams,parent_ticket",
                                 "attachments,collections,contact",
                                 "attachments,collections,contact,creator",
                                 "attachments,collections,contact,creator,parent_ticket",
@@ -4138,6 +4245,22 @@
                                 "collections,account,creator",
                                 "collections,account,creator,parent_ticket",
                                 "collections,account,parent_ticket",
+                                "collections,assigned_teams",
+                                "collections,assigned_teams,account",
+                                "collections,assigned_teams,account,contact",
+                                "collections,assigned_teams,account,contact,creator",
+                                "collections,assigned_teams,account,contact,creator,parent_ticket",
+                                "collections,assigned_teams,account,contact,parent_ticket",
+                                "collections,assigned_teams,account,creator",
+                                "collections,assigned_teams,account,creator,parent_ticket",
+                                "collections,assigned_teams,account,parent_ticket",
+                                "collections,assigned_teams,contact",
+                                "collections,assigned_teams,contact,creator",
+                                "collections,assigned_teams,contact,creator,parent_ticket",
+                                "collections,assigned_teams,contact,parent_ticket",
+                                "collections,assigned_teams,creator",
+                                "collections,assigned_teams,creator,parent_ticket",
+                                "collections,assigned_teams,parent_ticket",
                                 "collections,contact",
                                 "collections,contact,creator",
                                 "collections,contact,creator,parent_ticket",
@@ -4156,9 +4279,9 @@
                         },
                         "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
                         "examples": {
-                            "ExpandAttachments,Assignees,Collections,Account,Contact,Creator,ParentTicket": {
-                                "value": "attachments,assignees,collections,account,contact,creator,parent_ticket",
-                                "summary": "Expand Attachments, Assignees, Collections, Account, Contact, Creator, Parent_ticket"
+                            "ExpandAttachments,Assignees,Collections,AssignedTeams,Account,Contact,Creator,ParentTicket": {
+                                "value": "attachments,assignees,collections,assigned_teams,account,contact,creator,parent_ticket",
+                                "summary": "Expand Attachments, Assignees, Collections, Assigned_teams, Account, Contact, Creator, Parent_ticket"
                             }
                         }
                     },
@@ -4168,7 +4291,7 @@
                         "schema": {
                             "type": "boolean"
                         },
-                        "description": "Whether to include data that was marked as deleted by third party webhooks."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     {
                         "in": "query",
@@ -4185,6 +4308,14 @@
                             "type": "boolean"
                         },
                         "description": "Whether to include all remote fields, including fields that Merge did not map to common models, in a normalized format."
+                    },
+                    {
+                        "in": "query",
+                        "name": "include_shell_data",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null)."
                     },
                     {
                         "in": "query",
@@ -4343,13 +4474,15 @@
                             "type": "string",
                             "nullable": true,
                             "enum": [
+                                "",
                                 "CLOSED",
                                 "IN_PROGRESS",
+                                null,
                                 "ON_HOLD",
                                 "OPEN"
                             ]
                         },
-                        "description": "If provided, will only return tickets of this status.\n\n* `OPEN` - OPEN\n* `CLOSED` - CLOSED\n* `IN_PROGRESS` - IN_PROGRESS\n* `ON_HOLD` - ON_HOLD"
+                        "description": "If provided, will only return tickets of this status."
                     },
                     {
                         "in": "query",
@@ -4367,6 +4500,16 @@
                             "nullable": true
                         },
                         "description": "If provided, will only return tickets of this type."
+                    },
+                    {
+                        "in": "query",
+                        "name": "ticket_url",
+                        "schema": {
+                            "type": "string",
+                            "format": "uri",
+                            "nullable": true
+                        },
+                        "description": "If provided, will only return tickets where the URL matches or contains the substring"
                     }
                 ],
                 "tags": [
@@ -4492,6 +4635,22 @@
                                 "account,creator",
                                 "account,creator,parent_ticket",
                                 "account,parent_ticket",
+                                "assigned_teams",
+                                "assigned_teams,account",
+                                "assigned_teams,account,contact",
+                                "assigned_teams,account,contact,creator",
+                                "assigned_teams,account,contact,creator,parent_ticket",
+                                "assigned_teams,account,contact,parent_ticket",
+                                "assigned_teams,account,creator",
+                                "assigned_teams,account,creator,parent_ticket",
+                                "assigned_teams,account,parent_ticket",
+                                "assigned_teams,contact",
+                                "assigned_teams,contact,creator",
+                                "assigned_teams,contact,creator,parent_ticket",
+                                "assigned_teams,contact,parent_ticket",
+                                "assigned_teams,creator",
+                                "assigned_teams,creator,parent_ticket",
+                                "assigned_teams,parent_ticket",
                                 "assignees",
                                 "assignees,account",
                                 "assignees,account,contact",
@@ -4501,6 +4660,22 @@
                                 "assignees,account,creator",
                                 "assignees,account,creator,parent_ticket",
                                 "assignees,account,parent_ticket",
+                                "assignees,assigned_teams",
+                                "assignees,assigned_teams,account",
+                                "assignees,assigned_teams,account,contact",
+                                "assignees,assigned_teams,account,contact,creator",
+                                "assignees,assigned_teams,account,contact,creator,parent_ticket",
+                                "assignees,assigned_teams,account,contact,parent_ticket",
+                                "assignees,assigned_teams,account,creator",
+                                "assignees,assigned_teams,account,creator,parent_ticket",
+                                "assignees,assigned_teams,account,parent_ticket",
+                                "assignees,assigned_teams,contact",
+                                "assignees,assigned_teams,contact,creator",
+                                "assignees,assigned_teams,contact,creator,parent_ticket",
+                                "assignees,assigned_teams,contact,parent_ticket",
+                                "assignees,assigned_teams,creator",
+                                "assignees,assigned_teams,creator,parent_ticket",
+                                "assignees,assigned_teams,parent_ticket",
                                 "assignees,collections",
                                 "assignees,collections,account",
                                 "assignees,collections,account,contact",
@@ -4510,6 +4685,22 @@
                                 "assignees,collections,account,creator",
                                 "assignees,collections,account,creator,parent_ticket",
                                 "assignees,collections,account,parent_ticket",
+                                "assignees,collections,assigned_teams",
+                                "assignees,collections,assigned_teams,account",
+                                "assignees,collections,assigned_teams,account,contact",
+                                "assignees,collections,assigned_teams,account,contact,creator",
+                                "assignees,collections,assigned_teams,account,contact,creator,parent_ticket",
+                                "assignees,collections,assigned_teams,account,contact,parent_ticket",
+                                "assignees,collections,assigned_teams,account,creator",
+                                "assignees,collections,assigned_teams,account,creator,parent_ticket",
+                                "assignees,collections,assigned_teams,account,parent_ticket",
+                                "assignees,collections,assigned_teams,contact",
+                                "assignees,collections,assigned_teams,contact,creator",
+                                "assignees,collections,assigned_teams,contact,creator,parent_ticket",
+                                "assignees,collections,assigned_teams,contact,parent_ticket",
+                                "assignees,collections,assigned_teams,creator",
+                                "assignees,collections,assigned_teams,creator,parent_ticket",
+                                "assignees,collections,assigned_teams,parent_ticket",
                                 "assignees,collections,contact",
                                 "assignees,collections,contact,creator",
                                 "assignees,collections,contact,creator,parent_ticket",
@@ -4533,6 +4724,22 @@
                                 "attachments,account,creator",
                                 "attachments,account,creator,parent_ticket",
                                 "attachments,account,parent_ticket",
+                                "attachments,assigned_teams",
+                                "attachments,assigned_teams,account",
+                                "attachments,assigned_teams,account,contact",
+                                "attachments,assigned_teams,account,contact,creator",
+                                "attachments,assigned_teams,account,contact,creator,parent_ticket",
+                                "attachments,assigned_teams,account,contact,parent_ticket",
+                                "attachments,assigned_teams,account,creator",
+                                "attachments,assigned_teams,account,creator,parent_ticket",
+                                "attachments,assigned_teams,account,parent_ticket",
+                                "attachments,assigned_teams,contact",
+                                "attachments,assigned_teams,contact,creator",
+                                "attachments,assigned_teams,contact,creator,parent_ticket",
+                                "attachments,assigned_teams,contact,parent_ticket",
+                                "attachments,assigned_teams,creator",
+                                "attachments,assigned_teams,creator,parent_ticket",
+                                "attachments,assigned_teams,parent_ticket",
                                 "attachments,assignees",
                                 "attachments,assignees,account",
                                 "attachments,assignees,account,contact",
@@ -4542,6 +4749,22 @@
                                 "attachments,assignees,account,creator",
                                 "attachments,assignees,account,creator,parent_ticket",
                                 "attachments,assignees,account,parent_ticket",
+                                "attachments,assignees,assigned_teams",
+                                "attachments,assignees,assigned_teams,account",
+                                "attachments,assignees,assigned_teams,account,contact",
+                                "attachments,assignees,assigned_teams,account,contact,creator",
+                                "attachments,assignees,assigned_teams,account,contact,creator,parent_ticket",
+                                "attachments,assignees,assigned_teams,account,contact,parent_ticket",
+                                "attachments,assignees,assigned_teams,account,creator",
+                                "attachments,assignees,assigned_teams,account,creator,parent_ticket",
+                                "attachments,assignees,assigned_teams,account,parent_ticket",
+                                "attachments,assignees,assigned_teams,contact",
+                                "attachments,assignees,assigned_teams,contact,creator",
+                                "attachments,assignees,assigned_teams,contact,creator,parent_ticket",
+                                "attachments,assignees,assigned_teams,contact,parent_ticket",
+                                "attachments,assignees,assigned_teams,creator",
+                                "attachments,assignees,assigned_teams,creator,parent_ticket",
+                                "attachments,assignees,assigned_teams,parent_ticket",
                                 "attachments,assignees,collections",
                                 "attachments,assignees,collections,account",
                                 "attachments,assignees,collections,account,contact",
@@ -4551,6 +4774,22 @@
                                 "attachments,assignees,collections,account,creator",
                                 "attachments,assignees,collections,account,creator,parent_ticket",
                                 "attachments,assignees,collections,account,parent_ticket",
+                                "attachments,assignees,collections,assigned_teams",
+                                "attachments,assignees,collections,assigned_teams,account",
+                                "attachments,assignees,collections,assigned_teams,account,contact",
+                                "attachments,assignees,collections,assigned_teams,account,contact,creator",
+                                "attachments,assignees,collections,assigned_teams,account,contact,creator,parent_ticket",
+                                "attachments,assignees,collections,assigned_teams,account,contact,parent_ticket",
+                                "attachments,assignees,collections,assigned_teams,account,creator",
+                                "attachments,assignees,collections,assigned_teams,account,creator,parent_ticket",
+                                "attachments,assignees,collections,assigned_teams,account,parent_ticket",
+                                "attachments,assignees,collections,assigned_teams,contact",
+                                "attachments,assignees,collections,assigned_teams,contact,creator",
+                                "attachments,assignees,collections,assigned_teams,contact,creator,parent_ticket",
+                                "attachments,assignees,collections,assigned_teams,contact,parent_ticket",
+                                "attachments,assignees,collections,assigned_teams,creator",
+                                "attachments,assignees,collections,assigned_teams,creator,parent_ticket",
+                                "attachments,assignees,collections,assigned_teams,parent_ticket",
                                 "attachments,assignees,collections,contact",
                                 "attachments,assignees,collections,contact,creator",
                                 "attachments,assignees,collections,contact,creator,parent_ticket",
@@ -4574,6 +4813,22 @@
                                 "attachments,collections,account,creator",
                                 "attachments,collections,account,creator,parent_ticket",
                                 "attachments,collections,account,parent_ticket",
+                                "attachments,collections,assigned_teams",
+                                "attachments,collections,assigned_teams,account",
+                                "attachments,collections,assigned_teams,account,contact",
+                                "attachments,collections,assigned_teams,account,contact,creator",
+                                "attachments,collections,assigned_teams,account,contact,creator,parent_ticket",
+                                "attachments,collections,assigned_teams,account,contact,parent_ticket",
+                                "attachments,collections,assigned_teams,account,creator",
+                                "attachments,collections,assigned_teams,account,creator,parent_ticket",
+                                "attachments,collections,assigned_teams,account,parent_ticket",
+                                "attachments,collections,assigned_teams,contact",
+                                "attachments,collections,assigned_teams,contact,creator",
+                                "attachments,collections,assigned_teams,contact,creator,parent_ticket",
+                                "attachments,collections,assigned_teams,contact,parent_ticket",
+                                "attachments,collections,assigned_teams,creator",
+                                "attachments,collections,assigned_teams,creator,parent_ticket",
+                                "attachments,collections,assigned_teams,parent_ticket",
                                 "attachments,collections,contact",
                                 "attachments,collections,contact,creator",
                                 "attachments,collections,contact,creator,parent_ticket",
@@ -4597,6 +4852,22 @@
                                 "collections,account,creator",
                                 "collections,account,creator,parent_ticket",
                                 "collections,account,parent_ticket",
+                                "collections,assigned_teams",
+                                "collections,assigned_teams,account",
+                                "collections,assigned_teams,account,contact",
+                                "collections,assigned_teams,account,contact,creator",
+                                "collections,assigned_teams,account,contact,creator,parent_ticket",
+                                "collections,assigned_teams,account,contact,parent_ticket",
+                                "collections,assigned_teams,account,creator",
+                                "collections,assigned_teams,account,creator,parent_ticket",
+                                "collections,assigned_teams,account,parent_ticket",
+                                "collections,assigned_teams,contact",
+                                "collections,assigned_teams,contact,creator",
+                                "collections,assigned_teams,contact,creator,parent_ticket",
+                                "collections,assigned_teams,contact,parent_ticket",
+                                "collections,assigned_teams,creator",
+                                "collections,assigned_teams,creator,parent_ticket",
+                                "collections,assigned_teams,parent_ticket",
                                 "collections,contact",
                                 "collections,contact,creator",
                                 "collections,contact,creator,parent_ticket",
@@ -4615,9 +4886,9 @@
                         },
                         "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
                         "examples": {
-                            "ExpandAttachments,Assignees,Collections,Account,Contact,Creator,ParentTicket": {
-                                "value": "attachments,assignees,collections,account,contact,creator,parent_ticket",
-                                "summary": "Expand Attachments, Assignees, Collections, Account, Contact, Creator, Parent_ticket"
+                            "ExpandAttachments,Assignees,Collections,AssignedTeams,Account,Contact,Creator,ParentTicket": {
+                                "value": "attachments,assignees,collections,assigned_teams,account,contact,creator,parent_ticket",
+                                "summary": "Expand Attachments, Assignees, Collections, Assigned_teams, Account, Contact, Creator, Parent_ticket"
                             }
                         }
                     },
@@ -4797,10 +5068,10 @@
                 "x-endpoint-availability": "ENDPOINT_AVAILABILITY_PUBLIC"
             }
         },
-        "/tickets/{parent_id}/collaborators": {
+        "/tickets/{ticket_id}/viewers": {
             "get": {
-                "operationId": "tickets_collaborators_list",
-                "description": "Returns a list of `User` objects.",
+                "operationId": "tickets_viewers_list",
+                "description": "Returns a list of `Viewer` objects that point to a User id or Team id that is either an assignee or viewer on a `Ticket` with the given id. [Learn more.](https://help.merge.dev/en/articles/10333658-ticketing-access-control-list-acls)",
                 "parameters": [
                     {
                         "in": "header",
@@ -4831,16 +5102,16 @@
                         "schema": {
                             "type": "string",
                             "enum": [
-                                "roles",
-                                "teams",
-                                "teams,roles"
+                                "team",
+                                "user",
+                                "user,team"
                             ]
                         },
                         "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
                         "examples": {
-                            "ExpandTeams,Roles": {
-                                "value": "teams,roles",
-                                "summary": "Expand Teams, Roles"
+                            "ExpandUser,Team": {
+                                "value": "user,team",
+                                "summary": "Expand User, Team"
                             }
                         }
                     },
@@ -4850,7 +5121,7 @@
                         "schema": {
                             "type": "boolean"
                         },
-                        "description": "Whether to include data that was marked as deleted by third party webhooks."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     {
                         "in": "query",
@@ -4859,6 +5130,14 @@
                             "type": "boolean"
                         },
                         "description": "Whether to include the original data Merge fetched from the third-party to produce these models."
+                    },
+                    {
+                        "in": "query",
+                        "name": "include_shell_data",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null)."
                     },
                     {
                         "name": "page_size",
@@ -4871,7 +5150,7 @@
                     },
                     {
                         "in": "path",
-                        "name": "parent_id",
+                        "name": "ticket_id",
                         "schema": {
                             "type": "string",
                             "format": "uuid"
@@ -4880,7 +5159,8 @@
                     }
                 ],
                 "tags": [
-                    "tickets"
+                    "tickets",
+                    "viewers"
                 ],
                 "security": [
                     {
@@ -4892,7 +5172,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/PaginatedUserList"
+                                    "$ref": "#/components/schemas/PaginatedViewerList"
                                 }
                             }
                         },
@@ -5023,7 +5303,7 @@
                         "schema": {
                             "type": "boolean"
                         },
-                        "description": "Whether to include data that was marked as deleted by third party webhooks."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     {
                         "in": "query",
@@ -5032,6 +5312,14 @@
                             "type": "boolean"
                         },
                         "description": "Whether to include the original data Merge fetched from the third-party to produce these models."
+                    },
+                    {
+                        "in": "query",
+                        "name": "include_shell_data",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null)."
                     },
                     {
                         "in": "query",
@@ -5072,7 +5360,7 @@
                         "description": ""
                     }
                 },
-                "x-endpoint-availability": "ENDPOINT_AVAILABILITY_CLOSED_BETA"
+                "x-endpoint-availability": "ENDPOINT_AVAILABILITY_PUBLIC_BETA"
             }
         },
         "/users": {
@@ -5155,7 +5443,7 @@
                         "schema": {
                             "type": "boolean"
                         },
-                        "description": "Whether to include data that was marked as deleted by third party webhooks."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     {
                         "in": "query",
@@ -5164,6 +5452,14 @@
                             "type": "boolean"
                         },
                         "description": "Whether to include the original data Merge fetched from the third-party to produce these models."
+                    },
+                    {
+                        "in": "query",
+                        "name": "include_shell_data",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null)."
                     },
                     {
                         "in": "query",
@@ -5200,6 +5496,14 @@
                             "nullable": true
                         },
                         "description": "The API provider's ID for the given object."
+                    },
+                    {
+                        "in": "query",
+                        "name": "team",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "If provided, will only return users matching in this team."
                     }
                 ],
                 "tags": [
@@ -5460,7 +5764,7 @@
                     },
                     "remote_was_deleted": {
                         "type": "boolean",
-                        "description": "Indicates whether or not this object has been deleted in the third party platform."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     "field_mappings": {
                         "type": "object",
@@ -5561,6 +5865,13 @@
                         "type": "string",
                         "readOnly": true,
                         "example": "PRODUCTION"
+                    },
+                    "completed_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true,
+                        "description": "The time at which account completes the linking flow.",
+                        "example": "2024-08-26T20:11:19.277118Z"
                     }
                 },
                 "x-merge-category": "ticketing"
@@ -5656,10 +5967,16 @@
                     "account_type": {
                         "type": "string",
                         "example": "PRODUCTION"
+                    },
+                    "completed_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-08-26T20:11:19.277118Z"
                     }
                 },
                 "required": [
                     "account_type",
+                    "completed_at",
                     "end_user_email_address",
                     "end_user_organization_name",
                     "id",
@@ -5716,10 +6033,11 @@
                 "enum": [
                     "COMPLETE",
                     "INCOMPLETE",
-                    "RELINK_NEEDED"
+                    "RELINK_NEEDED",
+                    "IDLE"
                 ],
                 "type": "string",
-                "description": "* `COMPLETE` - COMPLETE\n* `INCOMPLETE` - INCOMPLETE\n* `RELINK_NEEDED` - RELINK_NEEDED",
+                "description": "* `COMPLETE` - COMPLETE\n* `INCOMPLETE` - INCOMPLETE\n* `RELINK_NEEDED` - RELINK_NEEDED\n* `IDLE` - IDLE",
                 "x-merge-category": "ticketing"
             },
             "AccountIntegration": {
@@ -5728,6 +6046,11 @@
                     "name": {
                         "type": "string",
                         "description": "Company name."
+                    },
+                    "abbreviated_name": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Optional. This shortened name appears in places with limited space, usually in conjunction with the platform's logo (e.g., Merge Link menu).<br><br>Example: <i>Workforce Now (in lieu of ADP Workforce Now), SuccessFactors (in lieu of SAP SuccessFactors)</i>"
                     },
                     "categories": {
                         "type": "array",
@@ -5741,13 +6064,13 @@
                         "type": "string",
                         "format": "uri",
                         "nullable": true,
-                        "description": "Company logo in rectangular shape. <b>Upload an image with a clear background.</b>"
+                        "description": "Company logo in rectangular shape."
                     },
                     "square_image": {
                         "type": "string",
                         "format": "uri",
                         "nullable": true,
-                        "description": "Company logo in square shape. <b>Upload an image with a white background.</b>"
+                        "description": "Company logo in square shape."
                     },
                     "color": {
                         "type": "string",
@@ -5923,7 +6246,8 @@
                     },
                     "remote_was_deleted": {
                         "type": "boolean",
-                        "readOnly": true
+                        "readOnly": true,
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     "field_mappings": {
                         "type": "object",
@@ -6054,7 +6378,7 @@
                                 "$ref": "#/components/schemas/EventTypeEnum"
                             }
                         ],
-                        "description": "Designates the type of event that occurred.\n\n* `CREATED_REMOTE_PRODUCTION_API_KEY` - CREATED_REMOTE_PRODUCTION_API_KEY\n* `DELETED_REMOTE_PRODUCTION_API_KEY` - DELETED_REMOTE_PRODUCTION_API_KEY\n* `CREATED_TEST_API_KEY` - CREATED_TEST_API_KEY\n* `DELETED_TEST_API_KEY` - DELETED_TEST_API_KEY\n* `REGENERATED_PRODUCTION_API_KEY` - REGENERATED_PRODUCTION_API_KEY\n* `INVITED_USER` - INVITED_USER\n* `TWO_FACTOR_AUTH_ENABLED` - TWO_FACTOR_AUTH_ENABLED\n* `TWO_FACTOR_AUTH_DISABLED` - TWO_FACTOR_AUTH_DISABLED\n* `DELETED_LINKED_ACCOUNT` - DELETED_LINKED_ACCOUNT\n* `CREATED_DESTINATION` - CREATED_DESTINATION\n* `DELETED_DESTINATION` - DELETED_DESTINATION\n* `CHANGED_DESTINATION` - CHANGED_DESTINATION\n* `CHANGED_SCOPES` - CHANGED_SCOPES\n* `CHANGED_PERSONAL_INFORMATION` - CHANGED_PERSONAL_INFORMATION\n* `CHANGED_ORGANIZATION_SETTINGS` - CHANGED_ORGANIZATION_SETTINGS\n* `ENABLED_INTEGRATION` - ENABLED_INTEGRATION\n* `DISABLED_INTEGRATION` - DISABLED_INTEGRATION\n* `ENABLED_CATEGORY` - ENABLED_CATEGORY\n* `DISABLED_CATEGORY` - DISABLED_CATEGORY\n* `CHANGED_PASSWORD` - CHANGED_PASSWORD\n* `RESET_PASSWORD` - RESET_PASSWORD\n* `ENABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION` - ENABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION\n* `ENABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT` - ENABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT\n* `DISABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION` - DISABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION\n* `DISABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT` - DISABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT\n* `CREATED_INTEGRATION_WIDE_FIELD_MAPPING` - CREATED_INTEGRATION_WIDE_FIELD_MAPPING\n* `CREATED_LINKED_ACCOUNT_FIELD_MAPPING` - CREATED_LINKED_ACCOUNT_FIELD_MAPPING\n* `CHANGED_INTEGRATION_WIDE_FIELD_MAPPING` - CHANGED_INTEGRATION_WIDE_FIELD_MAPPING\n* `CHANGED_LINKED_ACCOUNT_FIELD_MAPPING` - CHANGED_LINKED_ACCOUNT_FIELD_MAPPING\n* `DELETED_INTEGRATION_WIDE_FIELD_MAPPING` - DELETED_INTEGRATION_WIDE_FIELD_MAPPING\n* `DELETED_LINKED_ACCOUNT_FIELD_MAPPING` - DELETED_LINKED_ACCOUNT_FIELD_MAPPING\n* `FORCED_LINKED_ACCOUNT_RESYNC` - FORCED_LINKED_ACCOUNT_RESYNC\n* `MUTED_ISSUE` - MUTED_ISSUE\n* `GENERATED_MAGIC_LINK` - GENERATED_MAGIC_LINK\n* `ENABLED_MERGE_WEBHOOK` - ENABLED_MERGE_WEBHOOK\n* `DISABLED_MERGE_WEBHOOK` - DISABLED_MERGE_WEBHOOK\n* `MERGE_WEBHOOK_TARGET_CHANGED` - MERGE_WEBHOOK_TARGET_CHANGED",
+                        "description": "Designates the type of event that occurred.\n\n* `CREATED_REMOTE_PRODUCTION_API_KEY` - CREATED_REMOTE_PRODUCTION_API_KEY\n* `DELETED_REMOTE_PRODUCTION_API_KEY` - DELETED_REMOTE_PRODUCTION_API_KEY\n* `CREATED_TEST_API_KEY` - CREATED_TEST_API_KEY\n* `DELETED_TEST_API_KEY` - DELETED_TEST_API_KEY\n* `REGENERATED_PRODUCTION_API_KEY` - REGENERATED_PRODUCTION_API_KEY\n* `INVITED_USER` - INVITED_USER\n* `TWO_FACTOR_AUTH_ENABLED` - TWO_FACTOR_AUTH_ENABLED\n* `TWO_FACTOR_AUTH_DISABLED` - TWO_FACTOR_AUTH_DISABLED\n* `DELETED_LINKED_ACCOUNT` - DELETED_LINKED_ACCOUNT\n* `CREATED_DESTINATION` - CREATED_DESTINATION\n* `DELETED_DESTINATION` - DELETED_DESTINATION\n* `CHANGED_DESTINATION` - CHANGED_DESTINATION\n* `CHANGED_SCOPES` - CHANGED_SCOPES\n* `CHANGED_PERSONAL_INFORMATION` - CHANGED_PERSONAL_INFORMATION\n* `CHANGED_ORGANIZATION_SETTINGS` - CHANGED_ORGANIZATION_SETTINGS\n* `ENABLED_INTEGRATION` - ENABLED_INTEGRATION\n* `DISABLED_INTEGRATION` - DISABLED_INTEGRATION\n* `ENABLED_CATEGORY` - ENABLED_CATEGORY\n* `DISABLED_CATEGORY` - DISABLED_CATEGORY\n* `CHANGED_PASSWORD` - CHANGED_PASSWORD\n* `RESET_PASSWORD` - RESET_PASSWORD\n* `ENABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION` - ENABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION\n* `ENABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT` - ENABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT\n* `DISABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION` - DISABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION\n* `DISABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT` - DISABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT\n* `CREATED_INTEGRATION_WIDE_FIELD_MAPPING` - CREATED_INTEGRATION_WIDE_FIELD_MAPPING\n* `CREATED_LINKED_ACCOUNT_FIELD_MAPPING` - CREATED_LINKED_ACCOUNT_FIELD_MAPPING\n* `CHANGED_INTEGRATION_WIDE_FIELD_MAPPING` - CHANGED_INTEGRATION_WIDE_FIELD_MAPPING\n* `CHANGED_LINKED_ACCOUNT_FIELD_MAPPING` - CHANGED_LINKED_ACCOUNT_FIELD_MAPPING\n* `DELETED_INTEGRATION_WIDE_FIELD_MAPPING` - DELETED_INTEGRATION_WIDE_FIELD_MAPPING\n* `DELETED_LINKED_ACCOUNT_FIELD_MAPPING` - DELETED_LINKED_ACCOUNT_FIELD_MAPPING\n* `CREATED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE` - CREATED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE\n* `CHANGED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE` - CHANGED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE\n* `DELETED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE` - DELETED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE\n* `FORCED_LINKED_ACCOUNT_RESYNC` - FORCED_LINKED_ACCOUNT_RESYNC\n* `MUTED_ISSUE` - MUTED_ISSUE\n* `GENERATED_MAGIC_LINK` - GENERATED_MAGIC_LINK\n* `ENABLED_MERGE_WEBHOOK` - ENABLED_MERGE_WEBHOOK\n* `DISABLED_MERGE_WEBHOOK` - DISABLED_MERGE_WEBHOOK\n* `MERGE_WEBHOOK_TARGET_CHANGED` - MERGE_WEBHOOK_TARGET_CHANGED\n* `END_USER_CREDENTIALS_ACCESSED` - END_USER_CREDENTIALS_ACCESSED",
                         "example": "CHANGED_SCOPES"
                     },
                     "event_description": {
@@ -6158,7 +6482,7 @@
             },
             "Collection": {
                 "type": "object",
-                "description": "# The Collection Object\n### Description\nThe `Collection` object is used to represent collections of tickets. Collections may include other collections as\nsub collections.\n\n### Usage Example\nTODO",
+                "description": "# The Collection Object\n### Description\nThe `Collection` object is used to represent one or more `Tickets`. There can be a hierarchy of `Collections`, in which a sub-collection belongs to a parent-collection.\n\n### Usage Example\nTODO",
                 "properties": {
                     "id": {
                         "type": "string",
@@ -6216,9 +6540,21 @@
                         "example": "25782302-5be1-4d78-8f46-2a5db72204ef",
                         "x-merge-expands-to": "Collection"
                     },
+                    "teams": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid",
+                            "nullable": true
+                        },
+                        "example": [
+                            "4857c306-c1f9-489e-a6b6-90902f736dfe"
+                        ],
+                        "x-merge-expands-to": "Team"
+                    },
                     "remote_was_deleted": {
                         "type": "boolean",
-                        "description": "Indicates whether or not this object has been deleted in the third party platform."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     "access_level": {
                         "allOf": [
@@ -6252,7 +6588,7 @@
                         "nullable": true
                     }
                 },
-                "x-merge-expands": "{\"parent_collection\": \"Collection\"}",
+                "x-merge-expands": "{\"parent_collection\": \"Collection\", \"teams\": \"Team\"}",
                 "x-merge-category": "ticketing"
             },
             "CollectionTypeEnum": {
@@ -6298,7 +6634,7 @@
                         "type": "string",
                         "format": "uuid",
                         "nullable": true,
-                        "description": "The author of the Comment, if the author is a User.",
+                        "description": "The author of the Comment, if the author is a User. If the third party does not support specifying an author, we will append \"[Posted on behalf of {name}]\" to the comment.",
                         "example": "17a54124-287f-494d-965e-3c5b330c9a68",
                         "x-merge-expands-to": "User"
                     },
@@ -6306,7 +6642,7 @@
                         "type": "string",
                         "format": "uuid",
                         "nullable": true,
-                        "description": "The author of the Comment, if the author is a Contact.",
+                        "description": "The author of the Comment, if the author is a Contact.If the third party does not support specifying an author, we will append \"[Posted on behalf of {name}]\" to the comment.",
                         "example": "dde3fb16-b8eb-483d-81c4-b78100816f15",
                         "x-merge-expands-to": "Contact"
                     },
@@ -6344,7 +6680,8 @@
                     },
                     "remote_was_deleted": {
                         "type": "boolean",
-                        "readOnly": true
+                        "readOnly": true,
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     "field_mappings": {
                         "type": "object",
@@ -6391,7 +6728,7 @@
                         "type": "string",
                         "format": "uuid",
                         "nullable": true,
-                        "description": "The author of the Comment, if the author is a User.",
+                        "description": "The author of the Comment, if the author is a User. If the third party does not support specifying an author, we will append \"[Posted on behalf of {name}]\" to the comment.",
                         "example": "17a54124-287f-494d-965e-3c5b330c9a68",
                         "x-merge-expands-to": "User"
                     },
@@ -6399,7 +6736,7 @@
                         "type": "string",
                         "format": "uuid",
                         "nullable": true,
-                        "description": "The author of the Comment, if the author is a Contact.",
+                        "description": "The author of the Comment, if the author is a Contact.If the third party does not support specifying an author, we will append \"[Posted on behalf of {name}]\" to the comment.",
                         "example": "dde3fb16-b8eb-483d-81c4-b78100816f15",
                         "x-merge-expands-to": "Contact"
                     },
@@ -6632,7 +6969,7 @@
                     "remote_was_deleted": {
                         "type": "boolean",
                         "readOnly": true,
-                        "description": "Indicates whether or not this object has been deleted in the third party platform."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     "field_mappings": {
                         "type": "object",
@@ -6964,6 +7301,12 @@
                         "default": false,
                         "description": "Whether to generate a Magic Link URL. Defaults to false. For more information on Magic Link, see https://merge.dev/blog/integrations-fast-say-hello-to-magic-link."
                     },
+                    "hide_admin_magic_link": {
+                        "type": "boolean",
+                        "nullable": true,
+                        "default": false,
+                        "description": "Whether to generate a Magic Link URL on the Admin Needed screen during the linking flow. Defaults to false. For more information on Magic Link, see https://merge.dev/blog/integrations-fast-say-hello-to-magic-link."
+                    },
                     "common_models": {
                         "type": "array",
                         "items": {
@@ -6995,12 +7338,12 @@
                                         }
                                     },
                                     "field_permissions": {
-                                        "enabled": [
+                                        "enabled_fields": [
                                             "first_name",
                                             "last_name",
                                             "personal_email"
                                         ],
-                                        "disabled": [
+                                        "disabled_fields": [
                                             "preferred_name"
                                         ]
                                     }
@@ -7016,7 +7359,7 @@
                                         }
                                     },
                                     "field_permissions": {
-                                        "enabled": [
+                                        "enabled_fields": [
                                             "effective_date"
                                         ]
                                     }
@@ -7034,10 +7377,10 @@
                                         }
                                     },
                                     "field_permissions": {
-                                        "enabled": [
+                                        "enabled_fields": [
                                             "name"
                                         ],
-                                        "disabled": [
+                                        "disabled_fields": [
                                             "description"
                                         ]
                                     }
@@ -7057,11 +7400,20 @@
                         }
                     },
                     "language": {
-                        "type": "string",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/LanguageEnum"
+                            }
+                        ],
                         "nullable": true,
-                        "minLength": 1,
-                        "description": "The language code for the language to localize Merge Link to.",
-                        "maxLength": 2
+                        "description": "The following subset of IETF language tags can be used to configure localization.\n\n* `en` - en\n* `de` - de",
+                        "example": "en"
+                    },
+                    "are_syncs_disabled": {
+                        "type": "boolean",
+                        "nullable": true,
+                        "default": false,
+                        "description": "The boolean that indicates whether initial, periodic, and force syncs will be disabled."
                     },
                     "integration_specific_config": {
                         "type": "object",
@@ -7145,15 +7497,19 @@
                     "CHANGED_LINKED_ACCOUNT_FIELD_MAPPING",
                     "DELETED_INTEGRATION_WIDE_FIELD_MAPPING",
                     "DELETED_LINKED_ACCOUNT_FIELD_MAPPING",
+                    "CREATED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE",
+                    "CHANGED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE",
+                    "DELETED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE",
                     "FORCED_LINKED_ACCOUNT_RESYNC",
                     "MUTED_ISSUE",
                     "GENERATED_MAGIC_LINK",
                     "ENABLED_MERGE_WEBHOOK",
                     "DISABLED_MERGE_WEBHOOK",
-                    "MERGE_WEBHOOK_TARGET_CHANGED"
+                    "MERGE_WEBHOOK_TARGET_CHANGED",
+                    "END_USER_CREDENTIALS_ACCESSED"
                 ],
                 "type": "string",
-                "description": "* `CREATED_REMOTE_PRODUCTION_API_KEY` - CREATED_REMOTE_PRODUCTION_API_KEY\n* `DELETED_REMOTE_PRODUCTION_API_KEY` - DELETED_REMOTE_PRODUCTION_API_KEY\n* `CREATED_TEST_API_KEY` - CREATED_TEST_API_KEY\n* `DELETED_TEST_API_KEY` - DELETED_TEST_API_KEY\n* `REGENERATED_PRODUCTION_API_KEY` - REGENERATED_PRODUCTION_API_KEY\n* `INVITED_USER` - INVITED_USER\n* `TWO_FACTOR_AUTH_ENABLED` - TWO_FACTOR_AUTH_ENABLED\n* `TWO_FACTOR_AUTH_DISABLED` - TWO_FACTOR_AUTH_DISABLED\n* `DELETED_LINKED_ACCOUNT` - DELETED_LINKED_ACCOUNT\n* `CREATED_DESTINATION` - CREATED_DESTINATION\n* `DELETED_DESTINATION` - DELETED_DESTINATION\n* `CHANGED_DESTINATION` - CHANGED_DESTINATION\n* `CHANGED_SCOPES` - CHANGED_SCOPES\n* `CHANGED_PERSONAL_INFORMATION` - CHANGED_PERSONAL_INFORMATION\n* `CHANGED_ORGANIZATION_SETTINGS` - CHANGED_ORGANIZATION_SETTINGS\n* `ENABLED_INTEGRATION` - ENABLED_INTEGRATION\n* `DISABLED_INTEGRATION` - DISABLED_INTEGRATION\n* `ENABLED_CATEGORY` - ENABLED_CATEGORY\n* `DISABLED_CATEGORY` - DISABLED_CATEGORY\n* `CHANGED_PASSWORD` - CHANGED_PASSWORD\n* `RESET_PASSWORD` - RESET_PASSWORD\n* `ENABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION` - ENABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION\n* `ENABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT` - ENABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT\n* `DISABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION` - DISABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION\n* `DISABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT` - DISABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT\n* `CREATED_INTEGRATION_WIDE_FIELD_MAPPING` - CREATED_INTEGRATION_WIDE_FIELD_MAPPING\n* `CREATED_LINKED_ACCOUNT_FIELD_MAPPING` - CREATED_LINKED_ACCOUNT_FIELD_MAPPING\n* `CHANGED_INTEGRATION_WIDE_FIELD_MAPPING` - CHANGED_INTEGRATION_WIDE_FIELD_MAPPING\n* `CHANGED_LINKED_ACCOUNT_FIELD_MAPPING` - CHANGED_LINKED_ACCOUNT_FIELD_MAPPING\n* `DELETED_INTEGRATION_WIDE_FIELD_MAPPING` - DELETED_INTEGRATION_WIDE_FIELD_MAPPING\n* `DELETED_LINKED_ACCOUNT_FIELD_MAPPING` - DELETED_LINKED_ACCOUNT_FIELD_MAPPING\n* `FORCED_LINKED_ACCOUNT_RESYNC` - FORCED_LINKED_ACCOUNT_RESYNC\n* `MUTED_ISSUE` - MUTED_ISSUE\n* `GENERATED_MAGIC_LINK` - GENERATED_MAGIC_LINK\n* `ENABLED_MERGE_WEBHOOK` - ENABLED_MERGE_WEBHOOK\n* `DISABLED_MERGE_WEBHOOK` - DISABLED_MERGE_WEBHOOK\n* `MERGE_WEBHOOK_TARGET_CHANGED` - MERGE_WEBHOOK_TARGET_CHANGED",
+                "description": "* `CREATED_REMOTE_PRODUCTION_API_KEY` - CREATED_REMOTE_PRODUCTION_API_KEY\n* `DELETED_REMOTE_PRODUCTION_API_KEY` - DELETED_REMOTE_PRODUCTION_API_KEY\n* `CREATED_TEST_API_KEY` - CREATED_TEST_API_KEY\n* `DELETED_TEST_API_KEY` - DELETED_TEST_API_KEY\n* `REGENERATED_PRODUCTION_API_KEY` - REGENERATED_PRODUCTION_API_KEY\n* `INVITED_USER` - INVITED_USER\n* `TWO_FACTOR_AUTH_ENABLED` - TWO_FACTOR_AUTH_ENABLED\n* `TWO_FACTOR_AUTH_DISABLED` - TWO_FACTOR_AUTH_DISABLED\n* `DELETED_LINKED_ACCOUNT` - DELETED_LINKED_ACCOUNT\n* `CREATED_DESTINATION` - CREATED_DESTINATION\n* `DELETED_DESTINATION` - DELETED_DESTINATION\n* `CHANGED_DESTINATION` - CHANGED_DESTINATION\n* `CHANGED_SCOPES` - CHANGED_SCOPES\n* `CHANGED_PERSONAL_INFORMATION` - CHANGED_PERSONAL_INFORMATION\n* `CHANGED_ORGANIZATION_SETTINGS` - CHANGED_ORGANIZATION_SETTINGS\n* `ENABLED_INTEGRATION` - ENABLED_INTEGRATION\n* `DISABLED_INTEGRATION` - DISABLED_INTEGRATION\n* `ENABLED_CATEGORY` - ENABLED_CATEGORY\n* `DISABLED_CATEGORY` - DISABLED_CATEGORY\n* `CHANGED_PASSWORD` - CHANGED_PASSWORD\n* `RESET_PASSWORD` - RESET_PASSWORD\n* `ENABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION` - ENABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION\n* `ENABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT` - ENABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT\n* `DISABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION` - DISABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION\n* `DISABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT` - DISABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT\n* `CREATED_INTEGRATION_WIDE_FIELD_MAPPING` - CREATED_INTEGRATION_WIDE_FIELD_MAPPING\n* `CREATED_LINKED_ACCOUNT_FIELD_MAPPING` - CREATED_LINKED_ACCOUNT_FIELD_MAPPING\n* `CHANGED_INTEGRATION_WIDE_FIELD_MAPPING` - CHANGED_INTEGRATION_WIDE_FIELD_MAPPING\n* `CHANGED_LINKED_ACCOUNT_FIELD_MAPPING` - CHANGED_LINKED_ACCOUNT_FIELD_MAPPING\n* `DELETED_INTEGRATION_WIDE_FIELD_MAPPING` - DELETED_INTEGRATION_WIDE_FIELD_MAPPING\n* `DELETED_LINKED_ACCOUNT_FIELD_MAPPING` - DELETED_LINKED_ACCOUNT_FIELD_MAPPING\n* `CREATED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE` - CREATED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE\n* `CHANGED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE` - CHANGED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE\n* `DELETED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE` - DELETED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE\n* `FORCED_LINKED_ACCOUNT_RESYNC` - FORCED_LINKED_ACCOUNT_RESYNC\n* `MUTED_ISSUE` - MUTED_ISSUE\n* `GENERATED_MAGIC_LINK` - GENERATED_MAGIC_LINK\n* `ENABLED_MERGE_WEBHOOK` - ENABLED_MERGE_WEBHOOK\n* `DISABLED_MERGE_WEBHOOK` - DISABLED_MERGE_WEBHOOK\n* `MERGE_WEBHOOK_TARGET_CHANGED` - MERGE_WEBHOOK_TARGET_CHANGED\n* `END_USER_CREDENTIALS_ACCESSED` - END_USER_CREDENTIALS_ACCESSED",
                 "x-merge-category": "ticketing"
             },
             "ExternalTargetFieldAPI": {
@@ -7308,11 +7664,13 @@
                         "type": "object",
                         "properties": {
                             "remote_key_name": {
-                                "type": "string"
+                                "type": "string",
+                                "nullable": true
                             },
                             "schema": {
                                 "type": "object",
-                                "additionalProperties": {}
+                                "additionalProperties": {},
+                                "nullable": true
                             },
                             "remote_endpoint_info": {
                                 "type": "object",
@@ -7356,7 +7714,7 @@
                                 "method": "GET",
                                 "url_path": "/example-url-path",
                                 "field_traversal_path": [
-                                    "string"
+                                    "example_remote_field_key"
                                 ]
                             }
                         }
@@ -7471,11 +7829,11 @@
             "FieldPermissionDeserializer": {
                 "type": "object",
                 "properties": {
-                    "enabled": {
+                    "enabled_fields": {
                         "type": "array",
                         "items": {}
                     },
-                    "disabled": {
+                    "disabled_fields": {
                         "type": "array",
                         "items": {}
                     }
@@ -7485,11 +7843,11 @@
             "FieldPermissionDeserializerRequest": {
                 "type": "object",
                 "properties": {
-                    "enabled": {
+                    "enabled_fields": {
                         "type": "array",
                         "items": {}
                     },
-                    "disabled": {
+                    "disabled_fields": {
                         "type": "array",
                         "items": {}
                     }
@@ -7681,6 +8039,15 @@
                 ],
                 "type": "string",
                 "description": "* `string` - string\n* `number` - number\n* `date` - date\n* `datetime` - datetime\n* `bool` - bool\n* `list` - list",
+                "x-merge-category": "ticketing"
+            },
+            "LanguageEnum": {
+                "enum": [
+                    "en",
+                    "de"
+                ],
+                "type": "string",
+                "description": "* `en` - en\n* `de` - de",
                 "x-merge-category": "ticketing"
             },
             "LinkToken": {
@@ -8501,6 +8868,28 @@
                 },
                 "x-merge-category": "ticketing"
             },
+            "PaginatedViewerList": {
+                "type": "object",
+                "properties": {
+                    "next": {
+                        "type": "string",
+                        "nullable": true,
+                        "example": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw"
+                    },
+                    "previous": {
+                        "type": "string",
+                        "nullable": true,
+                        "example": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ"
+                    },
+                    "results": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Viewer"
+                        }
+                    }
+                },
+                "x-merge-category": "ticketing"
+            },
             "PatchedEditFieldMappingRequest": {
                 "type": "object",
                 "properties": {
@@ -8541,7 +8930,7 @@
             },
             "PatchedTicketRequest": {
                 "type": "object",
-                "description": "# The Ticket Object\n### Description\nThe `Ticket` object is used to represent a ticket or a task within a system.\n\n### Usage Example\nTODO",
+                "description": "# The Ticket Object\n### Description\nThe `Ticket` object is used to represent a ticket, issue, task or case.\n### Usage Example\nTODO",
                 "properties": {
                     "name": {
                         "type": "string",
@@ -8556,8 +8945,21 @@
                             "format": "uuid",
                             "nullable": true
                         },
+                        "description": "The individual `Users` who are assigned to this ticket. This does not include `Users` who just have view access to this ticket. To fetch all `Users` and `Teams` that can access the ticket, use the `GET /tickets/{ticket_id}/viewers` [endpoint](https://docs.merge.dev/ticketing/tickets/#tickets_viewers_list).",
                         "example": [
                             "17a54124-287f-494d-965e-3c5b330c9a68"
+                        ]
+                    },
+                    "assigned_teams": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid",
+                            "nullable": true
+                        },
+                        "description": "The `Teams` that are assigned to this ticket. This does not include `Teams` who just have view access to this ticket. To fetch all `Users` and `Teams` that can access this ticket, use the `GET /tickets/{ticket_id}/viewers` [endpoint](https://docs.merge.dev/ticketing/tickets/#tickets_viewers_list).",
+                        "example": [
+                            "4857c306-c1f9-489e-a6b6-90902f736dfe"
                         ]
                     },
                     "creator": {
@@ -8596,6 +8998,7 @@
                             "format": "uuid",
                             "nullable": true
                         },
+                        "description": "The `Collections` that this `Ticket` is included in.",
                         "example": [
                             "fb8c55b6-1cb8-4b4c-9fb6-17924231619d"
                         ]
@@ -8637,6 +9040,18 @@
                         "example": [
                             "enterprise",
                             "other-tag"
+                        ]
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid",
+                            "nullable": true
+                        },
+                        "example": [
+                            "21a54124-397f-494d-985e-3c5b330b8a68",
+                            "17a54124-287f-494d-965e-3c5b330c9a68"
                         ]
                     },
                     "completed_at": {
@@ -8747,7 +9162,7 @@
                     },
                     "remote_was_deleted": {
                         "type": "boolean",
-                        "description": "Indicates whether or not this object has been deleted in the third party platform."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     "field_mappings": {
                         "type": "object",
@@ -8775,12 +9190,19 @@
             },
             "RemoteData": {
                 "type": "object",
+                "description": "# The RemoteData Object\n### Description\nThe `RemoteData` object is used to represent the full data pulled from the third-party API for an object.\n\n### Usage Example\nTODO",
                 "properties": {
                     "path": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "The third-party API path that is being called.",
+                        "example": "/platform-endpoint"
                     },
                     "data": {
-                        "readOnly": true
+                        "readOnly": true,
+                        "description": "The data returned from the third-party for this object in its original, unnormalized format.",
+                        "example": [
+                            "Varies by platform"
+                        ]
                     }
                 },
                 "required": [
@@ -9210,7 +9632,7 @@
                     },
                     "remote_was_deleted": {
                         "type": "boolean",
-                        "description": "Indicates whether or not this object has been deleted in the third party platform."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     "field_mappings": {
                         "type": "object",
@@ -9342,6 +9764,12 @@
                         "description": "The datetime that this object was modified by Merge.",
                         "example": "2021-10-16T00:00:00Z"
                     },
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "readOnly": true,
+                        "example": "17a54124-287f-494d-965e-3c5b330c9a68"
+                    },
                     "name": {
                         "type": "string",
                         "nullable": true,
@@ -9350,7 +9778,7 @@
                     },
                     "remote_was_deleted": {
                         "type": "boolean",
-                        "description": "Indicates whether or not this object has been deleted in the third party platform."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     "field_mappings": {
                         "type": "object",
@@ -9378,7 +9806,7 @@
             },
             "Team": {
                 "type": "object",
-                "description": "# The Team Object\n### Description\nThe `Team` object is used to represent a team within the company receiving the ticket.\n\n### Usage Example\nTODO",
+                "description": "# The Team Object\n### Description\nThe `Team` object is used to represent one or more `Users` within the company receiving the ticket.\n\n### Usage Example\nTODO",
                 "properties": {
                     "id": {
                         "type": "string",
@@ -9420,7 +9848,7 @@
                     },
                     "remote_was_deleted": {
                         "type": "boolean",
-                        "description": "Indicates whether or not this object has been deleted in the third party platform."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     "field_mappings": {
                         "type": "object",
@@ -9449,7 +9877,7 @@
             },
             "Ticket": {
                 "type": "object",
-                "description": "# The Ticket Object\n### Description\nThe `Ticket` object is used to represent a ticket or a task within a system.\n\n### Usage Example\nTODO",
+                "description": "# The Ticket Object\n### Description\nThe `Ticket` object is used to represent a ticket, issue, task or case.\n### Usage Example\nTODO",
                 "properties": {
                     "id": {
                         "type": "string",
@@ -9490,10 +9918,24 @@
                             "format": "uuid",
                             "nullable": true
                         },
+                        "description": "The individual `Users` who are assigned to this ticket. This does not include `Users` who just have view access to this ticket. To fetch all `Users` and `Teams` that can access the ticket, use the `GET /tickets/{ticket_id}/viewers` [endpoint](https://docs.merge.dev/ticketing/tickets/#tickets_viewers_list).",
                         "example": [
                             "17a54124-287f-494d-965e-3c5b330c9a68"
                         ],
                         "x-merge-expands-to": "User"
+                    },
+                    "assigned_teams": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid",
+                            "nullable": true
+                        },
+                        "description": "The `Teams` that are assigned to this ticket. This does not include `Teams` who just have view access to this ticket. To fetch all `Users` and `Teams` that can access this ticket, use the `GET /tickets/{ticket_id}/viewers` [endpoint](https://docs.merge.dev/ticketing/tickets/#tickets_viewers_list).",
+                        "example": [
+                            "4857c306-c1f9-489e-a6b6-90902f736dfe"
+                        ],
+                        "x-merge-expands-to": "Team"
                     },
                     "creator": {
                         "type": "string",
@@ -9532,6 +9974,7 @@
                             "format": "uuid",
                             "nullable": true
                         },
+                        "description": "The `Collections` that this `Ticket` is included in.",
                         "example": [
                             "fb8c55b6-1cb8-4b4c-9fb6-17924231619d"
                         ],
@@ -9592,6 +10035,18 @@
                             "other-tag"
                         ]
                     },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid",
+                            "nullable": true
+                        },
+                        "example": [
+                            "21a54124-397f-494d-985e-3c5b330b8a68",
+                            "17a54124-287f-494d-965e-3c5b330c9a68"
+                        ]
+                    },
                     "remote_created_at": {
                         "type": "string",
                         "format": "date-time",
@@ -9615,7 +10070,8 @@
                     },
                     "remote_was_deleted": {
                         "type": "boolean",
-                        "readOnly": true
+                        "readOnly": true,
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     "ticket_url": {
                         "type": "string",
@@ -9664,7 +10120,7 @@
                         "readOnly": true
                     }
                 },
-                "x-merge-expands": "{\"account\": \"Account\", \"assignees\": \"User\", \"attachments\": \"Attachment\", \"collections\": \"Collection\", \"contact\": \"Contact\", \"creator\": \"User\", \"parent_ticket\": \"Ticket\"}",
+                "x-merge-expands": "{\"account\": \"Account\", \"assigned_teams\": \"Team\", \"assignees\": \"User\", \"attachments\": \"Attachment\", \"collections\": \"Collection\", \"contact\": \"Contact\", \"creator\": \"User\", \"parent_ticket\": \"Ticket\"}",
                 "x-merge-category": "ticketing"
             },
             "TicketAccessEnum": {
@@ -9704,7 +10160,7 @@
             },
             "TicketRequest": {
                 "type": "object",
-                "description": "# The Ticket Object\n### Description\nThe `Ticket` object is used to represent a ticket or a task within a system.\n\n### Usage Example\nTODO",
+                "description": "# The Ticket Object\n### Description\nThe `Ticket` object is used to represent a ticket, issue, task or case.\n### Usage Example\nTODO",
                 "properties": {
                     "name": {
                         "type": "string",
@@ -9719,10 +10175,24 @@
                             "format": "uuid",
                             "nullable": true
                         },
+                        "description": "The individual `Users` who are assigned to this ticket. This does not include `Users` who just have view access to this ticket. To fetch all `Users` and `Teams` that can access the ticket, use the `GET /tickets/{ticket_id}/viewers` [endpoint](https://docs.merge.dev/ticketing/tickets/#tickets_viewers_list).",
                         "example": [
                             "17a54124-287f-494d-965e-3c5b330c9a68"
                         ],
                         "x-merge-expands-to": "User"
+                    },
+                    "assigned_teams": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid",
+                            "nullable": true
+                        },
+                        "description": "The `Teams` that are assigned to this ticket. This does not include `Teams` who just have view access to this ticket. To fetch all `Users` and `Teams` that can access this ticket, use the `GET /tickets/{ticket_id}/viewers` [endpoint](https://docs.merge.dev/ticketing/tickets/#tickets_viewers_list).",
+                        "example": [
+                            "4857c306-c1f9-489e-a6b6-90902f736dfe"
+                        ],
+                        "x-merge-expands-to": "Team"
                     },
                     "creator": {
                         "type": "string",
@@ -9761,6 +10231,7 @@
                             "format": "uuid",
                             "nullable": true
                         },
+                        "description": "The `Collections` that this `Ticket` is included in.",
                         "example": [
                             "fb8c55b6-1cb8-4b4c-9fb6-17924231619d"
                         ],
@@ -9819,6 +10290,18 @@
                         "example": [
                             "enterprise",
                             "other-tag"
+                        ]
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid",
+                            "nullable": true
+                        },
+                        "example": [
+                            "21a54124-397f-494d-985e-3c5b330b8a68",
+                            "17a54124-287f-494d-965e-3c5b330c9a68"
                         ]
                     },
                     "completed_at": {
@@ -9872,7 +10355,7 @@
                         "writeOnly": true
                     }
                 },
-                "x-merge-expands": "{\"account\": \"Account\", \"assignees\": \"User\", \"attachments\": \"Attachment\", \"collections\": \"Collection\", \"contact\": \"Contact\", \"creator\": \"User\", \"parent_ticket\": \"Ticket\"}",
+                "x-merge-expands": "{\"account\": \"Account\", \"assigned_teams\": \"Team\", \"assignees\": \"User\", \"attachments\": \"Attachment\", \"collections\": \"Collection\", \"contact\": \"Contact\", \"creator\": \"User\", \"parent_ticket\": \"Ticket\"}",
                 "x-merge-category": "ticketing"
             },
             "TicketResponse": {
@@ -10008,7 +10491,7 @@
             },
             "User": {
                 "type": "object",
-                "description": "# The User Object\n### Description\nThe `User` object is used to represent an employee within a company.\n\n### Usage Example\nTODO",
+                "description": "# The User Object\n### Description\nThe `User` object is used to represent a user with a login to the ticketing system.\nUsers are either assignees who are directly responsible or a viewer on a `Ticket`/ `Collection`.\n\n### Usage Example\nTODO",
                 "properties": {
                     "id": {
                         "type": "string",
@@ -10088,7 +10571,7 @@
                     "remote_was_deleted": {
                         "type": "boolean",
                         "readOnly": true,
-                        "description": "Indicates whether or not this object has been deleted in the third party platform."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     "field_mappings": {
                         "type": "object",
@@ -10125,6 +10608,56 @@
                 "required": [
                     "pointer"
                 ],
+                "x-merge-category": "ticketing"
+            },
+            "Viewer": {
+                "type": "object",
+                "description": "# The Viewer Object\n### Description\nThe `Viewer` object is used to represent a User or Team within a company.\n\n### Usage Example\nTODO",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "format": "uuid",
+                        "readOnly": true,
+                        "example": "17a54124-287f-494d-965e-3c5b330c9a68"
+                    },
+                    "remote_id": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "The third-party API ID of the matching object.",
+                        "example": "088899"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true,
+                        "description": "The datetime that this object was created by Merge.",
+                        "example": "2021-09-15T00:00:00Z"
+                    },
+                    "modified_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "readOnly": true,
+                        "description": "The datetime that this object was modified by Merge.",
+                        "example": "2021-10-16T00:00:00Z"
+                    },
+                    "team": {
+                        "type": "string",
+                        "format": "uuid",
+                        "nullable": true,
+                        "description": "The Team this Viewer belongs to.",
+                        "example": "28b54125-287f-494d-965e-3c5b330c9a68",
+                        "x-merge-expands-to": "Team"
+                    },
+                    "user": {
+                        "type": "string",
+                        "format": "uuid",
+                        "nullable": true,
+                        "description": "The User this Viewer belongs to.",
+                        "example": "23454124-387f-494d-265e-345b330c9123",
+                        "x-merge-expands-to": "User"
+                    }
+                },
+                "x-merge-expands": "{\"team\": \"Team\", \"user\": \"User\"}",
                 "x-merge-category": "ticketing"
             },
             "WarningValidationProblem": {
@@ -10218,6 +10751,10 @@
         {
             "url": "https://api-eu.merge.dev/api/ticketing/v1",
             "description": "Production EU"
+        },
+        {
+            "url": "https://api-ap.merge.dev/api/ticketing/v1",
+            "description": "Production APSE1"
         }
     ]
 }

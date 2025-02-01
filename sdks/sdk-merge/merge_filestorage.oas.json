@@ -224,7 +224,7 @@
                         "schema": {
                             "type": "string"
                         },
-                        "description": "If included, will only include events with the given event type. Possible values include: `CREATED_REMOTE_PRODUCTION_API_KEY`, `DELETED_REMOTE_PRODUCTION_API_KEY`, `CREATED_TEST_API_KEY`, `DELETED_TEST_API_KEY`, `REGENERATED_PRODUCTION_API_KEY`, `INVITED_USER`, `TWO_FACTOR_AUTH_ENABLED`, `TWO_FACTOR_AUTH_DISABLED`, `DELETED_LINKED_ACCOUNT`, `CREATED_DESTINATION`, `DELETED_DESTINATION`, `CHANGED_DESTINATION`, `CHANGED_SCOPES`, `CHANGED_PERSONAL_INFORMATION`, `CHANGED_ORGANIZATION_SETTINGS`, `ENABLED_INTEGRATION`, `DISABLED_INTEGRATION`, `ENABLED_CATEGORY`, `DISABLED_CATEGORY`, `CHANGED_PASSWORD`, `RESET_PASSWORD`, `ENABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION`, `ENABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT`, `DISABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION`, `DISABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT`, `CREATED_INTEGRATION_WIDE_FIELD_MAPPING`, `CREATED_LINKED_ACCOUNT_FIELD_MAPPING`, `CHANGED_INTEGRATION_WIDE_FIELD_MAPPING`, `CHANGED_LINKED_ACCOUNT_FIELD_MAPPING`, `DELETED_INTEGRATION_WIDE_FIELD_MAPPING`, `DELETED_LINKED_ACCOUNT_FIELD_MAPPING`, `FORCED_LINKED_ACCOUNT_RESYNC`, `MUTED_ISSUE`, `GENERATED_MAGIC_LINK`, `ENABLED_MERGE_WEBHOOK`, `DISABLED_MERGE_WEBHOOK`, `MERGE_WEBHOOK_TARGET_CHANGED`"
+                        "description": "If included, will only include events with the given event type. Possible values include: `CREATED_REMOTE_PRODUCTION_API_KEY`, `DELETED_REMOTE_PRODUCTION_API_KEY`, `CREATED_TEST_API_KEY`, `DELETED_TEST_API_KEY`, `REGENERATED_PRODUCTION_API_KEY`, `INVITED_USER`, `TWO_FACTOR_AUTH_ENABLED`, `TWO_FACTOR_AUTH_DISABLED`, `DELETED_LINKED_ACCOUNT`, `CREATED_DESTINATION`, `DELETED_DESTINATION`, `CHANGED_DESTINATION`, `CHANGED_SCOPES`, `CHANGED_PERSONAL_INFORMATION`, `CHANGED_ORGANIZATION_SETTINGS`, `ENABLED_INTEGRATION`, `DISABLED_INTEGRATION`, `ENABLED_CATEGORY`, `DISABLED_CATEGORY`, `CHANGED_PASSWORD`, `RESET_PASSWORD`, `ENABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION`, `ENABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT`, `DISABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION`, `DISABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT`, `CREATED_INTEGRATION_WIDE_FIELD_MAPPING`, `CREATED_LINKED_ACCOUNT_FIELD_MAPPING`, `CHANGED_INTEGRATION_WIDE_FIELD_MAPPING`, `CHANGED_LINKED_ACCOUNT_FIELD_MAPPING`, `DELETED_INTEGRATION_WIDE_FIELD_MAPPING`, `DELETED_LINKED_ACCOUNT_FIELD_MAPPING`, `CREATED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE`, `CHANGED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE`, `DELETED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE`, `FORCED_LINKED_ACCOUNT_RESYNC`, `MUTED_ISSUE`, `GENERATED_MAGIC_LINK`, `ENABLED_MERGE_WEBHOOK`, `DISABLED_MERGE_WEBHOOK`, `MERGE_WEBHOOK_TARGET_CHANGED`, `END_USER_CREDENTIALS_ACCESSED`"
                     },
                     {
                         "name": "page_size",
@@ -316,7 +316,7 @@
         "/default-scopes": {
             "get": {
                 "operationId": "default_scopes_retrieve",
-                "description": "Get the default permissions for Merge Common Models and fields across all Linked Accounts of a given category. [Learn more](https://help.merge.dev/en/articles/8828211-common-model-and-field-scopes).",
+                "description": "Get the default permissions for Merge Common Models and fields across all Linked Accounts of a given category. [Learn more](https://help.merge.dev/en/articles/5950052-common-model-and-field-scopes).",
                 "tags": [
                     "scopes"
                 ],
@@ -423,7 +423,7 @@
                         "schema": {
                             "type": "boolean"
                         },
-                        "description": "Whether to include data that was marked as deleted by third party webhooks."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     {
                         "in": "query",
@@ -432,6 +432,14 @@
                             "type": "boolean"
                         },
                         "description": "Whether to include the original data Merge fetched from the third-party to produce these models."
+                    },
+                    {
+                        "in": "query",
+                        "name": "include_shell_data",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null)."
                     },
                     {
                         "in": "query",
@@ -570,6 +578,14 @@
                         },
                         "description": "Token identifying the end user.",
                         "required": true
+                    },
+                    {
+                        "in": "query",
+                        "name": "exclude_remote_field_metadata",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "If `true`, remote fields metadata is excluded from each field mapping instance (i.e. `remote_fields.remote_key_name` and `remote_fields.schema` will be null). This will increase the speed of the request since these fields require some calculations."
                     }
                 ],
                 "tags": [
@@ -606,6 +622,14 @@
                         },
                         "description": "Token identifying the end user.",
                         "required": true
+                    },
+                    {
+                        "in": "query",
+                        "name": "exclude_remote_field_metadata",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "If `true`, remote fields metadata is excluded from each field mapping instance (i.e. `remote_fields.remote_key_name` and `remote_fields.schema` will be null). This will increase the speed of the request since these fields require some calculations."
                     }
                 ],
                 "tags": [
@@ -863,7 +887,7 @@
                         "schema": {
                             "type": "boolean"
                         },
-                        "description": "Whether to include data that was marked as deleted by third party webhooks."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     {
                         "in": "query",
@@ -872,6 +896,14 @@
                             "type": "boolean"
                         },
                         "description": "Whether to include the original data Merge fetched from the third-party to produce these models."
+                    },
+                    {
+                        "in": "query",
+                        "name": "include_shell_data",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null)."
                     },
                     {
                         "in": "query",
@@ -1283,7 +1315,7 @@
                         "schema": {
                             "type": "boolean"
                         },
-                        "description": "Whether to include data that was marked as deleted by third party webhooks."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     {
                         "in": "query",
@@ -1292,6 +1324,14 @@
                             "type": "boolean"
                         },
                         "description": "Whether to include the original data Merge fetched from the third-party to produce these models."
+                    },
+                    {
+                        "in": "query",
+                        "name": "include_shell_data",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null)."
                     },
                     {
                         "in": "query",
@@ -1659,11 +1699,28 @@
                     },
                     {
                         "in": "query",
+                        "name": "expand",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "child_groups"
+                            ]
+                        },
+                        "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+                        "examples": {
+                            "ExpandChildGroups": {
+                                "value": "child_groups",
+                                "summary": "Expand Child_groups"
+                            }
+                        }
+                    },
+                    {
+                        "in": "query",
                         "name": "include_deleted_data",
                         "schema": {
                             "type": "boolean"
                         },
-                        "description": "Whether to include data that was marked as deleted by third party webhooks."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     {
                         "in": "query",
@@ -1672,6 +1729,14 @@
                             "type": "boolean"
                         },
                         "description": "Whether to include the original data Merge fetched from the third-party to produce these models."
+                    },
+                    {
+                        "in": "query",
+                        "name": "include_shell_data",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null)."
                     },
                     {
                         "in": "query",
@@ -1746,6 +1811,23 @@
                         },
                         "description": "Token identifying the end user.",
                         "required": true
+                    },
+                    {
+                        "in": "query",
+                        "name": "expand",
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "child_groups"
+                            ]
+                        },
+                        "description": "Which relations should be returned in expanded form. Multiple relation names should be comma separated without spaces.",
+                        "examples": {
+                            "ExpandChildGroups": {
+                                "value": "child_groups",
+                                "summary": "Expand Child_groups"
+                            }
+                        }
                     },
                     {
                         "in": "path",
@@ -2033,7 +2115,7 @@
         "/linked-account-scopes": {
             "get": {
                 "operationId": "linked_account_scopes_retrieve",
-                "description": "Get all available permissions for Merge Common Models and fields for a single Linked Account. [Learn more](https://help.merge.dev/en/articles/8828211-common-model-and-field-scopes).",
+                "description": "Get all available permissions for Merge Common Models and fields for a single Linked Account. [Learn more](https://help.merge.dev/en/articles/5950052-common-model-and-field-scopes).",
                 "parameters": [
                     {
                         "in": "header",
@@ -2069,7 +2151,7 @@
             },
             "post": {
                 "operationId": "linked_account_scopes_create",
-                "description": "Update permissions for any Common Model or field for a single Linked Account. Any Scopes not set in this POST request will inherit the default Scopes. [Learn more](https://help.merge.dev/en/articles/8828211-common-model-and-field-scopes)",
+                "description": "Update permissions for any Common Model or field for a single Linked Account. Any Scopes not set in this POST request will inherit the default Scopes. [Learn more](https://help.merge.dev/en/articles/5950052-common-model-and-field-scopes)",
                 "parameters": [
                     {
                         "in": "header",
@@ -2249,7 +2331,7 @@
                         "schema": {
                             "type": "string"
                         },
-                        "description": "Filter by status. Options: `COMPLETE`, `INCOMPLETE`, `RELINK_NEEDED`"
+                        "description": "Filter by status. Options: `COMPLETE`, `IDLE`, `INCOMPLETE`, `RELINK_NEEDED`"
                     }
                 ],
                 "tags": [
@@ -2498,7 +2580,7 @@
         "/sync-status/resync": {
             "post": {
                 "operationId": "sync_status_resync_create",
-                "description": "Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Launch, Professional, or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.",
+                "description": "Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Professional or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.",
                 "parameters": [
                     {
                         "in": "header",
@@ -2626,7 +2708,7 @@
                         "schema": {
                             "type": "boolean"
                         },
-                        "description": "Whether to include data that was marked as deleted by third party webhooks."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     {
                         "in": "query",
@@ -2635,6 +2717,14 @@
                             "type": "boolean"
                         },
                         "description": "Whether to include the original data Merge fetched from the third-party to produce these models."
+                    },
+                    {
+                        "in": "query",
+                        "name": "include_shell_data",
+                        "schema": {
+                            "type": "boolean"
+                        },
+                        "description": "Whether to include shell records. Shell records are empty records (they may contain some metadata but all other fields are null)."
                     },
                     {
                         "in": "query",
@@ -2925,6 +3015,13 @@
                         "type": "string",
                         "readOnly": true,
                         "example": "PRODUCTION"
+                    },
+                    "completed_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "nullable": true,
+                        "description": "The time at which account completes the linking flow.",
+                        "example": "2024-08-26T20:11:19.277118Z"
                     }
                 },
                 "x-merge-category": "filestorage"
@@ -3020,10 +3117,16 @@
                     "account_type": {
                         "type": "string",
                         "example": "PRODUCTION"
+                    },
+                    "completed_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-08-26T20:11:19.277118Z"
                     }
                 },
                 "required": [
                     "account_type",
+                    "completed_at",
                     "end_user_email_address",
                     "end_user_organization_name",
                     "id",
@@ -3080,10 +3183,11 @@
                 "enum": [
                     "COMPLETE",
                     "INCOMPLETE",
-                    "RELINK_NEEDED"
+                    "RELINK_NEEDED",
+                    "IDLE"
                 ],
                 "type": "string",
-                "description": "* `COMPLETE` - COMPLETE\n* `INCOMPLETE` - INCOMPLETE\n* `RELINK_NEEDED` - RELINK_NEEDED",
+                "description": "* `COMPLETE` - COMPLETE\n* `INCOMPLETE` - INCOMPLETE\n* `RELINK_NEEDED` - RELINK_NEEDED\n* `IDLE` - IDLE",
                 "x-merge-category": "filestorage"
             },
             "AccountIntegration": {
@@ -3092,6 +3196,11 @@
                     "name": {
                         "type": "string",
                         "description": "Company name."
+                    },
+                    "abbreviated_name": {
+                        "type": "string",
+                        "nullable": true,
+                        "description": "Optional. This shortened name appears in places with limited space, usually in conjunction with the platform's logo (e.g., Merge Link menu).<br><br>Example: <i>Workforce Now (in lieu of ADP Workforce Now), SuccessFactors (in lieu of SAP SuccessFactors)</i>"
                     },
                     "categories": {
                         "type": "array",
@@ -3105,13 +3214,13 @@
                         "type": "string",
                         "format": "uri",
                         "nullable": true,
-                        "description": "Company logo in rectangular shape. <b>Upload an image with a clear background.</b>"
+                        "description": "Company logo in rectangular shape."
                     },
                     "square_image": {
                         "type": "string",
                         "format": "uri",
                         "nullable": true,
-                        "description": "Company logo in square shape. <b>Upload an image with a white background.</b>"
+                        "description": "Company logo in square shape."
                     },
                     "color": {
                         "type": "string",
@@ -3259,7 +3368,7 @@
                                 "$ref": "#/components/schemas/EventTypeEnum"
                             }
                         ],
-                        "description": "Designates the type of event that occurred.\n\n* `CREATED_REMOTE_PRODUCTION_API_KEY` - CREATED_REMOTE_PRODUCTION_API_KEY\n* `DELETED_REMOTE_PRODUCTION_API_KEY` - DELETED_REMOTE_PRODUCTION_API_KEY\n* `CREATED_TEST_API_KEY` - CREATED_TEST_API_KEY\n* `DELETED_TEST_API_KEY` - DELETED_TEST_API_KEY\n* `REGENERATED_PRODUCTION_API_KEY` - REGENERATED_PRODUCTION_API_KEY\n* `INVITED_USER` - INVITED_USER\n* `TWO_FACTOR_AUTH_ENABLED` - TWO_FACTOR_AUTH_ENABLED\n* `TWO_FACTOR_AUTH_DISABLED` - TWO_FACTOR_AUTH_DISABLED\n* `DELETED_LINKED_ACCOUNT` - DELETED_LINKED_ACCOUNT\n* `CREATED_DESTINATION` - CREATED_DESTINATION\n* `DELETED_DESTINATION` - DELETED_DESTINATION\n* `CHANGED_DESTINATION` - CHANGED_DESTINATION\n* `CHANGED_SCOPES` - CHANGED_SCOPES\n* `CHANGED_PERSONAL_INFORMATION` - CHANGED_PERSONAL_INFORMATION\n* `CHANGED_ORGANIZATION_SETTINGS` - CHANGED_ORGANIZATION_SETTINGS\n* `ENABLED_INTEGRATION` - ENABLED_INTEGRATION\n* `DISABLED_INTEGRATION` - DISABLED_INTEGRATION\n* `ENABLED_CATEGORY` - ENABLED_CATEGORY\n* `DISABLED_CATEGORY` - DISABLED_CATEGORY\n* `CHANGED_PASSWORD` - CHANGED_PASSWORD\n* `RESET_PASSWORD` - RESET_PASSWORD\n* `ENABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION` - ENABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION\n* `ENABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT` - ENABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT\n* `DISABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION` - DISABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION\n* `DISABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT` - DISABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT\n* `CREATED_INTEGRATION_WIDE_FIELD_MAPPING` - CREATED_INTEGRATION_WIDE_FIELD_MAPPING\n* `CREATED_LINKED_ACCOUNT_FIELD_MAPPING` - CREATED_LINKED_ACCOUNT_FIELD_MAPPING\n* `CHANGED_INTEGRATION_WIDE_FIELD_MAPPING` - CHANGED_INTEGRATION_WIDE_FIELD_MAPPING\n* `CHANGED_LINKED_ACCOUNT_FIELD_MAPPING` - CHANGED_LINKED_ACCOUNT_FIELD_MAPPING\n* `DELETED_INTEGRATION_WIDE_FIELD_MAPPING` - DELETED_INTEGRATION_WIDE_FIELD_MAPPING\n* `DELETED_LINKED_ACCOUNT_FIELD_MAPPING` - DELETED_LINKED_ACCOUNT_FIELD_MAPPING\n* `FORCED_LINKED_ACCOUNT_RESYNC` - FORCED_LINKED_ACCOUNT_RESYNC\n* `MUTED_ISSUE` - MUTED_ISSUE\n* `GENERATED_MAGIC_LINK` - GENERATED_MAGIC_LINK\n* `ENABLED_MERGE_WEBHOOK` - ENABLED_MERGE_WEBHOOK\n* `DISABLED_MERGE_WEBHOOK` - DISABLED_MERGE_WEBHOOK\n* `MERGE_WEBHOOK_TARGET_CHANGED` - MERGE_WEBHOOK_TARGET_CHANGED",
+                        "description": "Designates the type of event that occurred.\n\n* `CREATED_REMOTE_PRODUCTION_API_KEY` - CREATED_REMOTE_PRODUCTION_API_KEY\n* `DELETED_REMOTE_PRODUCTION_API_KEY` - DELETED_REMOTE_PRODUCTION_API_KEY\n* `CREATED_TEST_API_KEY` - CREATED_TEST_API_KEY\n* `DELETED_TEST_API_KEY` - DELETED_TEST_API_KEY\n* `REGENERATED_PRODUCTION_API_KEY` - REGENERATED_PRODUCTION_API_KEY\n* `INVITED_USER` - INVITED_USER\n* `TWO_FACTOR_AUTH_ENABLED` - TWO_FACTOR_AUTH_ENABLED\n* `TWO_FACTOR_AUTH_DISABLED` - TWO_FACTOR_AUTH_DISABLED\n* `DELETED_LINKED_ACCOUNT` - DELETED_LINKED_ACCOUNT\n* `CREATED_DESTINATION` - CREATED_DESTINATION\n* `DELETED_DESTINATION` - DELETED_DESTINATION\n* `CHANGED_DESTINATION` - CHANGED_DESTINATION\n* `CHANGED_SCOPES` - CHANGED_SCOPES\n* `CHANGED_PERSONAL_INFORMATION` - CHANGED_PERSONAL_INFORMATION\n* `CHANGED_ORGANIZATION_SETTINGS` - CHANGED_ORGANIZATION_SETTINGS\n* `ENABLED_INTEGRATION` - ENABLED_INTEGRATION\n* `DISABLED_INTEGRATION` - DISABLED_INTEGRATION\n* `ENABLED_CATEGORY` - ENABLED_CATEGORY\n* `DISABLED_CATEGORY` - DISABLED_CATEGORY\n* `CHANGED_PASSWORD` - CHANGED_PASSWORD\n* `RESET_PASSWORD` - RESET_PASSWORD\n* `ENABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION` - ENABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION\n* `ENABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT` - ENABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT\n* `DISABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION` - DISABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION\n* `DISABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT` - DISABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT\n* `CREATED_INTEGRATION_WIDE_FIELD_MAPPING` - CREATED_INTEGRATION_WIDE_FIELD_MAPPING\n* `CREATED_LINKED_ACCOUNT_FIELD_MAPPING` - CREATED_LINKED_ACCOUNT_FIELD_MAPPING\n* `CHANGED_INTEGRATION_WIDE_FIELD_MAPPING` - CHANGED_INTEGRATION_WIDE_FIELD_MAPPING\n* `CHANGED_LINKED_ACCOUNT_FIELD_MAPPING` - CHANGED_LINKED_ACCOUNT_FIELD_MAPPING\n* `DELETED_INTEGRATION_WIDE_FIELD_MAPPING` - DELETED_INTEGRATION_WIDE_FIELD_MAPPING\n* `DELETED_LINKED_ACCOUNT_FIELD_MAPPING` - DELETED_LINKED_ACCOUNT_FIELD_MAPPING\n* `CREATED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE` - CREATED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE\n* `CHANGED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE` - CHANGED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE\n* `DELETED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE` - DELETED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE\n* `FORCED_LINKED_ACCOUNT_RESYNC` - FORCED_LINKED_ACCOUNT_RESYNC\n* `MUTED_ISSUE` - MUTED_ISSUE\n* `GENERATED_MAGIC_LINK` - GENERATED_MAGIC_LINK\n* `ENABLED_MERGE_WEBHOOK` - ENABLED_MERGE_WEBHOOK\n* `DISABLED_MERGE_WEBHOOK` - DISABLED_MERGE_WEBHOOK\n* `MERGE_WEBHOOK_TARGET_CHANGED` - MERGE_WEBHOOK_TARGET_CHANGED\n* `END_USER_CREDENTIALS_ACCESSED` - END_USER_CREDENTIALS_ACCESSED",
                         "example": "CHANGED_SCOPES"
                     },
                     "event_description": {
@@ -3627,13 +3736,13 @@
                         "type": "string",
                         "format": "uuid",
                         "readOnly": true,
-                        "example": "31ce474c-asdf-34a2-754r-629f799f7d12"
+                        "example": "f9e3d315-d6c2-458e-85c4-fa773d6ff4a6"
                     },
                     "remote_id": {
                         "type": "string",
                         "nullable": true,
                         "description": "The third-party API ID of the matching object.",
-                        "example": "2039349"
+                        "example": "2039348"
                     },
                     "created_at": {
                         "type": "string",
@@ -3654,7 +3763,7 @@
                         "nullable": true,
                         "description": "The drive's name.",
                         "maxLength": 254,
-                        "example": "Documents"
+                        "example": "My Drive"
                     },
                     "remote_created_at": {
                         "type": "string",
@@ -3671,7 +3780,7 @@
                     },
                     "remote_was_deleted": {
                         "type": "boolean",
-                        "description": "Indicates whether or not this object has been deleted in the third party platform."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     "field_mappings": {
                         "type": "object",
@@ -3689,11 +3798,9 @@
                     "remote_data": {
                         "type": "array",
                         "items": {
-                            "type": "object",
-                            "additionalProperties": {},
-                            "nullable": true,
-                            "description": "The full data pulled from the third-party API for an object."
+                            "$ref": "#/components/schemas/RemoteData"
                         },
+                        "readOnly": true,
                         "nullable": true,
                         "example": [
                             {
@@ -3781,6 +3888,12 @@
                         "default": false,
                         "description": "Whether to generate a Magic Link URL. Defaults to false. For more information on Magic Link, see https://merge.dev/blog/integrations-fast-say-hello-to-magic-link."
                     },
+                    "hide_admin_magic_link": {
+                        "type": "boolean",
+                        "nullable": true,
+                        "default": false,
+                        "description": "Whether to generate a Magic Link URL on the Admin Needed screen during the linking flow. Defaults to false. For more information on Magic Link, see https://merge.dev/blog/integrations-fast-say-hello-to-magic-link."
+                    },
                     "common_models": {
                         "type": "array",
                         "items": {
@@ -3812,12 +3925,12 @@
                                         }
                                     },
                                     "field_permissions": {
-                                        "enabled": [
+                                        "enabled_fields": [
                                             "first_name",
                                             "last_name",
                                             "personal_email"
                                         ],
-                                        "disabled": [
+                                        "disabled_fields": [
                                             "preferred_name"
                                         ]
                                     }
@@ -3833,7 +3946,7 @@
                                         }
                                     },
                                     "field_permissions": {
-                                        "enabled": [
+                                        "enabled_fields": [
                                             "effective_date"
                                         ]
                                     }
@@ -3851,10 +3964,10 @@
                                         }
                                     },
                                     "field_permissions": {
-                                        "enabled": [
+                                        "enabled_fields": [
                                             "name"
                                         ],
-                                        "disabled": [
+                                        "disabled_fields": [
                                             "description"
                                         ]
                                     }
@@ -3874,11 +3987,20 @@
                         }
                     },
                     "language": {
-                        "type": "string",
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/LanguageEnum"
+                            }
+                        ],
                         "nullable": true,
-                        "minLength": 1,
-                        "description": "The language code for the language to localize Merge Link to.",
-                        "maxLength": 2
+                        "description": "The following subset of IETF language tags can be used to configure localization.\n\n* `en` - en\n* `de` - de",
+                        "example": "en"
+                    },
+                    "are_syncs_disabled": {
+                        "type": "boolean",
+                        "nullable": true,
+                        "default": false,
+                        "description": "The boolean that indicates whether initial, periodic, and force syncs will be disabled."
                     },
                     "integration_specific_config": {
                         "type": "object",
@@ -3962,15 +4084,19 @@
                     "CHANGED_LINKED_ACCOUNT_FIELD_MAPPING",
                     "DELETED_INTEGRATION_WIDE_FIELD_MAPPING",
                     "DELETED_LINKED_ACCOUNT_FIELD_MAPPING",
+                    "CREATED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE",
+                    "CHANGED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE",
+                    "DELETED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE",
                     "FORCED_LINKED_ACCOUNT_RESYNC",
                     "MUTED_ISSUE",
                     "GENERATED_MAGIC_LINK",
                     "ENABLED_MERGE_WEBHOOK",
                     "DISABLED_MERGE_WEBHOOK",
-                    "MERGE_WEBHOOK_TARGET_CHANGED"
+                    "MERGE_WEBHOOK_TARGET_CHANGED",
+                    "END_USER_CREDENTIALS_ACCESSED"
                 ],
                 "type": "string",
-                "description": "* `CREATED_REMOTE_PRODUCTION_API_KEY` - CREATED_REMOTE_PRODUCTION_API_KEY\n* `DELETED_REMOTE_PRODUCTION_API_KEY` - DELETED_REMOTE_PRODUCTION_API_KEY\n* `CREATED_TEST_API_KEY` - CREATED_TEST_API_KEY\n* `DELETED_TEST_API_KEY` - DELETED_TEST_API_KEY\n* `REGENERATED_PRODUCTION_API_KEY` - REGENERATED_PRODUCTION_API_KEY\n* `INVITED_USER` - INVITED_USER\n* `TWO_FACTOR_AUTH_ENABLED` - TWO_FACTOR_AUTH_ENABLED\n* `TWO_FACTOR_AUTH_DISABLED` - TWO_FACTOR_AUTH_DISABLED\n* `DELETED_LINKED_ACCOUNT` - DELETED_LINKED_ACCOUNT\n* `CREATED_DESTINATION` - CREATED_DESTINATION\n* `DELETED_DESTINATION` - DELETED_DESTINATION\n* `CHANGED_DESTINATION` - CHANGED_DESTINATION\n* `CHANGED_SCOPES` - CHANGED_SCOPES\n* `CHANGED_PERSONAL_INFORMATION` - CHANGED_PERSONAL_INFORMATION\n* `CHANGED_ORGANIZATION_SETTINGS` - CHANGED_ORGANIZATION_SETTINGS\n* `ENABLED_INTEGRATION` - ENABLED_INTEGRATION\n* `DISABLED_INTEGRATION` - DISABLED_INTEGRATION\n* `ENABLED_CATEGORY` - ENABLED_CATEGORY\n* `DISABLED_CATEGORY` - DISABLED_CATEGORY\n* `CHANGED_PASSWORD` - CHANGED_PASSWORD\n* `RESET_PASSWORD` - RESET_PASSWORD\n* `ENABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION` - ENABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION\n* `ENABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT` - ENABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT\n* `DISABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION` - DISABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION\n* `DISABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT` - DISABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT\n* `CREATED_INTEGRATION_WIDE_FIELD_MAPPING` - CREATED_INTEGRATION_WIDE_FIELD_MAPPING\n* `CREATED_LINKED_ACCOUNT_FIELD_MAPPING` - CREATED_LINKED_ACCOUNT_FIELD_MAPPING\n* `CHANGED_INTEGRATION_WIDE_FIELD_MAPPING` - CHANGED_INTEGRATION_WIDE_FIELD_MAPPING\n* `CHANGED_LINKED_ACCOUNT_FIELD_MAPPING` - CHANGED_LINKED_ACCOUNT_FIELD_MAPPING\n* `DELETED_INTEGRATION_WIDE_FIELD_MAPPING` - DELETED_INTEGRATION_WIDE_FIELD_MAPPING\n* `DELETED_LINKED_ACCOUNT_FIELD_MAPPING` - DELETED_LINKED_ACCOUNT_FIELD_MAPPING\n* `FORCED_LINKED_ACCOUNT_RESYNC` - FORCED_LINKED_ACCOUNT_RESYNC\n* `MUTED_ISSUE` - MUTED_ISSUE\n* `GENERATED_MAGIC_LINK` - GENERATED_MAGIC_LINK\n* `ENABLED_MERGE_WEBHOOK` - ENABLED_MERGE_WEBHOOK\n* `DISABLED_MERGE_WEBHOOK` - DISABLED_MERGE_WEBHOOK\n* `MERGE_WEBHOOK_TARGET_CHANGED` - MERGE_WEBHOOK_TARGET_CHANGED",
+                "description": "* `CREATED_REMOTE_PRODUCTION_API_KEY` - CREATED_REMOTE_PRODUCTION_API_KEY\n* `DELETED_REMOTE_PRODUCTION_API_KEY` - DELETED_REMOTE_PRODUCTION_API_KEY\n* `CREATED_TEST_API_KEY` - CREATED_TEST_API_KEY\n* `DELETED_TEST_API_KEY` - DELETED_TEST_API_KEY\n* `REGENERATED_PRODUCTION_API_KEY` - REGENERATED_PRODUCTION_API_KEY\n* `INVITED_USER` - INVITED_USER\n* `TWO_FACTOR_AUTH_ENABLED` - TWO_FACTOR_AUTH_ENABLED\n* `TWO_FACTOR_AUTH_DISABLED` - TWO_FACTOR_AUTH_DISABLED\n* `DELETED_LINKED_ACCOUNT` - DELETED_LINKED_ACCOUNT\n* `CREATED_DESTINATION` - CREATED_DESTINATION\n* `DELETED_DESTINATION` - DELETED_DESTINATION\n* `CHANGED_DESTINATION` - CHANGED_DESTINATION\n* `CHANGED_SCOPES` - CHANGED_SCOPES\n* `CHANGED_PERSONAL_INFORMATION` - CHANGED_PERSONAL_INFORMATION\n* `CHANGED_ORGANIZATION_SETTINGS` - CHANGED_ORGANIZATION_SETTINGS\n* `ENABLED_INTEGRATION` - ENABLED_INTEGRATION\n* `DISABLED_INTEGRATION` - DISABLED_INTEGRATION\n* `ENABLED_CATEGORY` - ENABLED_CATEGORY\n* `DISABLED_CATEGORY` - DISABLED_CATEGORY\n* `CHANGED_PASSWORD` - CHANGED_PASSWORD\n* `RESET_PASSWORD` - RESET_PASSWORD\n* `ENABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION` - ENABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION\n* `ENABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT` - ENABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT\n* `DISABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION` - DISABLED_REDACT_UNMAPPED_DATA_FOR_ORGANIZATION\n* `DISABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT` - DISABLED_REDACT_UNMAPPED_DATA_FOR_LINKED_ACCOUNT\n* `CREATED_INTEGRATION_WIDE_FIELD_MAPPING` - CREATED_INTEGRATION_WIDE_FIELD_MAPPING\n* `CREATED_LINKED_ACCOUNT_FIELD_MAPPING` - CREATED_LINKED_ACCOUNT_FIELD_MAPPING\n* `CHANGED_INTEGRATION_WIDE_FIELD_MAPPING` - CHANGED_INTEGRATION_WIDE_FIELD_MAPPING\n* `CHANGED_LINKED_ACCOUNT_FIELD_MAPPING` - CHANGED_LINKED_ACCOUNT_FIELD_MAPPING\n* `DELETED_INTEGRATION_WIDE_FIELD_MAPPING` - DELETED_INTEGRATION_WIDE_FIELD_MAPPING\n* `DELETED_LINKED_ACCOUNT_FIELD_MAPPING` - DELETED_LINKED_ACCOUNT_FIELD_MAPPING\n* `CREATED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE` - CREATED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE\n* `CHANGED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE` - CHANGED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE\n* `DELETED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE` - DELETED_LINKED_ACCOUNT_COMMON_MODEL_OVERRIDE\n* `FORCED_LINKED_ACCOUNT_RESYNC` - FORCED_LINKED_ACCOUNT_RESYNC\n* `MUTED_ISSUE` - MUTED_ISSUE\n* `GENERATED_MAGIC_LINK` - GENERATED_MAGIC_LINK\n* `ENABLED_MERGE_WEBHOOK` - ENABLED_MERGE_WEBHOOK\n* `DISABLED_MERGE_WEBHOOK` - DISABLED_MERGE_WEBHOOK\n* `MERGE_WEBHOOK_TARGET_CHANGED` - MERGE_WEBHOOK_TARGET_CHANGED\n* `END_USER_CREDENTIALS_ACCESSED` - END_USER_CREDENTIALS_ACCESSED",
                 "x-merge-category": "filestorage"
             },
             "ExternalTargetFieldAPI": {
@@ -4076,11 +4202,13 @@
                         "type": "object",
                         "properties": {
                             "remote_key_name": {
-                                "type": "string"
+                                "type": "string",
+                                "nullable": true
                             },
                             "schema": {
                                 "type": "object",
-                                "additionalProperties": {}
+                                "additionalProperties": {},
+                                "nullable": true
                             },
                             "remote_endpoint_info": {
                                 "type": "object",
@@ -4124,7 +4252,7 @@
                                 "method": "GET",
                                 "url_path": "/example-url-path",
                                 "field_traversal_path": [
-                                    "string"
+                                    "example_remote_field_key"
                                 ]
                             }
                         }
@@ -4203,11 +4331,11 @@
             "FieldPermissionDeserializer": {
                 "type": "object",
                 "properties": {
-                    "enabled": {
+                    "enabled_fields": {
                         "type": "array",
                         "items": {}
                     },
-                    "disabled": {
+                    "disabled_fields": {
                         "type": "array",
                         "items": {}
                     }
@@ -4217,11 +4345,11 @@
             "FieldPermissionDeserializerRequest": {
                 "type": "object",
                 "properties": {
-                    "enabled": {
+                    "enabled_fields": {
                         "type": "array",
                         "items": {}
                     },
-                    "disabled": {
+                    "disabled_fields": {
                         "type": "array",
                         "items": {}
                     }
@@ -4263,7 +4391,7 @@
                         "nullable": true,
                         "description": "The file's name.",
                         "maxLength": 254,
-                        "example": "omg_common_model_scope.docx"
+                        "example": "merge_file_storage_launch.docx"
                     },
                     "file_url": {
                         "type": "string",
@@ -4307,7 +4435,7 @@
                         "format": "uuid",
                         "nullable": true,
                         "description": "The folder that the file belongs to.",
-                        "example": "56ce474c-asdf-34a2-754r-629f799f7d31",
+                        "example": "8e889422-e086-42dc-b99e-24d732039b0b",
                         "x-merge-expands-to": "Folder"
                     },
                     "permissions": {
@@ -4330,7 +4458,7 @@
                                 "remote_data": null
                             },
                             {
-                                "id": "32ce474c-asdf-34a2-754r-629f799f7123",
+                                "id": "2ea7db93-1ae9-4686-82c9-35c768000736",
                                 "remote_id": null,
                                 "created_at": "2020-03-31T00:00:00Z",
                                 "modified_at": "2020-06-20T00:00:00Z",
@@ -4350,7 +4478,7 @@
                         "format": "uuid",
                         "nullable": true,
                         "description": "The drive that the file belongs to.",
-                        "example": "31ce474c-asdf-34a2-754r-629f799f7d12",
+                        "example": "204ca79c-0c86-4f6c-9ca6-61b946a4708a",
                         "x-merge-expands-to": "Drive"
                     },
                     "remote_created_at": {
@@ -4369,7 +4497,7 @@
                     },
                     "remote_was_deleted": {
                         "type": "boolean",
-                        "description": "Indicates whether or not this object has been deleted in the third party platform."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     "field_mappings": {
                         "type": "object",
@@ -4387,11 +4515,9 @@
                     "remote_data": {
                         "type": "array",
                         "items": {
-                            "type": "object",
-                            "additionalProperties": {},
-                            "nullable": true,
-                            "description": "The full data pulled from the third-party API for an object."
+                            "$ref": "#/components/schemas/RemoteData"
                         },
+                        "readOnly": true,
                         "nullable": true,
                         "example": [
                             {
@@ -4417,7 +4543,7 @@
                         "nullable": true,
                         "description": "The file's name.",
                         "maxLength": 254,
-                        "example": "omg_common_model_scope.docx"
+                        "example": "merge_file_storage_launch.docx"
                     },
                     "file_url": {
                         "type": "string",
@@ -4461,7 +4587,7 @@
                         "format": "uuid",
                         "nullable": true,
                         "description": "The folder that the file belongs to.",
-                        "example": "56ce474c-asdf-34a2-754r-629f799f7d31",
+                        "example": "8e889422-e086-42dc-b99e-24d732039b0b",
                         "x-merge-expands-to": "Folder"
                     },
                     "permissions": {
@@ -4484,7 +4610,7 @@
                                 "remote_data": null
                             },
                             {
-                                "id": "32ce474c-asdf-34a2-754r-629f799f7123",
+                                "id": "2ea7db93-1ae9-4686-82c9-35c768000736",
                                 "remote_id": null,
                                 "created_at": "2020-03-31T00:00:00Z",
                                 "modified_at": "2020-06-20T00:00:00Z",
@@ -4504,7 +4630,7 @@
                         "format": "uuid",
                         "nullable": true,
                         "description": "The drive that the file belongs to.",
-                        "example": "31ce474c-asdf-34a2-754r-629f799f7d12",
+                        "example": "204ca79c-0c86-4f6c-9ca6-61b946a4708a",
                         "x-merge-expands-to": "Drive"
                     },
                     "integration_params": {
@@ -4627,7 +4753,7 @@
                         "type": "string",
                         "format": "uuid",
                         "readOnly": true,
-                        "example": "56ce474c-asdf-34a2-754r-629f799f7d31"
+                        "example": "e021f7a7-74fc-4487-8e12-14180c92d3b7"
                     },
                     "remote_id": {
                         "type": "string",
@@ -4654,7 +4780,7 @@
                         "nullable": true,
                         "description": "The folder's name.",
                         "maxLength": 254,
-                        "example": "Platform"
+                        "example": "R&D"
                     },
                     "folder_url": {
                         "type": "string",
@@ -4677,7 +4803,7 @@
                         "nullable": true,
                         "description": "The folder's description.",
                         "maxLength": 2000,
-                        "example": "Platform team builds all of our amazing categories and integrations!"
+                        "example": "All things R&D related at Merge!"
                     },
                     "parent_folder": {
                         "type": "string",
@@ -4702,7 +4828,7 @@
                         },
                         "example": [
                             {
-                                "id": "31ce489c-asdf-68b1-754r-629f799f7123",
+                                "id": "105b9265-0d52-4e5c-bb88-0cb681ec77f6",
                                 "remote_id": "102895",
                                 "created_at": "2020-03-31T00:00:00Z",
                                 "modified_at": "2020-06-20T00:00:00Z",
@@ -4715,7 +4841,7 @@
                                 "remote_data": null
                             },
                             {
-                                "id": "32ce474c-asdf-34a2-754r-629f799f7123",
+                                "id": "a77ac1b4-a04f-4baa-a388-de3c0c173e1c",
                                 "remote_id": null,
                                 "created_at": "2020-03-31T00:00:00Z",
                                 "modified_at": "2020-06-20T00:00:00Z",
@@ -4735,18 +4861,18 @@
                         "format": "date-time",
                         "nullable": true,
                         "description": "When the third party's folder was created.",
-                        "example": "2022-02-02T00:00:00Z"
+                        "example": "2024-02-02T00:00:00Z"
                     },
                     "remote_updated_at": {
                         "type": "string",
                         "format": "date-time",
                         "nullable": true,
                         "description": "When the third party's folder was updated.",
-                        "example": "2022-02-03T00:00:00Z"
+                        "example": "2024-06-10T00:00:00Z"
                     },
                     "remote_was_deleted": {
                         "type": "boolean",
-                        "description": "Indicates whether or not this object has been deleted in the third party platform."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     "field_mappings": {
                         "type": "object",
@@ -4764,11 +4890,9 @@
                     "remote_data": {
                         "type": "array",
                         "items": {
-                            "type": "object",
-                            "additionalProperties": {},
-                            "nullable": true,
-                            "description": "The full data pulled from the third-party API for an object."
+                            "$ref": "#/components/schemas/RemoteData"
                         },
+                        "readOnly": true,
                         "nullable": true,
                         "example": [
                             {
@@ -4792,7 +4916,7 @@
                         "nullable": true,
                         "description": "The folder's name.",
                         "maxLength": 254,
-                        "example": "Platform"
+                        "example": "R&D"
                     },
                     "folder_url": {
                         "type": "string",
@@ -4815,7 +4939,7 @@
                         "nullable": true,
                         "description": "The folder's description.",
                         "maxLength": 2000,
-                        "example": "Platform team builds all of our amazing categories and integrations!"
+                        "example": "All things R&D related at Merge!"
                     },
                     "parent_folder": {
                         "type": "string",
@@ -4840,7 +4964,7 @@
                         },
                         "example": [
                             {
-                                "id": "31ce489c-asdf-68b1-754r-629f799f7123",
+                                "id": "105b9265-0d52-4e5c-bb88-0cb681ec77f6",
                                 "remote_id": "102895",
                                 "created_at": "2020-03-31T00:00:00Z",
                                 "modified_at": "2020-06-20T00:00:00Z",
@@ -4853,7 +4977,7 @@
                                 "remote_data": null
                             },
                             {
-                                "id": "32ce474c-asdf-34a2-754r-629f799f7123",
+                                "id": "a77ac1b4-a04f-4baa-a388-de3c0c173e1c",
                                 "remote_id": null,
                                 "created_at": "2020-03-31T00:00:00Z",
                                 "modified_at": "2020-06-20T00:00:00Z",
@@ -4908,13 +5032,13 @@
             },
             "Group": {
                 "type": "object",
-                "description": "# The Group Object\n### Description\nThe `Group` object is used to represent any subset of `User`s. This can extend to company domains as well.\n### Usage Example\nFetch from the `GET /api/filestorage/v1/groups` endpoint and view their groups.",
+                "description": "# The Group Object\n### Description\nThe `Group` object is used to represent any subset of `Users`. This can extend to company domains as well.\n### Usage Example\nFetch from the `GET /api/filestorage/v1/groups` endpoint and view their groups.",
                 "properties": {
                     "id": {
                         "type": "string",
                         "format": "uuid",
                         "readOnly": true,
-                        "example": "21ce474c-asdf-34a2-754r-629f799f7d12"
+                        "example": "5624aceb-0ea2-4864-ba08-354ac56b9884"
                     },
                     "remote_id": {
                         "type": "string",
@@ -4941,7 +5065,7 @@
                         "nullable": true,
                         "description": "The group's name.",
                         "maxLength": 254,
-                        "example": "Platform"
+                        "example": "Administrators"
                     },
                     "users": {
                         "type": "array",
@@ -4951,12 +5075,25 @@
                         },
                         "description": "The users that belong in the group. If null, this typically means it's either a domain or the third-party platform does not surface this information.",
                         "example": [
-                            "56ce474c-asdf-34a2-754r-629f799f7d31"
+                            "6e93361b-8ae7-444b-bfa2-71206cbbee24"
                         ]
+                    },
+                    "child_groups": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "readOnly": true,
+                        "description": "Groups that inherit the permissions of the parent group.",
+                        "example": [
+                            "a1f90b3c-633d-404e-a696-05cd54808676"
+                        ],
+                        "x-merge-expands-to": "Group"
                     },
                     "remote_was_deleted": {
                         "type": "boolean",
-                        "description": "Indicates whether or not this object has been deleted in the third party platform."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     "field_mappings": {
                         "type": "object",
@@ -4974,11 +5111,9 @@
                     "remote_data": {
                         "type": "array",
                         "items": {
-                            "type": "object",
-                            "additionalProperties": {},
-                            "nullable": true,
-                            "description": "The full data pulled from the third-party API for an object."
+                            "$ref": "#/components/schemas/RemoteData"
                         },
+                        "readOnly": true,
                         "nullable": true,
                         "example": [
                             {
@@ -4993,6 +5128,7 @@
                 "required": [
                     "users"
                 ],
+                "x-merge-expands": "{\"child_groups\": \"Group\"}",
                 "x-merge-category": "filestorage"
             },
             "IndividualCommonModelScopeDeserializer": {
@@ -5107,6 +5243,15 @@
                 ],
                 "type": "string",
                 "description": "* `ONGOING` - ONGOING\n* `RESOLVED` - RESOLVED",
+                "x-merge-category": "filestorage"
+            },
+            "LanguageEnum": {
+                "enum": [
+                    "en",
+                    "de"
+                ],
+                "type": "string",
+                "description": "* `en` - en\n* `de` - de",
                 "x-merge-category": "filestorage"
             },
             "LinkToken": {
@@ -5833,15 +5978,15 @@
                         "type": "string",
                         "format": "uuid",
                         "nullable": true,
-                        "description": "The user that is granted this permission.",
-                        "example": "21ce474c-asdf-34a2-754r-629f799f7d12",
+                        "description": "The user that is granted this permission. This will only be populated if the type is `USER`.",
+                        "example": "755e0a8e-1c04-444b-980f-51b1c0bdde8a",
                         "x-merge-expands-to": "User"
                     },
                     "group": {
                         "type": "string",
                         "format": "uuid",
                         "nullable": true,
-                        "description": "The group that is granted this permission.",
+                        "description": "The group that is granted this permission. This will only be populated if the type is `GROUP`.",
                         "x-merge-expands-to": "Group"
                     },
                     "type": {
@@ -5890,15 +6035,15 @@
                         "type": "string",
                         "format": "uuid",
                         "nullable": true,
-                        "description": "The user that is granted this permission.",
-                        "example": "21ce474c-asdf-34a2-754r-629f799f7d12",
+                        "description": "The user that is granted this permission. This will only be populated if the type is `USER`.",
+                        "example": "755e0a8e-1c04-444b-980f-51b1c0bdde8a",
                         "x-merge-expands-to": "User"
                     },
                     "group": {
                         "type": "string",
                         "format": "uuid",
                         "nullable": true,
-                        "description": "The group that is granted this permission.",
+                        "description": "The group that is granted this permission. This will only be populated if the type is `GROUP`.",
                         "x-merge-expands-to": "Group"
                     },
                     "type": {
@@ -5948,6 +6093,28 @@
                     }
                 },
                 "x-merge-expands": "{\"group\": \"Group\", \"primary_file\": \"File\", \"primary_folder\": \"Folder\", \"user\": \"User\"}",
+                "x-merge-category": "filestorage"
+            },
+            "RemoteData": {
+                "type": "object",
+                "description": "# The RemoteData Object\n### Description\nThe `RemoteData` object is used to represent the full data pulled from the third-party API for an object.\n\n### Usage Example\nTODO",
+                "properties": {
+                    "path": {
+                        "type": "string",
+                        "description": "The third-party API path that is being called.",
+                        "example": "/platform-endpoint"
+                    },
+                    "data": {
+                        "readOnly": true,
+                        "description": "The data returned from the third-party for this object in its original, unnormalized format.",
+                        "example": [
+                            "Varies by platform"
+                        ]
+                    }
+                },
+                "required": [
+                    "path"
+                ],
                 "x-merge-category": "filestorage"
             },
             "RemoteEndpointInfo": {
@@ -6302,7 +6469,7 @@
                         "type": "string",
                         "format": "uuid",
                         "readOnly": true,
-                        "example": "56ce474c-asdf-34a2-754r-629f799f7d31"
+                        "example": "83902e75-4362-4803-b76c-a7d6be292cbd"
                     },
                     "remote_id": {
                         "type": "string",
@@ -6345,7 +6512,7 @@
                     },
                     "remote_was_deleted": {
                         "type": "boolean",
-                        "description": "Indicates whether or not this object has been deleted in the third party platform."
+                        "description": "Indicates whether or not this object has been deleted in the third party platform. Full coverage deletion detection is a premium add-on. Native deletion detection is offered for free with limited coverage. [Learn more](https://docs.merge.dev/integrations/hris/supported-features/)."
                     },
                     "field_mappings": {
                         "type": "object",
@@ -6363,11 +6530,9 @@
                     "remote_data": {
                         "type": "array",
                         "items": {
-                            "type": "object",
-                            "additionalProperties": {},
-                            "nullable": true,
-                            "description": "The full data pulled from the third-party API for an object."
+                            "$ref": "#/components/schemas/RemoteData"
                         },
+                        "readOnly": true,
                         "nullable": true,
                         "example": [
                             {
@@ -6485,6 +6650,10 @@
         {
             "url": "https://api-eu.merge.dev/api/filestorage/v1",
             "description": "Production EU"
+        },
+        {
+            "url": "https://api-ap.merge.dev/api/filestorage/v1",
+            "description": "Production APSE1"
         }
     ]
 }

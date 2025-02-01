@@ -21,6 +21,10 @@ export const oasMeta = {
       url: 'https://api-eu.merge.dev/api/ticketing/v1',
       description: 'Production EU',
     },
+    {
+      url: 'https://api-ap.merge.dev/api/ticketing/v1',
+      description: 'Production APSE1',
+    },
   ],
 } as const
 export default oasMeta
