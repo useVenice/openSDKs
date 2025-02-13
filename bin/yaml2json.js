@@ -10,6 +10,7 @@ async function readStreamToString(/** @type {NodeJS.ReadableStream} */ stream) {
   for await (const chunk of stream) {
     chunks.push(typeof chunk === 'string' ? Buffer.from(chunk) : chunk)
   }
+  // @ts-expect-error ts(2345)
   return Buffer.concat(chunks).toString('utf8')
 }
 

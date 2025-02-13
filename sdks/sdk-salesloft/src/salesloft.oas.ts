@@ -1,6 +1,6 @@
 import {oas30, OpenAPISpec} from '@opensdks/runtime'
 import {createDocument, jsonOperation, Oas30Schema, z} from '@opensdks/util-zod'
-import _oas from '../salesloft.orig.oas.json'
+import _oas from '../salesloft.orig.oas.json' assert { type: 'json' }
 
 const cadenceSettings = z
   .object({
