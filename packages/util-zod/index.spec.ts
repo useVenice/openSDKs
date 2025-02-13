@@ -1,14 +1,12 @@
-import {z, zodToOas31Schema} from './index.js'
-
-/* eslint-disable unicorn/template-indent */ /* eslint-disable jest-formatting/padding-around-test-blocks */
-
+import {
+  z,
+  zodToOas31Schema,
+} from './index.js' /* eslint-disable unicorn/template-indent */ /* eslint-disable jest-formatting/padding-around-test-blocks */
 test('simple value', () => {
   expect(zodToOas31Schema(z.literal('myvalue'))).toMatchInlineSnapshot(
     `
     {
-      "enum": [
-        "myvalue",
-      ],
+      "const": "myvalue",
       "type": "string",
     }
   `,
@@ -52,17 +50,13 @@ test('union with description', () => {
     {
       "anyOf": [
         {
+          "const": "123",
           "description": "hello",
-          "enum": [
-            "123",
-          ],
           "type": "string",
         },
         {
+          "const": "456",
           "description": "world",
-          "enum": [
-            "456",
-          ],
           "type": "string",
         },
       ],
@@ -95,9 +89,7 @@ test('enum description to title', () => {
               "type": "string",
             },
             "type": {
-              "enum": [
-                "oauth",
-              ],
+              "const": "oauth",
               "type": "string",
             },
           },
@@ -111,9 +103,7 @@ test('enum description to title', () => {
         {
           "properties": {
             "type": {
-              "enum": [
-                "apikey",
-              ],
+              "const": "apikey",
               "type": "string",
             },
           },
@@ -280,7 +270,6 @@ test('streams', () => {
     `
     {
       "additionalProperties": {
-        "properties": {},
         "type": "object",
       },
       "type": "object",
