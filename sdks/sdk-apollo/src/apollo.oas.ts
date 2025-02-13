@@ -50,7 +50,6 @@ export type ApolloCreateEmailerCampaign = z.infer<
 export const apolloCreateEmailerCampaign = apolloEmailerCampaign
   .partial()
   .pick({
-    creation_type: true,
     name: true,
     permissions: true,
     user_id: true,

@@ -44,7 +44,7 @@
     "change-case": "^5.4.4",
     "fast-xml-parser": "^4.4.0",
     "openapi-typescript": "^7.4.4",
-    "prettier": "^3.1.0",
+    "prettier": "^3.5.0",
     "remeda": "^1.31.0",
     "yaml": "^2.3.4"
   },

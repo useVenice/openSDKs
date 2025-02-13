@@ -23,7 +23,7 @@ export function jsonOperation(
     body?: ZodOpenApiMediaTypeObject['schema']
     response: ZodOpenApiMediaTypeObject['schema']
   } & ZodOpenApiParameters,
-) {
+): ZodOpenApiOperationObject {
   return {
     ...meta,
     operationId: id,
