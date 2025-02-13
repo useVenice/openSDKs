@@ -61,11 +61,12 @@ await twilio.api_v2010
   .then((r) => console.log(r.data))
   //     ^? (parameter) r: {
   //            data: {
-  //                body?: string | null | undefined;
-  //                num_segments?: string | null | undefined;
-  //                direction?: "inbound" | "outbound-api" | "outbound-call" | "outbound-reply" | undefined;
-  //                from?: string | ... 1 more ... | undefined;
-  //                ... 15 more ...;
+  //                body?: string | null;
+  //                num_segments?: string | null;
+  //                direction?: components["schemas"]["message_enum_direction"];
+  //                from?: string | null;
+  //                to?: string | null;
+  //                ... 14 more ...;
   //                subresource_uris?: unknown;
   //            };
   //            error?: undefined;
@@ -108,7 +109,6 @@ await github
   .then((r) => {
     console.log(r.data.secrets[0]?.selected_repositories_url)
   })
-
 
 await slack.POST('/chat.postMessage', {
   body: {channel: 'C01U6P7LZ9M', text: 'Hello world!'},

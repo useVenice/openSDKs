@@ -34,3 +34,4 @@ dist/
 esm/
 cjs/
 types/
+.vercel/
