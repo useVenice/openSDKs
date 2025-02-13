@@ -216,11 +216,11 @@ importers:
   packages/util-zod:
     dependencies:
       zod:
-        specifier: ^3.22.4
-        version: 3.22.4
+        specifier: ^3.24.2
+        version: 3.24.2
       zod-openapi:
-        specifier: ^2.12.0
-        version: 2.12.0(zod@3.22.4)
+        specifier: ^4.2.3
+        version: 4.2.3(zod@3.24.2)
     devDependencies:
       concurrently:
         specifier: ^8.2.2
@@ -6304,14 +6304,14 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
-  zod-openapi@2.12.0:
-    resolution: {integrity: sha512-vTjUNJN7COtV36w5kVaKMpX6Anwn8fDWOBWkpJMnfbNJMjjM5IO8I//2N4cQbvB3EKOdX4ym/4Laa7lrtrWYLg==}
-    engines: {node: '>=16.11'}
+  zod-openapi@4.2.3:
+    resolution: {integrity: sha512-i0SqpcdXfsvVWTIY1Jl3Tk421s9fBIkpXvaA86zDas+8FjfZjm+GX6ot6SPB2SyuHwUNTN02gE5uIVlYXlyrDQ==}
+    engines: {node: '>=18'}
     peerDependencies:
       zod: ^3.21.4
 
-  zod@3.22.4:
-    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
+  zod@3.24.2:
+    resolution: {integrity: sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==}
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
@@ -12864,10 +12864,10 @@ snapshots:
 
   yocto-queue@0.1.0: {}
 
-  zod-openapi@2.12.0(zod@3.22.4):
+  zod-openapi@4.2.3(zod@3.24.2):
     dependencies:
-      zod: 3.22.4
+      zod: 3.24.2
 
-  zod@3.22.4: {}
+  zod@3.24.2: {}
 
   zwitch@2.0.4: {}
